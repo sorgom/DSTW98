@@ -8,7 +8,6 @@
 
 #include "values.h"
 #include <codebase/BaseTypes.h>
-#include <codebase/NoAssert.h>
 #include <codebase/Mem.h>
 #include <codebase/nocopy.h>
 
@@ -16,7 +15,7 @@
 
 //  communication telegrams
 //  Com telegrams element identifier
-constexpr auto ComAddrSize = 12;
+#define ComAddrSize 12
 
 struct ComAddr
 {
@@ -32,13 +31,6 @@ struct ComAddr
     }
 };
 
-STATIC_ASSERT(ComAddrSize == sizeof(ComAddr))
-
-//  standard telegram size
-constexpr auto ComTelegramSize = ComAddrSize + 8;
-
-constexpr auto ComDataSize = 8;
-
 //  Com telegrams data
 struct ComData
 {
@@ -51,7 +43,6 @@ struct ComData
     UINT8 param7 = PARAM_UNDEF;
     UINT8 param8 = PARAM_UNDEF;
 };
-STATIC_ASSERT(ComDataSize == sizeof(ComData))
 
 //  Com telegram
 struct ComTele
@@ -60,8 +51,6 @@ struct ComTele
     ComData data;
 };
 
-STATIC_ASSERT(ComAddrSize + ComDataSize == sizeof(ComTele))
-
 //  project items
 struct ProjItem
 {
@@ -69,9 +58,8 @@ struct ProjItem
     UINT8 type;
     UINT8 reserve[7];
 };
-STATIC_ASSERT(ComAddrSize + 8 == sizeof(ProjItem))
 
-//  Com TCP setup
+// Com TCP setup
 struct ComSetup
 {
     //  TCP port field
@@ -83,7 +71,6 @@ struct ComSetup
     //  TCP select timeout ms
     UINT16 timeout;
 };
-STATIC_ASSERT(8 == sizeof(ComSetup))
 
 //  result of a find operation
 struct PosRes
@@ -101,6 +88,6 @@ struct PosRes
 
 // //  byte array
 // template <size_t N>
-// using ByteArray = UINT8[N];
+// using Uint8Array = UINT8[N];
 
 #endif // _H

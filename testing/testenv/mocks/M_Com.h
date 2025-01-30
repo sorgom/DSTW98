@@ -15,7 +15,6 @@ namespace test
     {
     public:
         INSTANCE_DEC(M_Com)
-        NOCOPY(M_Com)
 
         inline void run() override
         {
@@ -52,6 +51,7 @@ namespace test
         {
             expect("toGui").TPARAM(ComTele, tele);
         }
+        NOCOPY(M_Com)
     private:
         inline M_Com() : M_Base("Com") {}
     };

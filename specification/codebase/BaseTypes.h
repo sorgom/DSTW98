@@ -30,9 +30,9 @@ using std::size_t;
 #endif
 
 template <size_t N>
-using ByteArray = UINT8[N];
+using Uint8Array = UINT8[N];
 
 template <typename NUM>
-using ByteArrayFor = ByteArray<sizeof(NUM)>;
+using Uint8ArrayFor = Uint8Array<sizeof(NUM)>;
 
 #endif // _H

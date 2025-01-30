@@ -16,7 +16,6 @@ namespace test
     {
     public:
         INSTANCE_DEC(M_TCP)
-        NOCOPY(M_TCP)
 
         inline void setTimeout(UINT32 ms)
         {
@@ -136,6 +135,7 @@ namespace test
         {
             expect("close").IGNORE();
         }
+        NOCOPY(M_TCP)
     private:
         using TelePtr = const ComTele*;
         mutable TelePtr mTele = nullptr;

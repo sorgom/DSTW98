@@ -1,9 +1,9 @@
 # Transfer from C++ 2017 to C++98
 
 ## coding (helpers)
--   replace DataTypes
+-   replace BaseTypes
 -   replace enums by static const UINT8
--   replace static asserts by module tests / cpp98_assert
+-   replace static asserts by module tests
 -   getn -> macros ?
 
 ## static storage

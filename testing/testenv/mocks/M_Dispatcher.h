@@ -14,7 +14,6 @@ namespace test
     {
     public:
         INSTANCE_DEC(M_Dispatcher)
-        NOCOPY(M_Dispatcher)
 
         inline void clear() override
         {
@@ -89,6 +88,7 @@ namespace test
             expect("reGui");
         }
 
+        NOCOPY(M_Dispatcher)
     private:
         inline M_Dispatcher() : M_Base("Dispatcher") {}
     };
