@@ -1,14 +1,18 @@
 # Transfer from C++ 2017 to C++98
+## 98
+-   replace standard in premake
 
 ## coding (helpers)
 -   replace BaseTypes
 -   replace enums by static const UINT8
 -   replace static asserts by module tests
--   getn -> macros ?
+-   replace static size asserts by module tests
 
 ## static storage
 ### ByteArray / StackArray / Index
-
+### general
+#### CAPACITY
+- use CAPACITY for all StaticArray classes?
 ## one polymorphic Provider
 ### Provider class
 - StaticArray of I_ELEM
