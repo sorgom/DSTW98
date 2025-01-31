@@ -35,7 +35,7 @@ void LCR_X::close()
 
 void LCR_X::toFld(const UINT8 state) const
 {
-    IL::getDispatcher().toFld(mId, ComData(state));
+    IL::getMapper().toFld(mId, ComData(state));
 }
 
 void LCR_X::fromGui(const ComData& data)
@@ -84,7 +84,7 @@ void LCR::fromFld(const ComData& data)
 
 void LCR::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData(mStateToGui));
+    IL::getMapper().toGui(mId, ComData(mStateToGui));
 }
 
 bool LCR_UBK::validUbk(const UINT8 state)
@@ -126,5 +126,5 @@ void LCR_UBK::fromFld(const ComData& data)
 
 void LCR_UBK::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData(mStateToGui, mUbkToGui));
+    IL::getMapper().toGui(mId, ComData(mStateToGui, mUbkToGui));
 }

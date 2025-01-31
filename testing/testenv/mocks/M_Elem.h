@@ -14,8 +14,6 @@ namespace test
     class M_Elem : public I_Elem, private M_Base
     {
     public:
-        inline M_Elem(const CONST_C_STRING name = "Elem") : M_Base(name) {}
-
         INSTANCE_DEC(M_Elem)
 
         inline void fromFld(const ComData& data)
@@ -50,37 +48,8 @@ namespace test
         }
 
         NOCOPY(M_Elem)
-    };
-
-    // deprecated
-    // mock TSW
-    class M_TSW : public M_Elem
-    {
-    public:
-        INSTANCE_DEC(M_TSW)
     private:
-        inline M_TSW() : M_Elem("TSW") {}
+        inline M_Elem() : M_Base("Elem") {}
     };
-
-    // deprecated
-    // mock SIG
-    class M_SIG : public M_Elem
-    {
-    public:
-        INSTANCE_DEC(M_SIG)
-    private:
-        inline M_SIG() : M_Elem("SIG") {}
-    };
-
-    // deprecated
-    // mock LCR
-    class M_LCR : public M_Elem
-    {
-    public:
-        INSTANCE_DEC(M_LCR)
-    private:
-        inline M_LCR() : M_Elem("LCR") {}
-    };
-
 } // namespace
 #endif // _H

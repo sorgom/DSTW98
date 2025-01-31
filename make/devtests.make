@@ -61,7 +61,6 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/BAS_Provider.o
 GENERATED += $(OBJDIR)/Com.o
 GENERATED += $(OBJDIR)/Comparator.o
 GENERATED += $(OBJDIR)/Ctrl.o
@@ -69,8 +68,6 @@ GENERATED += $(OBJDIR)/DT_00.o
 GENERATED += $(OBJDIR)/DT_01.o
 GENERATED += $(OBJDIR)/DT_02.o
 GENERATED += $(OBJDIR)/DT_03.o
-GENERATED += $(OBJDIR)/Dispatcher.o
-GENERATED += $(OBJDIR)/LCR_Provider.o
 GENERATED += $(OBJDIR)/LCR_X.o
 GENERATED += $(OBJDIR)/M_Instances.o
 GENERATED += $(OBJDIR)/Mapper.o
@@ -78,13 +75,11 @@ GENERATED += $(OBJDIR)/Net.o
 GENERATED += $(OBJDIR)/NetTest.o
 GENERATED += $(OBJDIR)/Provider.o
 GENERATED += $(OBJDIR)/Reader.o
-GENERATED += $(OBJDIR)/SIG_Provider.o
 GENERATED += $(OBJDIR)/SIG_X.o
 GENERATED += $(OBJDIR)/TCP.o
 GENERATED += $(OBJDIR)/TCP_Client.o
 GENERATED += $(OBJDIR)/TCP_Com.o
 GENERATED += $(OBJDIR)/TSW.o
-GENERATED += $(OBJDIR)/TSW_Provider.o
 GENERATED += $(OBJDIR)/TestGroupBase.o
 GENERATED += $(OBJDIR)/TestLib.o
 GENERATED += $(OBJDIR)/TestMain.o
@@ -93,7 +88,6 @@ GENERATED += $(OBJDIR)/TestStepsPlugin.o
 GENERATED += $(OBJDIR)/installComparators.o
 GENERATED += $(OBJDIR)/ostreamHelpers.o
 GENERATED += $(OBJDIR)/ostreams.o
-OBJECTS += $(OBJDIR)/BAS_Provider.o
 OBJECTS += $(OBJDIR)/Com.o
 OBJECTS += $(OBJDIR)/Comparator.o
 OBJECTS += $(OBJDIR)/Ctrl.o
@@ -101,8 +95,6 @@ OBJECTS += $(OBJDIR)/DT_00.o
 OBJECTS += $(OBJDIR)/DT_01.o
 OBJECTS += $(OBJDIR)/DT_02.o
 OBJECTS += $(OBJDIR)/DT_03.o
-OBJECTS += $(OBJDIR)/Dispatcher.o
-OBJECTS += $(OBJDIR)/LCR_Provider.o
 OBJECTS += $(OBJDIR)/LCR_X.o
 OBJECTS += $(OBJDIR)/M_Instances.o
 OBJECTS += $(OBJDIR)/Mapper.o
@@ -110,13 +102,11 @@ OBJECTS += $(OBJDIR)/Net.o
 OBJECTS += $(OBJDIR)/NetTest.o
 OBJECTS += $(OBJDIR)/Provider.o
 OBJECTS += $(OBJDIR)/Reader.o
-OBJECTS += $(OBJDIR)/SIG_Provider.o
 OBJECTS += $(OBJDIR)/SIG_X.o
 OBJECTS += $(OBJDIR)/TCP.o
 OBJECTS += $(OBJDIR)/TCP_Client.o
 OBJECTS += $(OBJDIR)/TCP_Com.o
 OBJECTS += $(OBJDIR)/TSW.o
-OBJECTS += $(OBJDIR)/TSW_Provider.o
 OBJECTS += $(OBJDIR)/TestGroupBase.o
 OBJECTS += $(OBJDIR)/TestLib.o
 OBJECTS += $(OBJDIR)/TestMain.o
@@ -188,9 +178,6 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/BAS_Provider.o: ../application/components/BAS/src/BAS_Provider.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Net.o: ../application/components/BAS/src/Net.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -203,22 +190,13 @@ $(OBJDIR)/TCP.o: ../application/components/COM/src/TCP.cpp
 $(OBJDIR)/TCP_Com.o: ../application/components/COM/src/TCP_Com.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/LCR_Provider.o: ../application/components/LCR/src/LCR_Provider.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/LCR_X.o: ../application/components/LCR/src/LCR_X.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/SIG_Provider.o: ../application/components/SIG/src/SIG_Provider.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/SIG_X.o: ../application/components/SIG/src/SIG_X.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Ctrl.o: ../application/components/SYS/src/Ctrl.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Dispatcher.o: ../application/components/SYS/src/Dispatcher.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp
@@ -231,9 +209,6 @@ $(OBJDIR)/Reader.o: ../application/components/SYS/src/Reader.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TSW.o: ../application/components/TSW/src/TSW.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TSW_Provider.o: ../application/components/TSW/src/TSW_Provider.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TestSteps.o: ../submodules/CppUTestSteps/TestSteps/src/TestSteps.cpp

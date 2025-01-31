@@ -162,7 +162,7 @@ void TCP_Con_Fld::onAccept() const
 
 void TCP_Con_Fld::forward(const ComTele& tele) const
 {
-    IL::getDispatcher().fromFld(tele);
+    IL::getMapper().fromFld(tele);
 }
 
 //  GUI connection
@@ -176,7 +176,7 @@ void TCP_Con_Gui::onAccept() const
 
 void TCP_Con_Gui::forward(const ComTele& tele) const
 {
-    IL::getDispatcher().fromGui(tele);
+    IL::getMapper().fromGui(tele);
 }
 
 //  control connection
@@ -196,7 +196,7 @@ void TCP_Con_Ctrl::forward(const ComTele& tele) const
             send(tele);
             break;
         case COM_CTRL_RE_GUI:
-            IL::getDispatcher().reGui();
+            IL::getMapper().reGui();
             break;
         default:
             break;

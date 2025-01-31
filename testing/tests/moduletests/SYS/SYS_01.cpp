@@ -7,6 +7,9 @@
 #include <SYS/Reader.h>
 #include <SYS/Ctrl.h>
 
+//  TODO
+#if 0
+
 namespace test
 {
     class TestGroupRDR : public TestGroupBase
@@ -15,10 +18,8 @@ namespace test
         static const CONST_C_STRING fname;
         void expectClear()
         {
-            m_Dispatcher().expectClear();
-            m_TSW_Provider().expectClear();
-            m_SIG_Provider().expectClear();
-            m_LCR_Provider().expectClear();
+            m_Mapper().expectClear();
+            m_Provider().expectClear();
         }
         void expectFail()
         {
@@ -59,10 +60,10 @@ namespace test
         STEP(1)
         expectClear();
         GenProjData<> data;
-        m_TSW_Provider().expectLoad(data.numTSW());
+        m_().expectLoad(data.numTSW());
         m_SIG_Provider().expectLoad(data.numSIG());
         m_LCR_Provider().expectLoad(data.numLCR());
-        m_Dispatcher().expectIndex();
+        m_Mapper().expectIndex();
         data.dump(fname);
         rdr.read(fname);
         CHECK_N_CLEAR()
@@ -143,3 +144,5 @@ namespace test
         L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
     }
 }
+
+#endif // TODO

@@ -9,9 +9,9 @@
 #define M_INSTANCES_H
 
 #include "M_Com.h"
-#include "M_Dispatcher.h"
-#include "M_Elem.h"
 #include "M_Ctrl.h"
+#include "M_Elem.h"
+#include "M_Mapper.h"
 #include "M_Provider.h"
 #include "M_Reader.h"
 #include "M_TCP_Con.h"
@@ -21,8 +21,8 @@
 namespace test
 {
     inline M_Com& m_Com() { return M_Com::instance(); }
-    inline M_Dispatcher& m_Dispatcher() { return M_Dispatcher::instance(); }
     inline M_Ctrl& m_Ctrl() { return M_Ctrl::instance(); }
+    inline M_Mapper& m_Mapper() { return M_Mapper::instance(); }
     inline M_Provider& m_Provider() { return M_Provider::instance(); }
     inline M_Reader& m_Reader() { return M_Reader::instance(); }
     inline M_TCP_Con_Ctrl& m_TCP_Con_Ctrl() { return M_TCP_Con_Ctrl::instance(); }
@@ -33,14 +33,5 @@ namespace test
     inline M_TCP_Listener_Gui& m_TCP_Listener_Gui() { return M_TCP_Listener_Gui::instance(); }
     inline M_TCP& m_TCP() { return M_TCP::instance(); }
 
-    // deprecated
-    inline M_LCR_Provider& m_LCR_Provider() { return M_LCR_Provider::instance(); }
-    inline M_LCR& m_LCR() { return M_LCR::instance(); }
-    inline M_SIG_Provider& m_SIG_Provider() { return M_SIG_Provider::instance(); }
-    inline M_SIG& m_SIG() { return M_SIG::instance(); }
-    inline M_TSW_Provider& m_TSW_Provider() { return M_TSW_Provider::instance(); }
-    inline M_TSW& m_TSW() { return M_TSW::instance(); }
-
-
-}
+} // namespace
 #endif // _H

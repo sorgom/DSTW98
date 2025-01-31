@@ -75,7 +75,7 @@ namespace test
             const ComTele tele{{}, {101, 202}};
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
-            m_Dispatcher().expectFromFld(tele);
+            m_Mapper().expectFromFld(tele);
             ok = client.select();
             CHECK_N_CLEAR()
             L_CHECK_TRUE(ok)
@@ -114,7 +114,7 @@ namespace test
             const ComTele tele{{}, {111, 212}};
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
-            m_Dispatcher().expectFromGui(tele);
+            m_Mapper().expectFromGui(tele);
             ok = client.select();
             CHECK_N_CLEAR()
             L_CHECK_TRUE(ok)
@@ -200,7 +200,7 @@ namespace test
             const ComTele tele1{{}, {COM_CTRL_RE_GUI, COM_CTRL_RE_GUI}};
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele1);
-            m_Dispatcher().expectReGui();
+            m_Mapper().expectReGui();
             ok = client.select();
             CHECK_N_CLEAR()
             L_CHECK_TRUE(ok)

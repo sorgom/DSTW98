@@ -45,17 +45,17 @@ void SIG_X::procFromGui(const UINT8 stateFld, const UINT8 stateGui)
 }
 void SIG_X::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData(mStateToGui));
+    IL::getMapper().toGui(mId, ComData(mStateToGui));
 }
 
 void SIG_X::toFld(const UINT8 state, const UINT8 speed) const
 {
-    IL::getDispatcher().toFld(mId, ComData(state, speed));
+    IL::getMapper().toFld(mId, ComData(state, speed));
 }
 
 void SIG_XS::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData(mStateToGui, mSpeedToGui));
+    IL::getMapper().toGui(mId, ComData(mStateToGui, mSpeedToGui));
 }
 
 void SIG_XS::procFromGui(const UINT8 stateFld, const UINT8 stateGui, const UINT8 speed)

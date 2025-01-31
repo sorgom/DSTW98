@@ -40,7 +40,7 @@ namespace test
             const ComData dataGui{stateToGui, speedToGui};
             if (stateToGui != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
+                m_Mapper().expectToGui(mId, dataGui);
             }
             mSUT().fromFld(ComData{fldState, fldSpeed});
             CHECK_N_CLEAR()
@@ -64,8 +64,8 @@ namespace test
             const ComData dataGui{stateToGui, speedToGui};
             if (stateToFld != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
-                m_Dispatcher().expectToFld(mId, dataFld);
+                m_Mapper().expectToGui(mId, dataGui);
+                m_Mapper().expectToFld(mId, dataFld);
             }
             mSUT().fromGui(ComData{guiState, guiSpeed});
             CHECK_N_CLEAR()
@@ -83,7 +83,7 @@ namespace test
             const ComData dataGui{stateToGui, PARAM_UNDEF};
             if (stateToGui != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
+                m_Mapper().expectToGui(mId, dataGui);
             }
             mSUT().fromFld(ComData{fldState, speed});
             CHECK_N_CLEAR()
@@ -104,8 +104,8 @@ namespace test
             const ComData dataGui{stateToGui, PARAM_UNDEF};
             if (stateToFld != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
-                m_Dispatcher().expectToFld(mId, dataFld);
+                m_Mapper().expectToGui(mId, dataGui);
+                m_Mapper().expectToFld(mId, dataFld);
             }
             mSUT().fromGui(ComData{guiState, speed});
             CHECK_N_CLEAR()
@@ -371,7 +371,7 @@ namespace test
         STEP(5)
         {
             const ComData dataFld{SIG_STATE_N0, 20};
-            m_Dispatcher().expectToFld(mId, dataFld);
+            m_Mapper().expectToFld(mId, dataFld);
             CMD(SIG_STATE_N0, 20);
         }
         STEP(6)
@@ -658,14 +658,14 @@ namespace test
         STEP(4)
         {
             const ComData dataFld{SIG_STATE_H1_N0, 10};
-            m_Dispatcher().expectToFld(mId, dataFld);
+            m_Mapper().expectToFld(mId, dataFld);
             CMD(SIG_STATE_H1_N0, 10);
         }
 
         STEP(5)
         {
             const ComData dataGui{SIG_STATE_H1_N0, 10};
-            m_Dispatcher().expectToGui(mId, dataGui);
+            m_Mapper().expectToGui(mId, dataGui);
             FLD(SIG_STATE_H1_N0, 10);
         }
 

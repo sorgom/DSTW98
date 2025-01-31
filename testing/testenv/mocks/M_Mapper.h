@@ -1,19 +1,19 @@
 //  ============================================================
-//  mock for interface Dispatcher
+//  mock for interface Mapper
 //  ============================================================
 //  created by Manfred Sorgo
-#ifndef M_DISPATCHER_H
-#define M_DISPATCHER_H
+#ifndef M_MAPPER_H
+#define M_MAPPER_H
 
-#include <ifs/I_Dispatcher.h>
+#include <ifs/I_Mapper.h>
 #include "M_Base.h"
 
 namespace test
 {
-    class M_Dispatcher : public I_Dispatcher, private M_Base
+    class M_Mapper : public I_Mapper, private M_Base
     {
     public:
-        INSTANCE_DEC(M_Dispatcher)
+        INSTANCE_DEC(M_Mapper)
 
         inline void clear()
         {
@@ -33,14 +33,17 @@ namespace test
             expect("index");
         }
 
-        inline const PosRes assign(const ComAddr& name, E_Comp comp, size_t pos)
+        inline bool add(const ProjItem& data)
         {
-            const INT32 i = call("assign").TPARAM(ComAddr, name).PARAM(comp).PARAM(pos).RETURN_DEF_INT(0);
-            return i < 0 ? PosRes {false} : PosRes {true, static_cast<size_t>(i)};
+            return static_cast<bool>(call("add").TPARAM(ProjItem, data).RETURN_DEF_BOOL(true));
         }
-        inline void expectAssign(const ComAddr& name, E_Comp comp, size_t pos, INT32 ret = 0) const
+        inline void expectAdd(const ProjItem& data, bool ret = true) const
         {
-            expect("assign").TPARAM(ComAddr, name).PARAM(comp).PARAM(pos).AND_RETURN(ret);
+            expect("add").TPARAM(ProjItem, data).AND_RETURN_BOOL(ret);
+        }
+        inline void expectAdd(UINT16 num, bool ret = true) const
+        {
+            expect(num, "add").IGNORE().AND_RETURN_BOOL(ret);
         }
 
         inline void fromFld(const ComTele& tele) const
@@ -88,9 +91,9 @@ namespace test
             expect("reGui");
         }
 
-        NOCOPY(M_Dispatcher)
+        NOCOPY(M_Mapper)
     private:
-        inline M_Dispatcher() : M_Base("Dispatcher") {}
+        inline M_Mapper() : M_Base("Mapper") {}
     };
 }
 #endif // _H

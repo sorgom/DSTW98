@@ -10,7 +10,9 @@ INSTANCE_DEF(Reader)
 
 void Reader::read(const CONST_C_STRING filename)
 {
-    IL::getDispatcher().clear();
+//  TODO
+#if 0
+    IL::getMapper().clear();
     IL::getTSW_Provider().clear();
     IL::getSIG_Provider().clear();
     IL::getLCR_Provider().clear();
@@ -83,7 +85,7 @@ void Reader::read(const CONST_C_STRING filename)
 
                 delete [] buf;
 
-                IL::getDispatcher().index();
+                IL::getMapper().index();
             }
         }
     }
@@ -93,4 +95,5 @@ void Reader::read(const CONST_C_STRING filename)
     {
         IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
     }
+#endif // TODO
 }

@@ -1,7 +1,6 @@
 
 #include <mocks/M_Instances.h>
 
-#include <mocks/M_Dispatcher.h>
 #include <mocks/M_Elem.h>
 #include <mocks/M_Ctrl.h>
 #include <mocks/M_Provider.h>
@@ -14,11 +13,10 @@
 
 namespace test
 {
-
     INSTANCE_DEF(M_Com)
-    INSTANCE_DEF(M_Dispatcher)
-    INSTANCE_DEF(M_Elem)
     INSTANCE_DEF(M_Ctrl)
+    INSTANCE_DEF(M_Elem)
+    INSTANCE_DEF(M_Mapper)
     INSTANCE_DEF(M_Provider)
     INSTANCE_DEF(M_Reader)
     INSTANCE_DEF(M_TCP_Con_Ctrl)
@@ -28,14 +26,6 @@ namespace test
     INSTANCE_DEF(M_TCP_Listener_Fld)
     INSTANCE_DEF(M_TCP_Listener_Gui)
     INSTANCE_DEF(M_TCP)
-
-    // deprecated
-    INSTANCE_DEF(M_LCR_Provider)
-    INSTANCE_DEF(M_LCR)
-    INSTANCE_DEF(M_SIG_Provider)
-    INSTANCE_DEF(M_SIG)
-    INSTANCE_DEF(M_TSW_Provider)
-    INSTANCE_DEF(M_TSW)
 
     std::ostringstream M_Base::mStream;
 }

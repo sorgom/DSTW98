@@ -24,7 +24,7 @@ namespace test
             const ComData dataGui{expStateGui, PARAM_UNDEF};
             if (expStateGui != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
+                m_Mapper().expectToGui(mId, dataGui);
             }
             mSUT.fromFld(ComData{fldState});
             CHECK_N_CLEAR()
@@ -36,8 +36,8 @@ namespace test
             const ComData dataFld{expCmdField, PARAM_UNDEF};
             if (expCmdField != NO_PARAM)
             {
-                m_Dispatcher().expectToGui(mId, dataGui);
-                m_Dispatcher().expectToFld(mId, dataFld);
+                m_Mapper().expectToGui(mId, dataGui);
+                m_Mapper().expectToFld(mId, dataFld);
             }
             mSUT.fromGui(ComData{guiCmd});
             CHECK_N_CLEAR()
