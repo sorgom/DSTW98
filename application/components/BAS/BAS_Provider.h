@@ -17,22 +17,22 @@
 class X_Provider : public I_Provider
 {
 public:
-    inline size_t size() const final
+    inline size_t size() const
     {
         return mElems.size();
     }
 
-    inline I_Elem& at(size_t pos) final
+    inline I_Elem& at(size_t pos)
     {
         return mElems.at(pos);
     }
 
-    inline void clear() final
+    inline void clear()
     {
         mElems.clear();
     }
 
-    void load(const ProjItem* data, UINT32 num) final;
+    void load(const ProjItem* data, UINT32 num);
 
     inline bool add(const ProjItem& data) { return true; }
 
@@ -50,6 +50,6 @@ template <E_Comp COMP>
 class BAS_Provider : public X_Provider
 {
 protected:
-    inline E_Comp comp() const final { return COMP; }
+    inline E_Comp comp() const { return COMP; }
 };
 #endif // _H

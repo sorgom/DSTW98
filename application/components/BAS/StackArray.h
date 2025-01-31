@@ -26,6 +26,11 @@ public:
 
     //  object access by position
     virtual const T& at(size_t pos) const = 0;
+
+    inline bool hasSpace() const
+    {
+        return size() < CAP;
+    }
 };
 
 template <size_t SIZE, size_t CAP>
@@ -104,7 +109,8 @@ public:
         return *reinterpret_cast<T*>(mBytes.at(pos));
     }
 
-    bool add(const T& obj)
+    template <class C>
+    inline bool add(const C& obj)
     {
         return mBytes.copy(obj);
     }
@@ -230,8 +236,7 @@ private:
         return dups;
     }
 
-    StackIndex();
-    StackIndex(const StackIndex&);
-    StackIndex& operator=(const StackIndex&);
+    NODEF(StackIndex)
+    NOCOPY(StackIndex)
 };
 #endif // H_
