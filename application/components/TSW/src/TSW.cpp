@@ -96,10 +96,10 @@ void TSW::chgState(const UINT8 state)
 
 void TSW::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData{mState});
+    IL::getDispatcher().toGui(mId, ComData(mState));
 }
 
 void TSW::toFld(const UINT8 state) const
 {
-    IL::getDispatcher().toFld(mId, ComData{state});
+    IL::getDispatcher().toFld(mId, ComData(state));
 }

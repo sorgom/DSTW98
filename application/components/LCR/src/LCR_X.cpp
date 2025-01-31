@@ -1,6 +1,5 @@
 #include <LCR/LCR_X.h>
 #include <SYS/IL.h>
-#include <BAS/utilz.h>
 
 void LCR_X::open()
 {
@@ -36,7 +35,7 @@ void LCR_X::close()
 
 void LCR_X::toFld(const UINT8 state) const
 {
-    IL::getDispatcher().toFld(mId, ComData{state});
+    IL::getDispatcher().toFld(mId, ComData(state));
 }
 
 void LCR_X::fromGui(const ComData& data)
@@ -85,7 +84,7 @@ void LCR::fromFld(const ComData& data)
 
 void LCR::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData{mStateToGui, PARAM_UNDEF});
+    IL::getDispatcher().toGui(mId, ComData(mStateToGui));
 }
 
 bool LCR_UBK::validUbk(const UINT8 state)
@@ -108,7 +107,8 @@ bool LCR_UBK::validUbk(const UINT8 state)
 
 void LCR_UBK::fromFld(const ComData& data)
 {
-    const auto [state, ubk] = getn<2>(data);
+    const UINT8 state = data.param1;
+    const UINT8 ubk   = data.param2;
     if (
         (
             (state != mStateToGui) or
@@ -126,5 +126,5 @@ void LCR_UBK::fromFld(const ComData& data)
 
 void LCR_UBK::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData{mStateToGui, mUbkToGui});
+    IL::getDispatcher().toGui(mId, ComData(mStateToGui, mUbkToGui));
 }

@@ -34,14 +34,31 @@ struct ComAddr
 //  Com telegrams data
 struct ComData
 {
-    UINT8 param1 = PARAM_UNDEF;
-    UINT8 param2 = PARAM_UNDEF;
-    UINT8 param3 = PARAM_UNDEF;
-    UINT8 param4 = PARAM_UNDEF;
-    UINT8 param5 = PARAM_UNDEF;
-    UINT8 param6 = PARAM_UNDEF;
-    UINT8 param7 = PARAM_UNDEF;
-    UINT8 param8 = PARAM_UNDEF;
+    UINT8 param1;
+    UINT8 param2;
+    UINT8 param3;
+    UINT8 param4;
+    UINT8 param5;
+    UINT8 param6;
+    UINT8 param7;
+    UINT8 param8;
+    inline ComData(const UINT8 p1 = PARAM_UNDEF,
+                   const UINT8 p2 = PARAM_UNDEF,
+                   const UINT8 p3 = PARAM_UNDEF,
+                   const UINT8 p4 = PARAM_UNDEF,
+                   const UINT8 p5 = PARAM_UNDEF,
+                   const UINT8 p6 = PARAM_UNDEF,
+                   const UINT8 p7 = PARAM_UNDEF,
+                   const UINT8 p8 = PARAM_UNDEF) :
+        param1(p1),
+        param2(p2),
+        param3(p3),
+        param4(p4),
+        param5(p5),
+        param6(p6),
+        param7(p7),
+        param8(p8)
+    {};
 };
 
 //  Com telegram
@@ -85,9 +102,5 @@ struct PosRes
 };
 
 #include <codebase/packEnd.h>
-
-// //  byte array
-// template <size_t N>
-// using Uint8Array = UINT8[N];
 
 #endif // _H

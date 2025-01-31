@@ -91,7 +91,7 @@ void Dispatcher::toFld(const size_t id, const ComData& data) const
 {
     if (mIndx.size() > id)
     {
-        const ComTele tele { mIndx.at(id).addr, data };
+        const ComTele tele = { mIndx.at(id).addr, data };
         IL::getCom().toFld(tele);
     }
 }
@@ -100,7 +100,7 @@ void Dispatcher::toGui(const size_t id, const ComData& data) const
 {
     if (mIndx.size() > id)
     {
-        const ComTele tele { mIndx.at(id).addr, data };
+        const ComTele tele = { mIndx.at(id).addr, data };
         IL::getCom().toGui(tele);
     }
 }

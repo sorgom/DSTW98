@@ -39,6 +39,7 @@ namespace test
             expect("clear");
         }
 
+        // deprecated
         inline void load(const ProjItem* data, UINT32 num)
         {
             call("load").PARAM(num);
@@ -47,12 +48,27 @@ namespace test
         {
             expect("load").PARAM(num);
         }
-        NODEF(M_Provider)
-        NOCOPY(M_Provider)
-    protected:
-        M_Provider(const CONST_C_STRING name) :
+
+        // new
+        inline bool add(const ProjItem& data)
+        {
+            return static_cast<bool>(call("add").TPARAM(ProjItem, data).RETURN_DEF_BOOL(true));
+        }
+        inline void expectAdd(const ProjItem& data, bool ret = true) const
+        {
+            expect("add").TPARAM(ProjItem, data).AND_RETURN_BOOL(ret);
+        }
+        inline void expectAdd(const UINT16 numCalls, bool ret = true) const
+        {
+            expect(numCalls, "add").IGNORE().AND_RETURN_BOOL(ret);
+        }
+
+        M_Provider(const CONST_C_STRING name = "Provider") :
             M_Base(name)
         {}
+
+        NODEF(M_Provider)
+        NOCOPY(M_Provider)
    };
 
     class M_TSW_Provider : public M_Provider

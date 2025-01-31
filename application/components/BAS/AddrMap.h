@@ -11,8 +11,8 @@
 #include <ifs/DataTypes.h>
 
 //  ============================================================
-//  class ApIndex is the core of Dispatcher
-//  see interface I_Dispatcher
+//  class AddrMap is the core of Dispatcher
+//  see interface I_Mapper
 //  ============================================================
 template<size_t CAP>
 class AddrMap

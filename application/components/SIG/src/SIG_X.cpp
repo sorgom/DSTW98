@@ -1,6 +1,5 @@
 #include <SIG/SIG_X.h>
 #include <SYS/IL.h>
-#include <BAS/utilz.h>
 
 void SIG_X::procFromFld(const UINT8 state)
 {
@@ -46,17 +45,17 @@ void SIG_X::procFromGui(const UINT8 stateFld, const UINT8 stateGui)
 }
 void SIG_X::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData{mStateToGui});
+    IL::getDispatcher().toGui(mId, ComData(mStateToGui));
 }
 
 void SIG_X::toFld(const UINT8 state, const UINT8 speed) const
 {
-    IL::getDispatcher().toFld(mId, ComData{state, speed});
+    IL::getDispatcher().toFld(mId, ComData(state, speed));
 }
 
 void SIG_XS::toGui() const
 {
-    IL::getDispatcher().toGui(mId, ComData{mStateToGui, mSpeedToGui});
+    IL::getDispatcher().toGui(mId, ComData(mStateToGui, mSpeedToGui));
 }
 
 void SIG_XS::procFromGui(const UINT8 stateFld, const UINT8 stateGui, const UINT8 speed)
@@ -153,7 +152,8 @@ void SIG_H::proc_H1()
 
 void SIG_N::fromFld(const ComData& data)
 {
-    const auto [ state, speed ] = getn<2>(data);
+    const UINT8 state = data.param1;
+    const UINT8 speed = data.param2;
     switch (state)
     {
     case SIG_STATE_UNDEF:
@@ -170,7 +170,8 @@ void SIG_N::fromFld(const ComData& data)
 
 void SIG_N::fromGui(const ComData& data)
 {
-    const auto [ state, speed ] = getn<2>(data);
+    const UINT8 state = data.param1;
+    const UINT8 speed = data.param2;
     switch (state)
     {
     case SIG_STATE_N0:
@@ -217,7 +218,8 @@ void SIG_N::proc_N1(const UINT8 speed)
 
 void SIG_H_N::fromFld(const ComData& data)
 {
-    const auto [ state, speed ] = getn<2>(data);
+    const UINT8 state = data.param1;
+    const UINT8 speed = data.param2;
     switch (state)
     {
     case SIG_STATE_UNDEF:
@@ -236,7 +238,9 @@ void SIG_H_N::fromFld(const ComData& data)
 
 void SIG_H_N::fromGui(const ComData& data)
 {
-    const auto [ state, speed ] = getn<2>(data);
+    const UINT8 state = data.param1;
+    const UINT8 speed = data.param2;
+
     switch (state)
     {
     case SIG_STATE_H0_N0:

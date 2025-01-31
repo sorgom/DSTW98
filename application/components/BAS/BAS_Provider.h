@@ -34,6 +34,8 @@ public:
 
     void load(const ProjItem* data, UINT32 num) final;
 
+    inline bool add(const ProjItem& data) { return true; }
+
 protected:
     //  individual add method
     virtual bool add(size_t id, const ProjItem& item) = 0;

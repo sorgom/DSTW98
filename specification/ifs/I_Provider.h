@@ -16,6 +16,9 @@ public:
     virtual I_Elem& at(size_t pos) = 0;
 
     virtual void clear() = 0;
+    // deprecated
     virtual void load(const ProjItem* data, UINT32 num) = 0;
+    // new
+    virtual bool add(const ProjItem& data) = 0;
 };
 #endif // _H
