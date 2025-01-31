@@ -450,7 +450,7 @@
 "_type":"LabelView","_id":"AAAAAAGLhi3yqDMg7NM=","_parent":{
 "$ref":"AAAAAAGLhi3yqDMetjY="
 }
-,"lineColor":"#00B799","fillColor":"#6DCEFF","font":"Arial;13;1","left":869,"top":375,"width":151,"height":13,"underline":true,"text":"Log -NF-"
+,"lineColor":"#00B799","fillColor":"#6DCEFF","font":"Arial;13;1","left":869,"top":375,"width":151,"height":13,"underline":true,"text":"Ctrl -NF-"
 }
 ,{
 "_type":"LabelView","_id":"AAAAAAGLhi3yqDMhs8w=","_parent":{
@@ -3452,7 +3452,7 @@
 "_type":"UMLObject","_id":"AAAAAAGLhi3ypzMbCLI=","_parent":{
 "$ref":"AAAAAAFF+qBWK6M3Z8Y="
 }
-,"name":"Log -NF-"
+,"name":"Ctrl -NF-"
 }
 ]
 }

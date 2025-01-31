@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef DATATYPES_H
-#define DATATYPES_H
+#ifndef DATA_TYPES_H
+#define DATA_TYPES_H
 
 #include "values.h"
 #include <codebase/BaseTypes.h>

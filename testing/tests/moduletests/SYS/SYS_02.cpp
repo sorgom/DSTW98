@@ -61,7 +61,7 @@ namespace test
 
         STEP(5)
         //  not assigned
-        m_Log().expectLog(COMP_SYS, RET_ERR_MATCH);
+        m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_MATCH);
         adrrElement(tele, 2, "TSW");
         dsp.fromFld(tele);
         CHECK_N_CLEAR()
@@ -106,7 +106,7 @@ namespace test
 
         STEP(5)
         //  not assigned
-        m_Log().expectLog(COMP_SYS, RET_ERR_MATCH);
+        m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_MATCH);
         adrrElement(tele, 2, "TSW");
         dsp.fromGui(tele);
         CHECK_N_CLEAR()
@@ -228,7 +228,7 @@ namespace test
         dsp.assign(genComAddr(4, "SEG"), COMP_SEG, 4);
         CHECK_N_CLEAR()
 
-        m_Log().expectLog(COMP_SYS, RET_ERR_STARTUP);
+        m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_STARTUP);
         dsp.index();
         CHECK_N_CLEAR()
     }
@@ -248,13 +248,13 @@ namespace test
 
         STEP(1)
         m_TSW_Provider().expectSize(1);
-        m_Log().expectLog(COMP_SYS, RET_ERR_RANGE);
+        m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_RANGE);
         dsp.fromGui(tele);
         CHECK_N_CLEAR()
 
         STEP(2)
         m_TSW_Provider().expectSize(1);
-        m_Log().expectLog(COMP_SYS, RET_ERR_RANGE);
+        m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_RANGE);
         dsp.fromFld(tele);
         CHECK_N_CLEAR()
     }

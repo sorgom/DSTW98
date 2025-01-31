@@ -21,7 +21,7 @@ if not exist %covfile% (
     exit /b 1
 )
 
-del /Q %buildLog% >NUL 2>&1
+del /Q %buildCtrl% >NUL 2>&1
 
 rem rewind coverage file if it was not removed before
 call covclear -q

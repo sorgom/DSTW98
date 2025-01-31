@@ -1,29 +1,27 @@
 //  ============================================================
-//  mock for interface Log
+//  mock for interface Ctrl
 //  ============================================================
 //  created by Manfred Sorgo
-#ifndef M_LOG_H
-#define M_LOG_H
+#ifndef M_CTRL_H
+#define M_CTRL_H
 
-#include <ifs/I_Log.h>
+#include <ifs/I_Ctrl.h>
 #include "M_Base.h"
-#include <testlib/NullStream.h>
 
 namespace test
 {
-    class M_Log :
-        public I_Log,
+    class M_Ctrl :
+        public I_Ctrl,
         private M_Base
     {
     public:
-        INSTANCE_DEC(M_Log)
+        INSTANCE_DEC(M_Ctrl)
 
-        inline std::ostream& log(E_Comp comp, E_Ret ret)
+        inline void log(E_Comp comp, E_Ret ret)
         {
             call("log").PARAM(comp).PARAM(ret);
-            return mStream;
         }
-        inline void expectLog(E_Comp comp, E_Ret ret) const
+        inline void expectCtrl(E_Comp comp, E_Ret ret) const
         {
             expect("log").PARAM(comp).PARAM(ret);
         }
@@ -36,8 +34,7 @@ namespace test
             expect("maxerr").AND_RETURN(ret);
         }
     private:
-        M_Log() : M_Base("Log") {}
-        NullStream mStream;
+        M_Ctrl() : M_Base("Ctrl") {}
     };
 }
 #endif // _H

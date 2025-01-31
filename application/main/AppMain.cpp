@@ -7,7 +7,7 @@ int main(const INT32 argc, const CONST_C_STRING* const argv)
 {
     IL::getReader().read("dstw.proj");
 
-    E_Ret res = IL::getLog().maxerr();
+    E_Ret res = IL::getCtrl().maxerr();
     cout
         << "TSW: " << setw(5) << IL::getTSW_Provider().size() << '\n'
         << "SIG: " << setw(5) << IL::getSIG_Provider().size() << '\n'
@@ -19,7 +19,7 @@ int main(const INT32 argc, const CONST_C_STRING* const argv)
     {
         cout << "run .." << '\n';
         IL::getCom().run();
-        res = IL::getLog().maxerr();
+        res = IL::getCtrl().maxerr();
         cout
             << "ERR: " << setw(5) << static_cast<UINT16>(res) << '\n'
         ;

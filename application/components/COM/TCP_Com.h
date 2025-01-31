@@ -13,7 +13,7 @@
 class TCP_Com_Base
 {
 protected:
-    static std::ostream& comerr();
+    static void comerr();
 };
 
 //  ============================================================

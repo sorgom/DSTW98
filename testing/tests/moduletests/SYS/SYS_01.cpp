@@ -1,11 +1,11 @@
 //  ============================================================
-//  test of module Reader, Log
+//  test of module Reader, Ctrl
 //  ============================================================
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
 #include <SYS/Reader.h>
-#include <SYS/Log.h>
+#include <SYS/Ctrl.h>
 
 namespace test
 {
@@ -23,7 +23,7 @@ namespace test
         void expectFail()
         {
             expectClear();
-            m_Log().expectLog(COMP_SYS, RET_ERR_STARTUP);
+            m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_STARTUP);
         }
 
         void wrongSize(int dev, const UINT32 n = 1)
@@ -133,12 +133,12 @@ namespace test
     TEST(SYS_01, T05)
     {
         STEP(1)
-        I_Log& logm = Log::instance();
+        I_Ctrl& logm = Ctrl::instance();
         logm.log(COMP_SYS, RET_ERR_MATCH);
         logm.log(COMP_SYS, RET_ERR_STARTUP);
 
         STEP(2)
-        const I_Log& logc = Log::instance();
+        const I_Ctrl& logc = Ctrl::instance();
         const E_Ret ret = logc.maxerr();
         L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
     }

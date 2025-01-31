@@ -17,8 +17,8 @@ set myReportsDir=%reportsDir%\%_me%
 set pyDir=%subsDir%\sompy
 set vsSolution=%makeDir%\DSTW.sln
 set exeDir=%buildDir%\windows
-set buildLog=%myReportsDir%\build.txt
-set covLog=%myReportsDir%\coverage.txt
+set buildCtrl=%myReportsDir%\build.txt
+set covCtrl=%myReportsDir%\coverage.txt
 set covHtmlDir=%myReportsDir%\html
 set testReport=%myReportsDir%\test_errors.txt
 

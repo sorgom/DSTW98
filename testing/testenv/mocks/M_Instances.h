@@ -11,7 +11,7 @@
 #include "M_Com.h"
 #include "M_Dispatcher.h"
 #include "M_Elem.h"
-#include "M_Log.h"
+#include "M_Ctrl.h"
 #include "M_Provider.h"
 #include "M_Reader.h"
 #include "M_TCP_Con.h"
@@ -22,7 +22,7 @@ namespace test
 {
     inline M_Com& m_Com() { return M_Com::instance(); }
     inline M_Dispatcher& m_Dispatcher() { return M_Dispatcher::instance(); }
-    inline M_Log& m_Log() { return M_Log::instance(); }
+    inline M_Ctrl& m_Ctrl() { return M_Ctrl::instance(); }
     inline M_Provider& m_Provider() { return M_Provider::instance(); }
     inline M_Reader& m_Reader() { return M_Reader::instance(); }
     inline M_TCP_Con_Ctrl& m_TCP_Con_Ctrl() { return M_TCP_Con_Ctrl::instance(); }

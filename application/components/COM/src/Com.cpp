@@ -31,7 +31,7 @@ void Com::run()
     }
     else
     {
-        IL::getLog().log(COMP_COM, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_COM, RET_ERR_STARTUP);
     }
 
     while (ok and mRunning)
@@ -46,7 +46,7 @@ void Com::run()
 
         if (not ok)
         {
-            IL::getLog().log(COMP_COM, RET_ERR_COM);
+            IL::getCtrl().log(COMP_COM, RET_ERR_COM);
             mRunning = false;
         }
     }

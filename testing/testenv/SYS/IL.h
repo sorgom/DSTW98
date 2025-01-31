@@ -13,7 +13,7 @@ namespace IL
 {
     inline I_Com& getCom() { return test::m_Com(); }
     inline I_Dispatcher& getDispatcher() { return test::m_Dispatcher(); }
-    inline I_Log& getLog() { return test::m_Log(); }
+    inline I_Ctrl& getCtrl() { return test::m_Ctrl(); }
     inline I_Provider& getProvider() { return test::m_Provider(); }
     inline I_Reader& getReader() { return test::m_Reader(); }
     inline I_TCP_Con& getTCP_Con_Ctrl() { return test::m_TCP_Con_Ctrl(); }

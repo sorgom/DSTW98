@@ -16,6 +16,6 @@ void X_Provider::load(const ProjItem* const data, const UINT32 num)
     if (not ok)
     {
         clear();
-        IL::getLog().log(comp(), RET_ERR_STARTUP);
+        IL::getCtrl().log(comp(), RET_ERR_STARTUP);
     }
 }

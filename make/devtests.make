@@ -64,6 +64,7 @@ OBJECTS :=
 GENERATED += $(OBJDIR)/BAS_Provider.o
 GENERATED += $(OBJDIR)/Com.o
 GENERATED += $(OBJDIR)/Comparator.o
+GENERATED += $(OBJDIR)/Ctrl.o
 GENERATED += $(OBJDIR)/DT_00.o
 GENERATED += $(OBJDIR)/DT_01.o
 GENERATED += $(OBJDIR)/DT_02.o
@@ -71,7 +72,6 @@ GENERATED += $(OBJDIR)/DT_03.o
 GENERATED += $(OBJDIR)/Dispatcher.o
 GENERATED += $(OBJDIR)/LCR_Provider.o
 GENERATED += $(OBJDIR)/LCR_X.o
-GENERATED += $(OBJDIR)/Log.o
 GENERATED += $(OBJDIR)/M_Instances.o
 GENERATED += $(OBJDIR)/Mapper.o
 GENERATED += $(OBJDIR)/Net.o
@@ -96,6 +96,7 @@ GENERATED += $(OBJDIR)/ostreams.o
 OBJECTS += $(OBJDIR)/BAS_Provider.o
 OBJECTS += $(OBJDIR)/Com.o
 OBJECTS += $(OBJDIR)/Comparator.o
+OBJECTS += $(OBJDIR)/Ctrl.o
 OBJECTS += $(OBJDIR)/DT_00.o
 OBJECTS += $(OBJDIR)/DT_01.o
 OBJECTS += $(OBJDIR)/DT_02.o
@@ -103,7 +104,6 @@ OBJECTS += $(OBJDIR)/DT_03.o
 OBJECTS += $(OBJDIR)/Dispatcher.o
 OBJECTS += $(OBJDIR)/LCR_Provider.o
 OBJECTS += $(OBJDIR)/LCR_X.o
-OBJECTS += $(OBJDIR)/Log.o
 OBJECTS += $(OBJDIR)/M_Instances.o
 OBJECTS += $(OBJDIR)/Mapper.o
 OBJECTS += $(OBJDIR)/Net.o
@@ -215,10 +215,10 @@ $(OBJDIR)/SIG_Provider.o: ../application/components/SIG/src/SIG_Provider.cpp
 $(OBJDIR)/SIG_X.o: ../application/components/SIG/src/SIG_X.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Dispatcher.o: ../application/components/SYS/src/Dispatcher.cpp
+$(OBJDIR)/Ctrl.o: ../application/components/SYS/src/Ctrl.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Log.o: ../application/components/SYS/src/Log.cpp
+$(OBJDIR)/Dispatcher.o: ../application/components/SYS/src/Dispatcher.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp

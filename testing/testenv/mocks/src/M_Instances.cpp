@@ -3,7 +3,7 @@
 
 #include <mocks/M_Dispatcher.h>
 #include <mocks/M_Elem.h>
-#include <mocks/M_Log.h>
+#include <mocks/M_Ctrl.h>
 #include <mocks/M_Provider.h>
 #include <mocks/M_Reader.h>
 #include <mocks/M_TCP_Con.h>
@@ -18,7 +18,7 @@ namespace test
     INSTANCE_DEF(M_Com)
     INSTANCE_DEF(M_Dispatcher)
     INSTANCE_DEF(M_Elem)
-    INSTANCE_DEF(M_Log)
+    INSTANCE_DEF(M_Ctrl)
     INSTANCE_DEF(M_Provider)
     INSTANCE_DEF(M_Reader)
     INSTANCE_DEF(M_TCP_Con_Ctrl)

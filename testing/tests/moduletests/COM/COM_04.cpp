@@ -34,13 +34,13 @@ namespace test
 
         void expectExitStartup()
         {
-            m_Log().expectLog(COMP_COM, RET_ERR_STARTUP);
+            m_Ctrl().expectCtrl(COMP_COM, RET_ERR_STARTUP);
             expectExit();
         }
 
         void expectExitRuntime()
         {
-            m_Log().expectLog(COMP_COM, RET_ERR_COM);
+            m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);
             expectExit();
         }
     };

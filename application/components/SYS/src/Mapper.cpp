@@ -9,7 +9,7 @@ void Mapper::index()
 {
     if (not mMap.index())
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
     }
 }
 
@@ -22,7 +22,7 @@ void Mapper::fromFld(const ComTele& tele) const
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
     }
 }
 
@@ -35,7 +35,7 @@ void Mapper::fromGui(const ComTele& tele) const
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
     }
 }
 

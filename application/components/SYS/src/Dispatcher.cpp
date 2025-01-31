@@ -14,7 +14,7 @@ void Dispatcher::index()
 {
     if (not mIndx.index())
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
     }
 }
 
@@ -53,7 +53,7 @@ void Dispatcher::fromFld(const ComTele& tele) const
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
     }
 }
 
@@ -83,7 +83,7 @@ void Dispatcher::fromGui(const ComTele& tele) const
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
     }
 }
 
@@ -129,7 +129,7 @@ void Dispatcher::forwardFld(I_Provider& prov, const Acp& acp, const ComTele& tel
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_RANGE);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_RANGE);
     }
 }
 void Dispatcher::forwardGui(I_Provider& prov, const Acp& acp, const ComTele& tele)
@@ -140,6 +140,6 @@ void Dispatcher::forwardGui(I_Provider& prov, const Acp& acp, const ComTele& tel
     }
     else
     {
-        IL::getLog().log(COMP_SYS, RET_ERR_RANGE);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_RANGE);
     }
 }
