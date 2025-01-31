@@ -24,11 +24,11 @@ class Tcp_Listener_Base :
     private TCP_Com_Base
 {
 public:
-    bool listen(UINT16 port) override;
+    bool listen(UINT16 port);
 
-    bool select() override;
+    bool select();
 
-    void close() override;
+    void close();
 
     NOCOPY(Tcp_Listener_Base)
 
@@ -45,7 +45,7 @@ public:
     INSTANCE_DEC(TCP_Listener_Fld)
     NOCOPY(TCP_Listener_Fld)
 protected:
-    I_TCP_Con& getCon() const override;
+    I_TCP_Con& getCon() const;
 private:
     inline TCP_Listener_Fld() = default;
 };
@@ -56,7 +56,7 @@ public:
     INSTANCE_DEC(TCP_Listener_Gui)
     NOCOPY(TCP_Listener_Gui)
 protected:
-    I_TCP_Con& getCon() const override;
+    I_TCP_Con& getCon() const;
 private:
     inline TCP_Listener_Gui() = default;
 };
@@ -67,7 +67,7 @@ public:
     INSTANCE_DEC(TCP_Listener_Ctrl)
     NOCOPY(TCP_Listener_Ctrl)
 protected:
-    I_TCP_Con& getCon() const override;
+    I_TCP_Con& getCon() const;
 private:
     inline TCP_Listener_Ctrl() = default;
 };
@@ -81,10 +81,10 @@ class TCP_Con_Base :
     private TCP_Com_Base
 {
 public:
-    bool accept(INT32 socket) override;
-    bool select() override;
-    void close() override;
-    void send(const ComTele& tele) const override;
+    bool accept(INT32 socket);
+    bool select();
+    void close();
+    void send(const ComTele& tele) const;
     NOCOPY(TCP_Con_Base)
 protected:
     inline TCP_Con_Base() = default;
@@ -102,8 +102,8 @@ public:
     INSTANCE_DEC(TCP_Con_Fld)
     NOCOPY(TCP_Con_Fld)
 protected:
-    void onAccept() const override;
-    void forward(const ComTele& tele) const override;
+    void onAccept() const;
+    void forward(const ComTele& tele) const;
 private:
     inline TCP_Con_Fld() = default;
 };
@@ -115,8 +115,8 @@ public:
     INSTANCE_DEC(TCP_Con_Gui)
     NOCOPY(TCP_Con_Gui)
 protected:
-    void onAccept() const override;
-    void forward(const ComTele& tele) const override;
+    void onAccept() const;
+    void forward(const ComTele& tele) const;
 private:
     inline TCP_Con_Gui() = default;
 };
@@ -129,7 +129,7 @@ public:
     NOCOPY(TCP_Con_Ctrl)
 protected:
     inline void onAccept() const override {}
-    void forward(const ComTele& tele) const override;
+    void forward(const ComTele& tele) const;
 private:
     inline TCP_Con_Ctrl() = default;
 };

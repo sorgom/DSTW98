@@ -10,7 +10,7 @@
 class Reader : public I_Reader
 {
 public:
-    void read(CONST_C_STRING filename) override;
+    void read(CONST_C_STRING filename);
     inline const ComSetup& getComSetup() const override { return mComSetup; }
 
     INSTANCE_DEC(Reader)

@@ -14,18 +14,18 @@ class Dispatcher : public I_Dispatcher
 {
 public:
 
-    void clear() override;
-    void index() override;
+    void clear();
+    void index();
 
-    const PosRes assign(const ComAddr& addr, E_Comp comp, size_t pos) override;
+    const PosRes assign(const ComAddr& addr, E_Comp comp, size_t pos);
 
-    void fromFld(const ComTele& tele) const override;
-    void fromGui(const ComTele& tele) const override;
+    void fromFld(const ComTele& tele) const;
+    void fromGui(const ComTele& tele) const;
 
-    void toFld(size_t id, const ComData& data) const override;
-    void toGui(size_t id, const ComData& data) const override;
+    void toFld(size_t id, const ComData& data) const;
+    void toGui(size_t id, const ComData& data) const;
 
-    void reGui() const override;
+    void reGui() const;
 
     INSTANCE_DEC(Dispatcher)
 

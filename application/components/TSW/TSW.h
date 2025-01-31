@@ -21,9 +21,9 @@ public:
         mState(TSW_STATE_UNDEF)
     {}
 
-    void toGui() const override;
-    void fromFld(const ComData& data) override;
-    void fromGui(const ComData& data) override;
+    void toGui() const;
+    void fromFld(const ComData& data);
+    void fromGui(const ComData& data);
 
     NOCOPY(TSW)
     NODEF(TSW)

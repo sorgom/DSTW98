@@ -14,7 +14,7 @@ class LCR_X : public I_Elem
 {
 public:
 
-    void fromGui(const ComData& data) override;
+    void fromGui(const ComData& data);
 
     NOCOPY(LCR_X)
     NODEF(LCR_X)
@@ -44,8 +44,8 @@ class LCR : public LCR_X
 public:
     inline LCR(size_t id): LCR_X(id) {}
 
-    void fromFld(const ComData& data) override;
-    void toGui() const override;
+    void fromFld(const ComData& data);
+    void toGui() const;
 
     NOCOPY(LCR)
     NODEF(LCR)
@@ -62,8 +62,8 @@ public:
         mUbkToGui(LCR_UBK_STATE_UNDEF)
     {}
 
-    void fromFld(const ComData& data) override;
-    void toGui() const override;
+    void fromFld(const ComData& data);
+    void toGui() const;
 
     NOCOPY(LCR_UBK)
     NODEF(LCR_UBK)

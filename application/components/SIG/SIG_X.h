@@ -13,7 +13,7 @@
 class SIG_X : public I_Elem
 {
 public:
-    void toGui() const override;
+    void toGui() const;
 
     NOCOPY(SIG_X)
     NODEF(SIG_X)
@@ -40,7 +40,7 @@ protected:
 class SIG_XS : public SIG_X
 {
 public:
-    void toGui() const override;
+    void toGui() const;
 
     NOCOPY(SIG_XS)
     NODEF(SIG_XS)
@@ -71,8 +71,8 @@ class SIG_H : public SIG_X
 public:
     inline SIG_H(size_t id): SIG_X(id) {}
 
-    void fromFld(const ComData& data) override;
-    void fromGui(const ComData& data) override;
+    void fromFld(const ComData& data);
+    void fromGui(const ComData& data);
 
     NOCOPY(SIG_H)
     NODEF(SIG_H)
@@ -94,8 +94,8 @@ class SIG_N : public SIG_XS
 public:
     inline SIG_N(size_t id): SIG_XS(id) {}
 
-    void fromFld(const ComData& data) override;
-    void fromGui(const ComData& data) override;
+    void fromFld(const ComData& data);
+    void fromGui(const ComData& data);
 
     NOCOPY(SIG_N)
     NODEF(SIG_N)
@@ -119,8 +119,8 @@ class SIG_H_N : public SIG_XS
 public:
     inline SIG_H_N(size_t id): SIG_XS(id) {}
 
-    void fromFld(const ComData& data) override;
-    void fromGui(const ComData& data) override;
+    void fromFld(const ComData& data);
+    void fromGui(const ComData& data);
 
     NOCOPY(SIG_H_N)
     NODEF(SIG_H_N)

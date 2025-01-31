@@ -12,8 +12,8 @@
 class Com : public I_Com
 {
 public:
-    void run() override;
-    void stop() override;
+    void run();
+    void stop();
     void toFld(const ComTele& tele) const;
     void toGui(const ComTele& tele) const;
 
