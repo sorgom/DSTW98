@@ -16,6 +16,8 @@ namespace test
     public:
         inline M_Elem(const CONST_C_STRING name = "Elem") : M_Base(name) {}
 
+        INSTANCE_DEC(M_Elem)
+
         inline void fromFld(const ComData& data)
         {
             call("fromFld").TPARAM(ComData, data);
@@ -46,8 +48,11 @@ namespace test
         {
             expect(num, "toGui");
         }
+
+        NOCOPY(M_Elem)
     };
 
+    // deprecated
     // mock TSW
     class M_TSW : public M_Elem
     {
@@ -57,6 +62,7 @@ namespace test
         inline M_TSW() : M_Elem("TSW") {}
     };
 
+    // deprecated
     // mock SIG
     class M_SIG : public M_Elem
     {
@@ -66,6 +72,7 @@ namespace test
         inline M_SIG() : M_Elem("SIG") {}
     };
 
+    // deprecated
     // mock LCR
     class M_LCR : public M_Elem
     {

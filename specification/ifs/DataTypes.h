@@ -10,6 +10,7 @@
 #include <codebase/BaseTypes.h>
 #include <codebase/Mem.h>
 #include <codebase/nocopy.h>
+#include <codebase/checks.h>
 
 #include <codebase/packBegin.h>
 
@@ -30,6 +31,7 @@ struct ComAddr
         return Mem::cmp(chars, b.chars) > 0;
     }
 };
+SIZE_CHECK(ComAddr, ComAddrSize)
 
 //  Com telegrams data
 struct ComData
@@ -60,6 +62,7 @@ struct ComData
         param8(p8)
     {};
 };
+SIZE_CHECK(ComData, 8)
 
 //  Com telegram
 struct ComTele
@@ -67,6 +70,7 @@ struct ComTele
     ComAddr addr;
     ComData data;
 };
+SIZE_CHECK(ComTele, sizeof(ComAddr) + sizeof(ComData))
 
 //  project items
 struct ProjItem
@@ -75,6 +79,7 @@ struct ProjItem
     UINT8 type;
     UINT8 reserve[7];
 };
+SIZE_CHECK(ProjItem, sizeof(ComAddr) + 8)
 
 // Com TCP setup
 struct ComSetup
@@ -88,6 +93,7 @@ struct ComSetup
     //  TCP select timeout ms
     UINT16 timeout;
 };
+SIZE_CHECK(ComSetup, 8)
 
 //  result of a find operation
 struct PosRes

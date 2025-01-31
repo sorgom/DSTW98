@@ -20,6 +20,11 @@ namespace test
         private M_Base
     {
     public:
+        M_Provider(const CONST_C_STRING name = "Provider") :
+            M_Base(name)
+        {}
+
+        INSTANCE_DEC(M_Provider)
 
         inline size_t size() const
         {
@@ -63,14 +68,15 @@ namespace test
             expect(numCalls, "add").IGNORE().AND_RETURN_BOOL(ret);
         }
 
-        M_Provider(const CONST_C_STRING name = "Provider") :
-            M_Base(name)
-        {}
+        inline I_Elem& at(size_t pos)
+        {
+            return M_Elem::instance();
+        }
 
-        NODEF(M_Provider)
         NOCOPY(M_Provider)
    };
 
+    // deprecated
     class M_TSW_Provider : public M_Provider
     {
     public:
@@ -84,6 +90,7 @@ namespace test
         M_TSW_Provider(): M_Provider("TSW_Provider") {}
     };
 
+    // deprecated
     class M_SIG_Provider : public M_Provider
     {
     public:
@@ -97,6 +104,7 @@ namespace test
         M_SIG_Provider(): M_Provider("SIG_Provider") {}
     };
 
+    // deprecated
     class M_LCR_Provider : public M_Provider
     {
     public:
