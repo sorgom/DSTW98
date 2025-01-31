@@ -74,7 +74,7 @@ bool LCR_X::validState(const UINT8 state)
 
 void LCR::fromFld(const ComData& data)
 {
-    const auto state = data.param1;
+    const UINT8 state = data.param1;
     if (validState(state) and state != mStateToGui)
     {
         mStateToGui = state;

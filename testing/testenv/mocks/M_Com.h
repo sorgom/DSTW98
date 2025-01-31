@@ -16,7 +16,7 @@ namespace test
     public:
         INSTANCE_DEC(M_Com)
 
-        inline void run() override
+        inline void run()
         {
             call("run");
         }
@@ -25,7 +25,7 @@ namespace test
             expect("run");
         }
 
-        inline void stop() override
+        inline void stop()
         {
             call("stop");
         }

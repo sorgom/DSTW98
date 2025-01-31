@@ -73,6 +73,7 @@ GENERATED += $(OBJDIR)/LCR_Provider.o
 GENERATED += $(OBJDIR)/LCR_X.o
 GENERATED += $(OBJDIR)/Log.o
 GENERATED += $(OBJDIR)/M_Instances.o
+GENERATED += $(OBJDIR)/Mapper.o
 GENERATED += $(OBJDIR)/Net.o
 GENERATED += $(OBJDIR)/NetTest.o
 GENERATED += $(OBJDIR)/Reader.o
@@ -103,6 +104,7 @@ OBJECTS += $(OBJDIR)/LCR_Provider.o
 OBJECTS += $(OBJDIR)/LCR_X.o
 OBJECTS += $(OBJDIR)/Log.o
 OBJECTS += $(OBJDIR)/M_Instances.o
+OBJECTS += $(OBJDIR)/Mapper.o
 OBJECTS += $(OBJDIR)/Net.o
 OBJECTS += $(OBJDIR)/NetTest.o
 OBJECTS += $(OBJDIR)/Reader.o
@@ -215,6 +217,9 @@ $(OBJDIR)/Dispatcher.o: ../application/components/SYS/src/Dispatcher.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Log.o: ../application/components/SYS/src/Log.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Reader.o: ../application/components/SYS/src/Reader.cpp

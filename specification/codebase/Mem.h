@@ -21,7 +21,7 @@ public:
 
     //  mem compare two char arrays
     template <size_t N>
-    inline static auto cmp(const CHAR(& c1)[N], const CHAR(& c2)[N])
+    inline static int cmp(const CHAR(& c1)[N], const CHAR(& c2)[N])
     {
         return std::memcmp(c1, c2, N);
     }

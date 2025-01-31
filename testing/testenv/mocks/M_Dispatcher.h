@@ -15,7 +15,7 @@ namespace test
     public:
         INSTANCE_DEC(M_Dispatcher)
 
-        inline void clear() override
+        inline void clear()
         {
             call("clear");
         }
@@ -24,7 +24,7 @@ namespace test
             expect("clear");
         }
 
-        inline void index() override
+        inline void index()
         {
             call("index");
         }
@@ -33,7 +33,7 @@ namespace test
             expect("index");
         }
 
-        inline const PosRes assign(const ComAddr& name, E_Comp comp, size_t pos) override
+        inline const PosRes assign(const ComAddr& name, E_Comp comp, size_t pos)
         {
             const INT32 i = call("assign").TPARAM(ComAddr, name).PARAM(comp).PARAM(pos).RETURN_DEF_INT(0);
             return i < 0 ? PosRes {false} : PosRes {true, static_cast<size_t>(i)};
@@ -43,7 +43,7 @@ namespace test
             expect("assign").TPARAM(ComAddr, name).PARAM(comp).PARAM(pos).AND_RETURN(ret);
         }
 
-        inline void fromFld(const ComTele& tele) const override
+        inline void fromFld(const ComTele& tele) const
         {
             call("fromFld").TPARAM(ComTele, tele);
         }
@@ -52,7 +52,7 @@ namespace test
             expect("fromFld").TPARAM(ComTele, tele);
         }
 
-        inline void fromGui(const ComTele& tele) const override
+        inline void fromGui(const ComTele& tele) const
         {
             call("fromGui").TPARAM(ComTele, tele);
         }
@@ -61,7 +61,7 @@ namespace test
             expect("fromGui").TPARAM(ComTele, tele);
         }
 
-        inline void toFld(size_t id, const ComData& data) const override
+        inline void toFld(size_t id, const ComData& data) const
         {
             call("toFld").PARAM(id).TPARAM(ComData, data);
         }
@@ -70,7 +70,7 @@ namespace test
             expect("toFld").PARAM(id).TPARAM(ComData, data);
         }
 
-        inline void toGui(size_t id, const ComData& data) const override
+        inline void toGui(size_t id, const ComData& data) const
         {
             call("toGui").PARAM(id).TPARAM(ComData, data);
         }
@@ -79,7 +79,7 @@ namespace test
             expect("toGui").PARAM(id).TPARAM(ComData, data);
         }
 
-        inline void reGui() const override
+        inline void reGui() const
         {
             call("reGui");
         }

@@ -16,7 +16,7 @@ namespace test
     public:
         inline M_Elem(const CONST_C_STRING name = "Elem") : M_Base(name) {}
 
-        inline void fromFld(const ComData& data) override
+        inline void fromFld(const ComData& data)
         {
             call("fromFld").TPARAM(ComData, data);
         }
@@ -25,7 +25,7 @@ namespace test
             expect("fromFld").TPARAM(ComData, data);
         }
 
-        inline void fromGui(const ComData& data) override
+        inline void fromGui(const ComData& data)
         {
             call("fromGui").TPARAM(ComData, data);
         }
@@ -34,7 +34,7 @@ namespace test
             expect("fromGui").TPARAM(ComData, data);
         }
 
-        inline void toGui() const override
+        inline void toGui() const
         {
             call("toGui");
         }

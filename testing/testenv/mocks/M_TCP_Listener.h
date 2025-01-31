@@ -15,7 +15,7 @@ namespace test
     {
     public:
 
-        inline bool listen(UINT16 port) override
+        inline bool listen(UINT16 port)
         {
             return static_cast<bool>(call("listen").PARAM(port).RETURN_DEF_BOOL(true));
         }
@@ -24,7 +24,7 @@ namespace test
             expect("listen").PARAM(port).AND_RETURN_BOOL(ret);
         }
 
-        inline bool select() override
+        inline bool select()
         {
             return static_cast<bool>(call("select").RETURN_DEF_BOOL(true));
         }
@@ -33,7 +33,7 @@ namespace test
             expect("select").AND_RETURN_BOOL(ret);
         }
 
-        inline void close() override
+        inline void close()
         {
             call("close");
         }

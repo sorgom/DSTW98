@@ -11,7 +11,7 @@
 #include <ifs/DataTypes.h>
 
 //  ============================================================
-//  class AddrMap is the core of Dispatcher
+//  class AddrMap is the core of Mapper
 //  see interface I_Mapper
 //  ============================================================
 template<size_t CAP>
@@ -21,6 +21,12 @@ public:
     inline AddrMap() :
         mIndex(mData)
     {}
+
+    inline void clear()
+    {
+        mData.clear();
+        mIndex.clear();
+    }
 
     inline bool add(const ComAddr& addr)
     {
@@ -45,6 +51,11 @@ public:
     inline const ComAddr& at(const PosRes& res) const
     {
         return at(res.pos);
+    }
+
+    inline size_t size() const
+    {
+        return mData.size();
     }
 
 private:

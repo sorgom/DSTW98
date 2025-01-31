@@ -109,6 +109,11 @@ public:
         return mBytes.copy(obj);
     }
 
+    inline void clear()
+    {
+        mBytes.clear();
+    }
+
 protected:
     ByteArray<SIZE, CAP> mBytes;
 };
@@ -125,6 +130,11 @@ public:
     {
         sort();
         return dupCnt() == 0;
+    }
+
+    inline void clear()
+    {
+        std::memset(mIdx, 0, sizeof(mIdx));
     }
 
     //  find data position by key

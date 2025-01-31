@@ -25,12 +25,12 @@ typedef const void*     CPTR;
 typedef CHAR*           C_STRING;
 typedef const CHAR*     CONST_C_STRING;
 
-typedef bool            BOOL;
 
 #ifndef _MSC_VER
 using std::size_t;
 #endif
 
+#if 0
 #ifndef UINT8_MAX
 #define UINT8_MAX 0xFF
 #endif
@@ -66,6 +66,6 @@ using std::size_t;
 #ifndef INT32_MAX
 #define INT32_MAX 0x7FFFFFFF
 #endif
-
+#endif
 
 #endif // _H

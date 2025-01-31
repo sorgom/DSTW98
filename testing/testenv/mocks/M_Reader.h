@@ -17,7 +17,7 @@ namespace test
     public:
         INSTANCE_DEC(M_Reader)
 
-        inline void read(CONST_C_STRING filename) override
+        inline void read(CONST_C_STRING filename)
         {
             call("read");
         }
@@ -26,7 +26,7 @@ namespace test
             expect("read");
         }
 
-        inline const ComSetup& getComSetup() const override
+        inline const ComSetup& getComSetup() const
         {
             call("getComSetup");
             return setup;

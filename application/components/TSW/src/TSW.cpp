@@ -3,7 +3,7 @@
 
 void TSW::fromFld(const ComData& data)
 {
-    const auto state = data.param1;
+    const UINT8 state = data.param1;
     switch(state)
     {
     case TSW_STATE_LEFT:
@@ -20,7 +20,7 @@ void TSW::fromFld(const ComData& data)
 
 void TSW::fromGui(const ComData& data)
 {
-    const auto state = data.param1;
+    const UINT8 state = data.param1;
     switch(state)
     {
     case TSW_CMD_WU:

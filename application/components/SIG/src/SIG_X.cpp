@@ -91,7 +91,7 @@ void SIG_X::logMismatch()
 
 void SIG_H::fromFld(const ComData& data)
 {
-    const auto state = data.param1;
+    const UINT8 state = data.param1;
     switch (state)
     {
     case SIG_STATE_UNDEF:
