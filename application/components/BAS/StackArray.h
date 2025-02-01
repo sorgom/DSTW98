@@ -9,8 +9,8 @@
 
 #include <ifs/DataTypes.h>
 #include <BAS/coding.h>
-#include <new>
 #include <cstring>
+#include <new>
 
 template <class T, size_t CAP>
 class I_Array
@@ -51,30 +51,22 @@ public:
 
     PTR at(size_t pos)
     {
-        return pos < mSize ? mData[pos] : 0;
+        return mData[pos];
     }
     CPTR at(size_t pos) const
     {
-        return pos < mSize ? mData[pos] : 0;
+        return mData[pos];
     }
 
     PTR reserve()
     {
-        //  return pointer to next free segment
-        //  see C++ standard 5.16 Conditional operator [expr.cond]
-        //  mSize++ is only executed if mSize < CAP
-        return mSize < CAP ? mData[mSize++] : 0;
+        return mData[mSize++];
     }
 
     template <class T>
-    inline bool copy(const T& obj)
+    inline void copy(const T& obj)
     {
-        const bool ok = mSize < CAP and sizeof(T) <= SIZE;
-        if (ok)
-        {
-            std::memcpy(mData[mSize++], &obj, sizeof(T));
-        }
-        return ok;
+        std::memcpy(mData[mSize++], &obj, sizeof(T));
     }
 
     inline void clear()
@@ -89,7 +81,8 @@ private:
 };
 
 template <class T, size_t CAP, size_t SIZE = sizeof(T)>
-class StackArray : public I_Array<T, CAP>
+class StackArray :
+    public I_Array<T, CAP>
 {
 public:
     inline StackArray() {}
@@ -109,10 +102,15 @@ public:
         return *reinterpret_cast<T*>(mBytes.at(pos));
     }
 
-    template <class C>
-    inline bool add(const C& obj)
+    PTR reserve()
     {
-        return mBytes.copy(obj);
+        return mBytes.reserve();
+    }
+
+    template <class C>
+    inline void add(const C& obj)
+    {
+        mBytes.copy(obj);
     }
 
     inline void clear()

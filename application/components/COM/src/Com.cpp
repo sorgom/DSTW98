@@ -3,66 +3,49 @@
 
 INSTANCE_DEF(Com)
 
-void Com::run()
+void Com::start()
 {
-    mRunning = false;
-
-    I_TCP_Listener& listenerFld = IL::getTCP_Listener_Fld();
-    I_TCP_Listener& listenerGui = IL::getTCP_Listener_Gui();
-    I_TCP_Listener& listenerCtrl = IL::getTCP_Listener_Ctrl();
-
-    I_TCP_Con &clientFld = IL::getTCP_Con_Fld();
-    I_TCP_Con &clientGui = IL::getTCP_Con_Gui();
-    I_TCP_Con &clientCtrl = IL::getTCP_Con_Ctrl();
-
     I_TCP& tcp = IL::getTCP();
-
     const ComSetup& setup = IL::getReader().getComSetup();
 
-    bool ok = tcp.init()
-        and listenerFld.listen(setup.portFld)
-        and listenerGui.listen(setup.portGui)
-        and listenerCtrl.listen(setup.portCtrl);
-
-    if (ok)
+    if (
+        tcp.init()
+        and IL::getTCP_Listener_Fld().listen(setup.portFld)
+        and IL::getTCP_Listener_Gui().listen(setup.portGui)
+        and IL::getTCP_Listener_Ctrl().listen(setup.portCtrl)
+    )
     {
         tcp.setTimeout(setup.timeout);
-        mRunning = true;
     }
     else
     {
         IL::getCtrl().log(COMP_COM, RET_ERR_STARTUP);
     }
-
-    while (ok and mRunning)
-    {
-        ok =
-            listenerFld.select()
-            and listenerGui.select()
-            and listenerCtrl.select()
-            and clientFld.select()
-            and clientGui.select()
-            and clientCtrl.select();
-
-        if (not ok)
-        {
-            IL::getCtrl().log(COMP_COM, RET_ERR_COM);
-            mRunning = false;
-        }
-    }
-
-    listenerFld.close();
-    listenerGui.close();
-    listenerCtrl.close();
-    clientFld.close();
-    clientGui.close();
-    clientCtrl.close();
-    tcp.cleanup();
 }
 
+void Com::check()
+{
+    if (not(
+        IL::getTCP_Listener_Fld().select()
+        and IL::getTCP_Listener_Gui().select()
+        and IL::getTCP_Listener_Ctrl().select()
+        and IL::getTCP_Con_Fld().select()
+        and IL::getTCP_Con_Gui().select()
+        and IL::getTCP_Con_Ctrl().select()
+    ))
+    {
+        IL::getCtrl().log(COMP_COM, RET_ERR_COM);
+    }
+}
 void Com::stop()
 {
-    mRunning = false;
+    IL::getTCP_Listener_Fld().close();
+    IL::getTCP_Listener_Gui().close();
+    IL::getTCP_Listener_Ctrl().close();
+    IL::getTCP_Con_Fld().close();
+    IL::getTCP_Con_Gui().close();
+    IL::getTCP_Con_Ctrl().close();
+    IL::getTCP().cleanup();
 }
 
 void Com::toFld(const ComTele& tele) const

@@ -38,7 +38,7 @@ public:
 
     NOCOPY(TCP)
 private:
-    TCP() = default;
+    TCP() {}
     UINT32 mSec = 0;
     UINT32 mMicro = 10000;
 };

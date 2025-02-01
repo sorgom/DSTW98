@@ -28,9 +28,9 @@ public:
         mIndex.clear();
     }
 
-    inline bool add(const ComAddr& addr)
+    inline void add(const ComAddr& addr)
     {
-        return mData.add(addr);
+        mData.add(addr);
     }
 
     inline bool index()
@@ -56,6 +56,11 @@ public:
     inline size_t size() const
     {
         return mData.size();
+    }
+
+    inline bool hasSpace() const
+    {
+        return mData.hasSpace();
     }
 
 private:

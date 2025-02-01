@@ -16,7 +16,7 @@ public:
     virtual void index() = 0;
 
     //  add ProjItem
-    virtual bool add(const ProjItem& data) = 0;
+    virtual void add(const ProjItem& data) = 0;
 
     //  field state telegrams shall be dispatched to components
     virtual void fromFld(const ComTele& tele) const = 0;

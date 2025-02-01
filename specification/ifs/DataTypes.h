@@ -21,7 +21,7 @@
 struct ComAddr
 {
     CHAR chars[ComAddrSize];
-    inline ComAddr() = default;
+    inline ComAddr() {}
     inline ComAddr(const ComAddr& src)
     {
         Mem::cpy(chars, src.chars);

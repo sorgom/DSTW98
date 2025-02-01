@@ -25,6 +25,7 @@ namespace test
         {
             expect("log").PARAM(comp).PARAM(ret);
         }
+
         inline E_Ret maxerr() const
         {
             return static_cast<E_Ret>(call("maxerr").RETURN_DEF_UNSIGNED(RET_NO_ERR));
@@ -32,6 +33,33 @@ namespace test
         inline void expectMaxerr(E_Ret ret = RET_NO_ERR) const
         {
             expect("maxerr").AND_RETURN(ret);
+        }
+
+        inline void clear()
+        {
+            call("clear");
+        }
+        inline void expectClear() const
+        {
+            expect("clear");
+        }
+
+        inline void stop()
+        {
+            call("stop");
+        }
+        inline void expectStop() const
+        {
+            expect("stop");
+        }
+
+        inline bool ok() const
+        {
+            return static_cast<bool>(call("ok").RETURN_DEF_BOOL(true));
+        }
+        inline void expectOk(bool ret = true) const
+        {
+            expect("ok").AND_RETURN(ret);
         }
     private:
         M_Ctrl() : M_Base("Ctrl") {}

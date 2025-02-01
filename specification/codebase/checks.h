@@ -9,6 +9,9 @@
 //  creates inline size check function for type
 //  coverage proofs if executed
 #define SIZE_CHECK(TYPE, SIZE) \
-    inline bool checkSize ## TYPE() { return sizeof(TYPE) == (SIZE); }
+    inline bool sizeCheck ## TYPE() { return sizeof(TYPE) == (SIZE); }
+
+#define ENUM_CHECK(VAL) \
+    inline bool enumCheck ## VAL() { return VAL <= 255; }
 
 #endif // _H

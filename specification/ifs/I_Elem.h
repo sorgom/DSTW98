@@ -23,6 +23,6 @@ public:
     //  re-send current state to GUI
     virtual void toGui() const = 0;
 
-    inline virtual ~I_Elem() = default;
+    inline virtual ~I_Elem() {}
 };
 #endif // _H

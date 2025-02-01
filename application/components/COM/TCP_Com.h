@@ -33,7 +33,7 @@ public:
     NOCOPY(Tcp_Listener_Base)
 
 protected:
-    Tcp_Listener_Base() = default;
+    Tcp_Listener_Base() {}
     virtual I_TCP_Con& getCon() const = 0;
 private:
     INT32 mSocket = -1;
@@ -47,7 +47,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Fld() = default;
+    inline TCP_Listener_Fld() {}
 };
 
 class TCP_Listener_Gui : public Tcp_Listener_Base
@@ -58,7 +58,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Gui() = default;
+    inline TCP_Listener_Gui() {}
 };
 
 class TCP_Listener_Ctrl : public Tcp_Listener_Base
@@ -69,7 +69,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Ctrl() = default;
+    inline TCP_Listener_Ctrl() {}
 };
 
 //  ============================================================
@@ -87,7 +87,7 @@ public:
     void send(const ComTele& tele) const;
     NOCOPY(TCP_Con_Base)
 protected:
-    inline TCP_Con_Base() = default;
+    inline TCP_Con_Base() {}
     virtual void onAccept() const = 0;
     virtual void forward(const ComTele& tele) const = 0;
 private:
@@ -105,7 +105,7 @@ protected:
     void onAccept() const;
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Fld() = default;
+    inline TCP_Con_Fld() {}
 };
 
 //  GUI tcp communication client
@@ -118,7 +118,7 @@ protected:
     void onAccept() const;
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Gui() = default;
+    inline TCP_Con_Gui() {}
 };
 
 //  control tcp communication client
@@ -131,6 +131,6 @@ protected:
     inline void onAccept() const override {}
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Ctrl() = default;
+    inline TCP_Con_Ctrl() {}
 };
 #endif // _H

@@ -33,17 +33,17 @@ namespace test
             expect("index");
         }
 
-        inline bool add(const ProjItem& data)
+        inline void add(const ProjItem& data)
         {
-            return static_cast<bool>(call("add").TPARAM(ProjItem, data).RETURN_DEF_BOOL(true));
+            call("add").TPARAM(ProjItem, data);
         }
-        inline void expectAdd(const ProjItem& data, bool ret = true) const
+        inline void expectAdd(const ProjItem& data) const
         {
-            expect("add").TPARAM(ProjItem, data).AND_RETURN_BOOL(ret);
+            expect("add").TPARAM(ProjItem, data);
         }
-        inline void expectAdd(UINT16 num, bool ret = true) const
+        inline void expectAdd(const UINT16 numCalls) const
         {
-            expect(num, "add").IGNORE().AND_RETURN_BOOL(ret);
+            expect(numCalls, "add").IGNORE();
         }
 
         inline void fromFld(const ComTele& tele) const

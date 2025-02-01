@@ -14,7 +14,7 @@ namespace test
     {
     public:
 
-        TCP_Client() = default;
+        TCP_Client() {}
 
         static bool init();
         static void cleanup();

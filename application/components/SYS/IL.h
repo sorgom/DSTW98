@@ -1,7 +1,6 @@
 //  ============================================================
 //  Interface Locator IL
 //  - production application version
-//  - no exchange of providers
 //  ============================================================
 //  created by Manfred Sorgo
 
@@ -21,7 +20,7 @@ namespace IL
     inline I_Com& getCom() { return Com::instance(); }
     inline I_Ctrl& getCtrl() { return Ctrl::instance(); }
     inline I_Mapper& getMapper() { return Mapper::instance(); }
-    inline I_Provider& getLProvider() { return Provider::instance(); }
+    inline I_Provider& getProvider() { return Provider::instance(); }
     inline I_Reader& getReader() { return Reader::instance(); }
     inline I_TCP_Con& getTCP_Con_Ctrl() { return TCP_Con_Ctrl::instance(); }
     inline I_TCP_Con& getTCP_Con_Fld() { return TCP_Con_Fld::instance(); }

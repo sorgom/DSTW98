@@ -20,10 +20,6 @@ namespace test
         private M_Base
     {
     public:
-        M_Provider(const CONST_C_STRING name = "Provider") :
-            M_Base(name)
-        {}
-
         INSTANCE_DEC(M_Provider)
 
         inline size_t size() const
@@ -44,28 +40,22 @@ namespace test
             expect("clear");
         }
 
-        // deprecated
-        inline void load(const ProjItem* data, UINT32 num)
+        inline void add(const ProjItem& data)
         {
-            call("load").PARAM(num);
+            call("add").TPARAM(ProjItem, data);
         }
-        inline void expectLoad(UINT32 num) const
+        inline void expectAdd(const ProjItem& data) const
         {
-            expect("load").PARAM(num);
+            expect("add").TPARAM(ProjItem, data);
+        }
+        inline void expectAdd(const UINT16 numCalls) const
+        {
+            expect(numCalls, "add").IGNORE();
         }
 
-        // new
-        inline bool add(const ProjItem& data)
+        inline const I_Elem& at(size_t pos) const
         {
-            return static_cast<bool>(call("add").TPARAM(ProjItem, data).RETURN_DEF_BOOL(true));
-        }
-        inline void expectAdd(const ProjItem& data, bool ret = true) const
-        {
-            expect("add").TPARAM(ProjItem, data).AND_RETURN_BOOL(ret);
-        }
-        inline void expectAdd(const UINT16 numCalls, bool ret = true) const
-        {
-            expect(numCalls, "add").IGNORE().AND_RETURN_BOOL(ret);
+            return M_Elem::instance();
         }
 
         inline I_Elem& at(size_t pos)
@@ -74,6 +64,8 @@ namespace test
         }
 
         NOCOPY(M_Provider)
+    private:
+        inline M_Provider() : M_Base("Provider") {}
    };
 
 } // namespace

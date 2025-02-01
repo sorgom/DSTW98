@@ -21,27 +21,14 @@ namespace test
             m_TCP().expectSetTimeout(tcpTimeout);
         }
 
-        void expectExit()
-        {
-            m_TCP_Listener_Fld().expectClose();
-            m_TCP_Listener_Gui().expectClose();
-            m_TCP_Listener_Ctrl().expectClose();
-            m_TCP_Con_Fld().expectClose();
-            m_TCP_Con_Gui().expectClose();
-            m_TCP_Con_Ctrl().expectClose();
-            m_TCP().expectCleanup();
-        }
-
-        void expectExitStartup()
+        void expectErrStartup()
         {
             m_Ctrl().expectCtrl(COMP_COM, RET_ERR_STARTUP);
-            expectExit();
         }
 
-        void expectExitRuntime()
+        void expectErrRuntime()
         {
             m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);
-            expectExit();
         }
     };
 
@@ -56,8 +43,8 @@ namespace test
         STEP(1)
         m_Reader().expectGetComSetup();
         m_TCP().expectInit(false);
-        expectExitStartup();
-        com.run();
+        expectErrStartup();
+        com.start();
         CHECK_N_CLEAR()
 
         //  listener field fails
@@ -65,8 +52,8 @@ namespace test
         m_Reader().expectGetComSetup();
         m_TCP().expectInit(true);
         m_TCP_Listener_Fld().expectListen(tcpPortFld, false);
-        expectExitStartup();
-        com.run();
+        expectErrStartup();
+        com.start();
         CHECK_N_CLEAR()
 
         //  listener GUI fails
@@ -75,8 +62,8 @@ namespace test
         m_TCP().expectInit(true);
         m_TCP_Listener_Fld().expectListen(tcpPortFld, true);
         m_TCP_Listener_Gui().expectListen(tcpPortGui, false);
-        expectExitStartup();
-        com.run();
+        expectErrStartup();
+        com.start();
         CHECK_N_CLEAR()
 
         //  listener control fails
@@ -86,8 +73,19 @@ namespace test
         m_TCP_Listener_Fld().expectListen(tcpPortFld, true);
         m_TCP_Listener_Gui().expectListen(tcpPortGui, true);
         m_TCP_Listener_Ctrl().expectListen(tcpPortCtrl, false);
-        expectExitStartup();
-        com.run();
+        expectErrStartup();
+        com.start();
+        CHECK_N_CLEAR()
+
+        //  success
+        STEP(5)
+        m_Reader().expectGetComSetup();
+        m_TCP().expectInit(true);
+        m_TCP_Listener_Fld().expectListen(tcpPortFld, true);
+        m_TCP_Listener_Gui().expectListen(tcpPortGui, true);
+        m_TCP_Listener_Ctrl().expectListen(tcpPortCtrl, true);
+        m_TCP().expectSetTimeout(tcpTimeout);
+        com.start();
         CHECK_N_CLEAR()
     }
 
@@ -100,83 +98,80 @@ namespace test
 
         //  select on listener field fails
         STEP(1)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
         //  select on listener GUI fails
         STEP(2)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
         //  select on listener control fails
         STEP(3)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(true);
         m_TCP_Listener_Ctrl().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
         //  select on client field fails
         STEP(4)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(true);
         m_TCP_Listener_Ctrl().expectSelect(true);
         m_TCP_Con_Fld().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
         //  select on client GUI fails
         STEP(5)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(true);
         m_TCP_Listener_Ctrl().expectSelect(true);
         m_TCP_Con_Fld().expectSelect(true);
         m_TCP_Con_Gui().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
         //  select on client control fails
         STEP(6)
-        expectStartupOk();
-        expectExitRuntime();
+        expectErrRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(true);
         m_TCP_Listener_Ctrl().expectSelect(true);
         m_TCP_Con_Fld().expectSelect(true);
         m_TCP_Con_Gui().expectSelect(true);
         m_TCP_Con_Ctrl().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
-        //  all selects pass for 1st time than listener field fails
+        //  all selects pass
         STEP(7)
-        expectStartupOk();
-        expectExitRuntime();
         m_TCP_Listener_Fld().expectSelect(true);
         m_TCP_Listener_Gui().expectSelect(true);
         m_TCP_Listener_Ctrl().expectSelect(true);
         m_TCP_Con_Fld().expectSelect(true);
         m_TCP_Con_Gui().expectSelect(true);
         m_TCP_Con_Ctrl().expectSelect(true);
-        m_TCP_Listener_Fld().expectSelect(false);
-        com.run();
+        com.check();
         CHECK_N_CLEAR()
 
-        //  coverage: stop
         STEP(8)
+        m_TCP_Listener_Fld().expectClose();
+        m_TCP_Listener_Gui().expectClose();
+        m_TCP_Listener_Ctrl().expectClose();
+        m_TCP_Con_Fld().expectClose();
+        m_TCP_Con_Gui().expectClose();
+        m_TCP_Con_Ctrl().expectClose();
+        m_TCP().expectCleanup();
         com.stop();
         CHECK_N_CLEAR()
     }

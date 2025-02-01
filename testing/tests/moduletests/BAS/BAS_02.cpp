@@ -30,8 +30,7 @@ namespace test
         for (UINT8 n = 0; n < tSize; ++n)
         {
             STEP(n)
-            ok = indx.add(genComAddr(tOffs - n));
-            L_CHECK_TRUE(ok)
+            indx.add(genComAddr(tOffs - n));
         }
         ENDSTEPS()
 

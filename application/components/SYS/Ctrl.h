@@ -16,6 +16,22 @@ public:
 
     void log(E_Comp comp, E_Ret ret);
 
+    inline void clear()
+    {
+        mErr = RET_NO_ERR;
+        mRunning = true;
+    }
+
+    inline void stop()
+    {
+        mRunning = false;
+    }
+
+    inline bool ok() const
+    {
+        return mRunning and mErr == RET_NO_ERR;
+    }
+
     inline E_Ret maxerr() const
     {
         return mErr;
@@ -25,7 +41,8 @@ public:
 
     NOCOPY(Ctrl)
 private:
-    E_Ret mErr = RET_NO_ERR;
-    inline Ctrl() = default;
+    E_Ret mErr;
+    bool mRunning;
+    inline Ctrl() { clear(); }
 };
 #endif // _H

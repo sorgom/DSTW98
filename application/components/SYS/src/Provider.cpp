@@ -1,37 +1,41 @@
 #include <SYS/Provider.h>
+#include <SYS/IL.h>
+#include <ifs/values.h>
 
 INSTANCE_DEF(Provider)
 
-bool Provider::add(const ProjItem& item)
+void Provider::add(const ProjItem& item)
 {
-    bool ok = mElems.hasSpace();
-    if (ok)
+    if (mElems.hasSpace())
     {
         const size_t pos = mElems.size();
         switch (item.type)
         {
             case TYPE_LCR:
-                mElems.add(LCR(pos));
+                add<LCR>(pos);
                 break;
             case TYPE_LCR_UBK:
-                mElems.add(LCR_UBK(pos));
+                add<LCR_UBK>(pos);
                 break;
             case TYPE_SIG_H:
-                mElems.add(SIG_H(pos));
+                add<SIG_H>(pos);
                 break;
             case TYPE_SIG_N:
-                mElems.add(SIG_N(pos));
+                add<SIG_N>(pos);
                 break;
             case TYPE_SIG_H_N:
-                mElems.add(SIG_H_N(pos));
+                add<SIG_H_N>(pos);
                 break;
             case TYPE_TSW:
-                mElems.add(TSW(pos));
+                add<TSW>(pos);
                 break;
             default:
-                ok = false;
+                IL::getCtrl().log(COMP_SYS, RET_ERR_PROJ);
                 break;
         }
     }
-    return ok;
+    else
+    {
+        IL::getCtrl().log(COMP_SYS, RET_ERR_RANGE);
+    }
 }

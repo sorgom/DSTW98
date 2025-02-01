@@ -16,7 +16,6 @@ namespace test
     TEST(BAS_01, T01)
     {
         STEP(1)
-        PTR p = 0;
         ByteArray<10, 5> ba;
         L_CHECK_EQUAL(0, ba.size())
 
@@ -25,19 +24,13 @@ namespace test
         for (size_t n = 0; n < ba.capacity(); ++n)
         {
             STEP(n)
-            p = ba.reserve();
-            L_CHECK_FALSE(p == 0)
+            ba.reserve();
             L_CHECK_EQUAL(n + 1, ba.size())
         }
         ENDSTEPS()
         L_CHECK_EQUAL(ba.capacity(), ba.size())
 
         STEP(3)
-        p = ba.reserve();
-        L_CHECK_EQUAL(0, p)
-        L_CHECK_EQUAL(ba.capacity(), ba.size())
-
-        STEP(4)
         ba.clear();
         L_CHECK_EQUAL(0, ba.size())
     }
@@ -53,15 +46,9 @@ namespace test
     class TestArray : public StackArray<TestData, CAP, sizeof(TestData) + 10>
     {
     public:
-        bool add(int v1, int v2 = 0)
+        void add(int v1, int v2 = 0)
         {
-            PTR p = this->mBytes.reserve();
-            const bool ok = p != 0;
-            if (ok)
-            {
-                new (p) TestData(v1, v2);
-            }
-            return ok;
+            new (this->mBytes.reserve()) TestData(v1, v2);
         }
     };
 
@@ -93,18 +80,13 @@ namespace test
         for (size_t n = 0; n < ta.capacity(); ++n)
         {
             STEP(n)
-            ok = ta.add(2 * ta.capacity() - 2 * n, n);
-            L_CHECK_TRUE(ok)
+            ta.add(2 * ta.capacity() - 2 * n, n);
             L_CHECK_EQUAL(n + 1, ta.size())
         }
         ENDSTEPS()
         L_CHECK_EQUAL(ta.capacity(), ta.size())
 
         STEP(3)
-        ok = ta.add(0);
-        L_CHECK_FALSE(ok)
-
-        STEP(4)
         SUBSTEPS()
         for (size_t n = 0; n < ta.capacity(); ++n)
         {
@@ -115,11 +97,11 @@ namespace test
         }
         ENDSTEPS()
 
-        STEP(5)
+        STEP(4)
         ok = ti.index();
         L_CHECK_TRUE(ok)
 
-        STEP(6)
+        STEP(5)
         SUBSTEPS()
         for (size_t n = 0; n < ta.capacity(); ++n)
         {

@@ -5,6 +5,18 @@
 
 INSTANCE_DEF(Mapper)
 
+void Mapper::add(const ProjItem& data)
+{
+    if (mMap.hasSpace())
+    {
+        mMap.add(data.addr);
+    }
+    else
+    {
+        IL::getCtrl().log(COMP_SYS, RET_ERR_RANGE);
+    }
+}
+
 void Mapper::index()
 {
     if (not mMap.index())
@@ -19,6 +31,7 @@ void Mapper::fromFld(const ComTele& tele) const
 
     if (res.valid)
     {
+        IL::getProvider().at(res.pos).fromFld(tele.data);
     }
     else
     {
@@ -32,6 +45,7 @@ void Mapper::fromGui(const ComTele& tele) const
 
     if (res.valid)
     {
+        IL::getProvider().at(res.pos).fromGui(tele.data);
     }
     else
     {
@@ -59,4 +73,9 @@ void Mapper::toGui(const size_t id, const ComData& data) const
 
 void Mapper::reGui() const
 {
+    const I_Provider& prov = IL::getProvider();
+    for (size_t i = 0; i < prov.size(); ++i)
+    {
+        prov.at(i).toGui();
+    }
 }

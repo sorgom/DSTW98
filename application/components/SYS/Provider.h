@@ -24,6 +24,11 @@ public:
         return mElems.size();
     }
 
+    inline const I_Elem& at(size_t pos) const
+    {
+        return mElems.at(pos);
+    }
+
     inline I_Elem& at(size_t pos)
     {
         return mElems.at(pos);
@@ -37,7 +42,7 @@ public:
     // deprecated
     inline void load(const ProjItem* data, UINT32 num) {}
 
-    bool add(const ProjItem& data);
+    void add(const ProjItem& data);
 
     INSTANCE_DEC(Provider)
     NOCOPY(Provider)
@@ -55,7 +60,10 @@ private:
     StackArray<I_Elem, CAPACITY, sizeof(Sizes)> mElems;
 
     template <class T>
-    inline void addElem(size_t pos) { mElems.add(T(pos)); }
+    inline void add(size_t pos)
+    {
+        new (mElems.reserve()) T(pos);
+    }
 
 };
 

@@ -12,7 +12,8 @@
 class Com : public I_Com
 {
 public:
-    void run();
+    void start();
+    void check();
     void stop();
     void toFld(const ComTele& tele) const;
     void toGui(const ComTele& tele) const;
@@ -21,7 +22,6 @@ public:
     NOCOPY(Com)
 
 private:
-    inline Com() = default;
-    bool mRunning = false;
+    inline Com() {}
 };
 #endif // _H

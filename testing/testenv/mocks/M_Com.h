@@ -16,13 +16,21 @@ namespace test
     public:
         INSTANCE_DEC(M_Com)
 
-        inline void run()
+        inline void start()
         {
-            call("run");
+            call("start");
         }
-        inline void expectRun() const
+        inline void expectStart() const
         {
-            expect("run");
+            expect("start");
+        }
+        inline void check()
+        {
+            call("check");
+        }
+        inline void expectCheck() const
+        {
+            expect("check");
         }
 
         inline void stop()

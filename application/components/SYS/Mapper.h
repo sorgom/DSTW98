@@ -18,10 +18,7 @@ public:
     inline void clear() { mMap.clear(); }
     void index();
 
-    inline bool add(const ProjItem& data)
-    {
-        return mMap.add(data.addr);
-    }
+    void add(const ProjItem& data);
 
     void fromFld(const ComTele& tele) const;
     void fromGui(const ComTele& tele) const;
