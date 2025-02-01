@@ -68,7 +68,7 @@ namespace test
 #ifdef _WIN32
 #pragma warning(default:4389)
 #endif
-        timeval timeout{0, 50000};
+        timeval timeout = {0, 50000};
         bool ok = false;
         if (
             (::select(mSocket + 1, &readfds, nullptr, nullptr, &timeout) >= 0) and

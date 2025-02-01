@@ -11,14 +11,19 @@ namespace test
 
     TEST_GROUP_BASE(COM_03, TestGroupBase)
     {
-        constexpr static INT32 validSocket = 0;
-        constexpr static INT32 invalidSocket = -1;
-        bool ok = false;
+        static const INT32 validSocket = 0;
+        static const INT32 invalidSocket = -1;
+        ComTele tele;
+        bool ok;
         static void expectComerr()
         {
             m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);
         }
-
+        void setTele(const UINT8 p1, const UINT8 p2 = PARAM_UNDEF)
+        {
+            tele.data.param1 = p1;
+            tele.data.param2 = p2;
+        }
     };
 
     //  test type: equivalence class test
@@ -47,7 +52,7 @@ namespace test
         //  should not send
         STEP(3)
         {
-            const ComTele tele{{}, {101, 202}};
+            setTele(101, 202);
             client.send(tele);
             CHECK_N_CLEAR()
         }
@@ -72,7 +77,7 @@ namespace test
         //  Dispatcher gets data from field
         STEP(6)
         {
-            const ComTele tele{{}, {101, 202}};
+            setTele(101, 202);
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
             m_Mapper().expectFromFld(tele);
@@ -111,7 +116,7 @@ namespace test
         //  Dispatcher gets data from GUI
         STEP(2)
         {
-            const ComTele tele{{}, {111, 212}};
+            setTele(121, 212);
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
             m_Mapper().expectFromGui(tele);
@@ -123,7 +128,7 @@ namespace test
         //  send telegram to valid socket
         STEP(3)
         {
-            const ComTele tele{{}, {131, 232}};
+            setTele(131, 232);
             m_TCP().expectSend(validSocket, sizeof(ComTele));
             client.send(tele);
             CHECK_N_CLEAR()
@@ -159,7 +164,7 @@ namespace test
         //  data contains different values
         STEP(2)
         {
-            const ComTele tele{{}, {COM_CTRL_STOP - 1, COM_CTRL_STOP}};
+            setTele(COM_CTRL_STOP - 1, COM_CTRL_STOP);
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
             ok = client.select();
@@ -171,9 +176,9 @@ namespace test
         //  Com::stop called
         STEP(3)
         {
-            const ComTele tele1{{}, {COM_CTRL_STOP, COM_CTRL_STOP}};
+            setTele(COM_CTRL_STOP, COM_CTRL_STOP);
             m_TCP().expectSelect(validSocket, SELECT_READY);
-            m_TCP().expectRecv(validSocket, tele1);
+            m_TCP().expectRecv(validSocket, tele);
             m_Com().expectStop();
             ok = client.select();
             CHECK_N_CLEAR()
@@ -184,9 +189,9 @@ namespace test
         //  send echo
         STEP(4)
         {
-            const ComTele tele1{{}, {COM_CTRL_PING, COM_CTRL_PING}};
+            setTele(COM_CTRL_PING, COM_CTRL_PING);
             m_TCP().expectSelect(validSocket, SELECT_READY);
-            m_TCP().expectRecv(validSocket, tele1);
+            m_TCP().expectRecv(validSocket, tele);
             m_TCP().expectSend(validSocket, sizeof(ComTele));
             ok = client.select();
             CHECK_N_CLEAR()
@@ -197,9 +202,9 @@ namespace test
         //  Dispatcher::reGui called
         STEP(5)
         {
-            const ComTele tele1{{}, {COM_CTRL_RE_GUI, COM_CTRL_RE_GUI}};
+            setTele(COM_CTRL_RE_GUI, COM_CTRL_RE_GUI);
             m_TCP().expectSelect(validSocket, SELECT_READY);
-            m_TCP().expectRecv(validSocket, tele1);
+            m_TCP().expectRecv(validSocket, tele);
             m_Mapper().expectReGui();
             ok = client.select();
             CHECK_N_CLEAR()
@@ -210,9 +215,9 @@ namespace test
         //  no reaction
         STEP(5)
         {
-            const ComTele tele1{{}, {PARAM_UNKNOWN, PARAM_UNKNOWN}};
+            setTele(PARAM_UNKNOWN, PARAM_UNKNOWN);
             m_TCP().expectSelect(validSocket, SELECT_READY);
-            m_TCP().expectRecv(validSocket, tele1);
+            m_TCP().expectRecv(validSocket, tele);
             ok = client.select();
             CHECK_N_CLEAR()
             L_CHECK_TRUE(ok)

@@ -2,7 +2,8 @@
 --  premake5 build settings
 --  ============================================================
 
-buildoptions_gcc = '-std=c++17 -pedantic-errors -Werror -Wall'
+-- buildoptions_gcc = '-std=c++17 -pedantic-errors -Werror -Wall'
+buildoptions_gcc = '-std=c++98 -pedantic-errors -Werror -Wall'
 
 buildoptions_vs = '/std:c++17 /MP'
 buildoptions_vs_app = buildoptions_vs .. ' /W4 /wd4100 /wd4103'
@@ -41,7 +42,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW98'
-    configurations { 'ci', 'debug' }
+    configurations { 'ci', 'debug', '98' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'

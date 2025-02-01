@@ -8,7 +8,7 @@
 
 #include "DataTypes.h"
 
-enum E_Select : INT8
+enum E_Select
 {
     SELECT_ERR = -1,
     SELECT_NONE = 0,

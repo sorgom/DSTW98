@@ -33,38 +33,82 @@ public:
     }
 };
 
-template <size_t SIZE, size_t CAP>
-class ByteArray
+// template <size_t SIZE, size_t CAP>
+// class ByteArray
+// {
+// public:
+//     inline ByteArray(): mSize(0) {}
+
+//     inline static size_t capacity()
+//     {
+//         return CAP;
+//     }
+
+//     inline size_t size() const
+//     {
+//         return mSize;
+//     }
+
+//     PTR at(size_t pos)
+//     {
+//         return mData[pos];
+//     }
+//     CPTR at(size_t pos) const
+//     {
+//         return mData[pos];
+//     }
+
+//     PTR reserve()
+//     {
+//         return mData[mSize++];
+//     }
+
+//     template <class T>
+//     inline void copy(const T& obj)
+//     {
+//         std::memcpy(mData[mSize++], &obj, sizeof(T));
+//     }
+
+//     inline void clear()
+//     {
+//         mSize = 0;
+//     }
+
+// private:
+//     typedef BYTE Segment[SIZE];
+//     Segment mData[CAP];
+//     size_t mSize;
+// };
+
+template <class T, size_t CAP, size_t SIZE = sizeof(T)>
+class StackArray :
+    public I_Array<T, CAP>
 {
 public:
-    inline ByteArray(): mSize(0) {}
-
-    inline static size_t capacity()
-    {
-        return CAP;
-    }
+    inline StackArray() : mSize(0) {}
 
     inline size_t size() const
     {
         return mSize;
     }
 
-    PTR at(size_t pos)
+    const T& at(size_t pos) const
     {
-        return mData[pos];
+        return *reinterpret_cast<const T*>(mData[pos]);
     }
-    CPTR at(size_t pos) const
+
+    T& at(size_t pos)
     {
-        return mData[pos];
+        return *reinterpret_cast<T*>(mData[pos]);
     }
 
     PTR reserve()
     {
-        return mData[mSize++];
+        return mData[mSize++];;
     }
 
-    template <class T>
-    inline void copy(const T& obj)
+    template <class C>
+    inline void add(const C& obj)
     {
         std::memcpy(mData[mSize++], &obj, sizeof(T));
     }
@@ -74,52 +118,20 @@ public:
         mSize = 0;
     }
 
-private:
-    typedef BYTE Segment[SIZE];
-    Segment mData[CAP];
-    size_t mSize;
-};
-
-template <class T, size_t CAP, size_t SIZE = sizeof(T)>
-class StackArray :
-    public I_Array<T, CAP>
-{
-public:
-    inline StackArray() {}
-
-    inline size_t size() const
+    inline const BYTE* data() const
     {
-        return mBytes.size();
+        return mData;
     }
 
-    const T& at(size_t pos) const
+    inline size_t dsize() const
     {
-        return *reinterpret_cast<const T*>(mBytes.at(pos));
-    }
-
-    T& at(size_t pos)
-    {
-        return *reinterpret_cast<T*>(mBytes.at(pos));
-    }
-
-    PTR reserve()
-    {
-        return mBytes.reserve();
-    }
-
-    template <class C>
-    inline void add(const C& obj)
-    {
-        mBytes.copy(obj);
-    }
-
-    inline void clear()
-    {
-        mBytes.clear();
+        return mSize * SIZE;
     }
 
 protected:
-    ByteArray<SIZE, CAP> mBytes;
+    typedef BYTE Segment[SIZE];
+    Segment mData[CAP];
+    size_t mSize;
 };
 
 template <class T, size_t CAP, class KEY>
@@ -174,7 +186,7 @@ public:
                 }
             }
         }
-        return PosRes{found, pos};
+        return PosRes(found, pos);
     }
 
 protected:

@@ -25,12 +25,13 @@ typedef const void*     CPTR;
 typedef CHAR*           C_STRING;
 typedef const CHAR*     CONST_C_STRING;
 
+#define nullptr 0
 
 #ifndef _MSC_VER
 using std::size_t;
 #endif
 
-#if 0
+#ifndef _WIN32
 #ifndef UINT8_MAX
 #define UINT8_MAX 0xFF
 #endif

@@ -21,25 +21,25 @@ namespace test
         {}
         void FLD(const UINT8 fldState, const UINT8 expStateGui = NO_PARAM)
         {
-            const ComData dataGui{expStateGui, PARAM_UNDEF};
+            const ComData dataGui(expStateGui, PARAM_UNDEF);
             if (expStateGui != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
             }
-            mSUT.fromFld(ComData{fldState});
+            mSUT.fromFld(ComData(fldState));
             CHECK_N_CLEAR()
         }
 
         void CMD(const UINT8 guiCmd, const UINT8 expCmdField = NO_PARAM, const UINT8 expStateGui = PARAM_UNDEF)
         {
-            const ComData dataGui{expStateGui, PARAM_UNDEF};
-            const ComData dataFld{expCmdField, PARAM_UNDEF};
+            const ComData dataGui(expStateGui, PARAM_UNDEF);
+            const ComData dataFld(expCmdField, PARAM_UNDEF);
             if (expCmdField != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
                 m_Mapper().expectToFld(mId, dataFld);
             }
-            mSUT.fromGui(ComData{guiCmd});
+            mSUT.fromGui(ComData(guiCmd));
             CHECK_N_CLEAR()
         }
     };

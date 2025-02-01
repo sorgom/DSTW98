@@ -23,79 +23,51 @@
 #include <testlib/TestLib.h>
 #include <fstream>
 #include <vector>
+#include <setup/Capacity.h>
+#include <BAS/StackArray.h>
 
 namespace test
 {
-    template <
-        size_t NTSW = TEST_NUM_TSW,
-        size_t NSIG = TEST_NUM_SIG,
-        size_t NLCR = TEST_NUM_LCR,
-        size_t NSEG = TEST_NUM_SEG
-    >
+    template <size_t CAP = CAPACITY>
     class GenProjData
     {
-    private:
-        using ProjVec = std::vector<ProjItem>;
-        ProjVec mTSWs, mSIGs, mLCRs, mSEGs;
-
     public:
-        // const ComSetup mComSetup = { tcpPortFld, tcpPortGui, tcpPortCtrl, tcpTimeout };
-        const ComSetup mComSetup = {
-            NetTest::toN(tcpPortFld),
-            NetTest::toN(tcpPortGui),
-            NetTest::toN(tcpPortCtrl),
-            NetTest::toN(tcpTimeout)
-        };
+        const ComSetup mComSetup;
 
-        GenProjData()
+        GenProjData() :
+            mComSetup(
+                NetTest::toN(tcpPortFld),
+                NetTest::toN(tcpPortGui),
+                NetTest::toN(tcpPortCtrl),
+                NetTest::toN(tcpTimeout)
+            )
         {
-            preset(mTSWs, "TSW", NTSW);
-            preset(mSIGs, "SIG", NSIG);
-            preset(mLCRs, "LCR", NLCR);
-            preset(mSEGs, "SEG", NSEG);
-
-            setSigType(TYPE_SIG_H);
-            setLcrType(TYPE_LCR);
+            preset();
         }
 
-        inline UINT32 numTSW() const { return mTSWs.size(); }
-        inline UINT32 numSIG() const { return mSIGs.size(); }
-        inline UINT32 numLCR() const { return mLCRs.size(); }
-        inline UINT32 numSEG() const { return mSEGs.size(); }
-
-        inline const ProjItem* pTSW() const { return mTSWs.data(); }
-        inline const ProjItem* pSIG() const { return mSIGs.data(); }
-        inline const ProjItem* pLCR() const { return mLCRs.data(); }
-        inline const ProjItem* pSEG() const { return mSEGs.data(); }
-
-        inline const ProjItem& tsw(size_t pos) const { return mTSWs.at(pos); }
-        inline const ProjItem& sig(size_t pos) const { return mSIGs.at(pos); }
-        inline const ProjItem& lcr(size_t pos) const { return mLCRs.at(pos); }
-        inline const ProjItem& seg(size_t pos) const { return mSEGs.at(pos); }
-
-        inline const ComAddr& tswAddr(size_t pos) const { return tsw(pos).addr; }
-        inline const ComAddr& sigAddr(size_t pos) const { return sig(pos).addr; }
-        inline const ComAddr& lcrAddr(size_t pos) const { return lcr(pos).addr; }
-        inline const ComAddr& segAddr(size_t pos) const { return seg(pos).addr; }
-
-        void setSigType(size_t pos, UINT8 type)
+        void preset()
         {
-            setType(mSIGs, pos, type);
+            items.clear();
+            for (size_t n = 0; n < CAP; ++n)
+            {
+                const ProjItem item = { genComAddr(CAP - n), { getType(n) } };
+                items.add(item);
+            }
         }
 
-        void setSigType(UINT8 type)
+        static UINT8 getType(const size_t pos)
         {
-            setType(mSIGs, type);
-        }
-
-        void setLcrType(size_t pos, UINT8 type)
-        {
-            setType(mLCRs, pos, type);
-        }
-
-        void setLcrType(UINT8 type)
-        {
-            setType(mLCRs, type);
+            static const UINT8 types[] = {
+                TYPE_LCR,
+                TYPE_LCR_UBK,
+                TYPE_SEG,
+                TYPE_SIG_H,
+                TYPE_SIG_H_N,
+                TYPE_SIG_N,
+                TYPE_SIG_S,
+                TYPE_TSW
+            };
+            return types[pos % sizeof(types)];
         }
 
         void dump(CONST_C_STRING filename) const
@@ -103,60 +75,20 @@ namespace test
             std::ofstream os(filename, std::ios::binary);
             if (os.good())
             {
-                write(os, numTSW());
-                write(os, numSIG());
-                write(os, numLCR());
-                write(os, numSEG());
-                write(os, mComSetup);
-                write(os, mTSWs);
-                write(os, mSIGs);
-                write(os, mLCRs);
-                write(os, mSEGs);
+                os.write(reinterpret_cast<const char*>(&mComSetup), sizeof(mComSetup));
+                os.write((items.data()), items.dsize());
             }
             os.close();
         }
 
+        ProjItem& at(size_t pos)
+        {
+            return items.at(pos);
+        }
+
+        StackArray<ProjItem, CAP> items;
+
         NOCOPY(GenProjData)
-
-    private:
-
-        void preset(ProjVec& vec, CONST_C_STRING what, size_t num)
-        {
-            vec.resize(num);
-            for (auto& elem : vec)         {
-                adrrElement(elem, num--, what);
-            }
-        }
-
-        void setType(ProjVec& vec, size_t pos, UINT8 type)
-        {
-            vec.at(pos).type = type;
-        }
-
-        void setType(ProjVec& vec, UINT8 type)
-        {
-            for (auto& elem : vec)
-            {
-                elem.type = type;
-            }
-        }
-
-        template <typename T>
-        inline static void write(std::ofstream& os, const T& t)
-        {
-            os.write(reinterpret_cast<const CHAR*>(&t), sizeof(T));
-        }
-
-        inline static void write(std::ofstream& os, const UINT32 n)
-        {
-            const UINT32 r = NetTest::toN(n);
-            os.write(reinterpret_cast<const CHAR*>(&r), sizeof(UINT32));
-        }
-
-        inline static void write(std::ofstream& os, const ProjVec& vec)
-        {
-            os.write(reinterpret_cast<const CHAR*>(vec.data()), sizeof(ProjItem) * vec.size());
-        }
     };
 } // namespace
 #endif // _H

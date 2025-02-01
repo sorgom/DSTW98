@@ -3,8 +3,8 @@
 namespace test
 {
 
-const NetTest::af16 NetTest::keep16 = [](const UINT16 u) { return u; };
-const NetTest::af16 NetTest::swap16 = [](const UINT16 u)
+UINT16 NetTest::keep16(const UINT16 u) { return u; }
+UINT16 NetTest::swap16(const UINT16 u)
     {
         union
         {
@@ -15,10 +15,10 @@ const NetTest::af16 NetTest::swap16 = [](const UINT16 u)
         trg.b[0] = src.b[1];
         trg.b[1] = src.b[0];
         return trg.u;
-    };
+    }
 
-const NetTest::af32 NetTest::keep32 = [](const UINT32 u) { return u; };
-const NetTest::af32 NetTest::swap32 = [](const UINT32 u)
+UINT32 NetTest::keep32(const UINT32 u) { return u; }
+UINT32 NetTest::swap32(const UINT32 u)
     {
         union
         {
@@ -31,7 +31,7 @@ const NetTest::af32 NetTest::swap32 = [](const UINT32 u)
         trg.b[2] = src.b[1];
         trg.b[3] = src.b[0];
         return trg.u;
-    };
+    }
 
 const UINT16 t16 = 0x0A0B;
 const bool isBig = *reinterpret_cast<const UINT8*>(&t16) == 0x0A;

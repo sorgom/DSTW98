@@ -54,14 +54,20 @@ public:
         return static_cast<INT32>(toH(static_cast<const UINT32>(n)));
     }
 
-    NetTest() = delete;
 private:
+    NetTest();
 
-    using af16 = UINT16 (*) (const UINT16);
-    using af32 = UINT32 (*) (const UINT32);
+    typedef UINT16 (*af16) (UINT16);
+    typedef UINT32 (*af32) (UINT32);
 
-    static const af16 keep16, swap16, adapt16;
-    static const af32 keep32, swap32, adapt32;
+    // using af16 = UINT16 (*) (const UINT16);
+    // using af32 = UINT32 (*) (const UINT32);
+    static UINT16 keep16(UINT16 n);
+    static UINT16 swap16(UINT16 n);
+    static UINT32 keep32(UINT32 n);
+    static UINT32 swap32(UINT32 n);
+    static const af16 adapt16;
+    static const af32 adapt32;
 
 };
 } // namespace

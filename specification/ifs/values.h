@@ -34,7 +34,7 @@ enum E_Ret
     //  communication error
     RET_ERR_COM,
     //  project data error
-    RET_ERR_PROJ,
+    RET_ERR_PROJ
 };
 
 //  reserved parameter values

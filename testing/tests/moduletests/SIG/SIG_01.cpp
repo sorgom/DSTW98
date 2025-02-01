@@ -37,12 +37,12 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataGui{stateToGui, speedToGui};
+            const ComData dataGui(stateToGui, speedToGui);
             if (stateToGui != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
             }
-            mSUT().fromFld(ComData{fldState, fldSpeed});
+            mSUT().fromFld(ComData(fldState, fldSpeed));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }
@@ -60,14 +60,14 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataFld{stateToFld, speedToFld};
-            const ComData dataGui{stateToGui, speedToGui};
+            const ComData dataFld(stateToFld, speedToFld);
+            const ComData dataGui(stateToGui, speedToGui);
             if (stateToFld != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
                 m_Mapper().expectToFld(mId, dataFld);
             }
-            mSUT().fromGui(ComData{guiState, guiSpeed});
+            mSUT().fromGui(ComData(guiState, guiSpeed));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }
@@ -80,12 +80,12 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataGui{stateToGui, PARAM_UNDEF};
+            const ComData dataGui(stateToGui, PARAM_UNDEF);
             if (stateToGui != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
             }
-            mSUT().fromFld(ComData{fldState, speed});
+            mSUT().fromFld(ComData(fldState, speed));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }
@@ -100,14 +100,14 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataFld{stateToFld, PARAM_UNDEF};
-            const ComData dataGui{stateToGui, PARAM_UNDEF};
+            const ComData dataFld(stateToFld, PARAM_UNDEF);
+            const ComData dataGui(stateToGui, PARAM_UNDEF);
             if (stateToFld != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
                 m_Mapper().expectToFld(mId, dataFld);
             }
-            mSUT().fromGui(ComData{guiState, speed});
+            mSUT().fromGui(ComData(guiState, speed));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }
@@ -234,11 +234,11 @@ namespace test
         FLD_H(SIG_STATE_H0, SIG_STATE_H0, 20);
 
         STEP(5)
-        mSUT().fromGui(ComData{SIG_STATE_H0, 30});
+        mSUT().fromGui(ComData(SIG_STATE_H0, 30));
         CHECK_N_CLEAR()
 
         STEP(6)
-        mSUT().fromFld(ComData{SIG_STATE_H0, 40});
+        mSUT().fromFld(ComData(SIG_STATE_H0, 40));
         CHECK_N_CLEAR()
     }
 
@@ -370,7 +370,7 @@ namespace test
 
         STEP(5)
         {
-            const ComData dataFld{SIG_STATE_N0, 20};
+            const ComData dataFld(SIG_STATE_N0, 20);
             m_Mapper().expectToFld(mId, dataFld);
             CMD(SIG_STATE_N0, 20);
         }
@@ -657,14 +657,14 @@ namespace test
 
         STEP(4)
         {
-            const ComData dataFld{SIG_STATE_H1_N0, 10};
+            const ComData dataFld(SIG_STATE_H1_N0, 10);
             m_Mapper().expectToFld(mId, dataFld);
             CMD(SIG_STATE_H1_N0, 10);
         }
 
         STEP(5)
         {
-            const ComData dataGui{SIG_STATE_H1_N0, 10};
+            const ComData dataGui(SIG_STATE_H1_N0, 10);
             m_Mapper().expectToGui(mId, dataGui);
             FLD(SIG_STATE_H1_N0, 10);
         }

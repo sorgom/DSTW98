@@ -18,7 +18,7 @@ namespace test
     class NullBuffer : public std::streambuf
     {
     public:
-        inline int overflow(int c) override
+        inline int overflow(int c)
         {
             return c; // Do nothing with the character
         }

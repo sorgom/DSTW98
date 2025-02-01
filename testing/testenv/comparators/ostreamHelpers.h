@@ -58,7 +58,6 @@ struct FixArr
         ptr(ptr),
         size(size)
     {}
-    NOCOPY(FixArr)
     NODEF(FixArr)
 };
 
@@ -70,7 +69,7 @@ inline const FixArr<T> fixT(const T (&ptr)[N])
 }
 
 //  stream FixChar as rvalue
-std::ostream& operator << (std::ostream& os, const FixArr<CHAR>&& d);
+std::ostream& operator << (std::ostream& os, const FixArr<CHAR>& d);
 
 //  make sure UINT8 output is numerical
 inline std::ostream& operator << (std::ostream& os, const UINT8 u)

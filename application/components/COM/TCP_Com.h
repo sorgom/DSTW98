@@ -33,10 +33,10 @@ public:
     NOCOPY(Tcp_Listener_Base)
 
 protected:
-    Tcp_Listener_Base() {}
+    Tcp_Listener_Base() : mSocket(-1) {}
     virtual I_TCP_Con& getCon() const = 0;
 private:
-    INT32 mSocket = -1;
+    INT32 mSocket;
 };
 
 class TCP_Listener_Fld : public Tcp_Listener_Base
@@ -87,11 +87,11 @@ public:
     void send(const ComTele& tele) const;
     NOCOPY(TCP_Con_Base)
 protected:
-    inline TCP_Con_Base() {}
+    inline TCP_Con_Base() : mSocket(-1) {}
     virtual void onAccept() const = 0;
     virtual void forward(const ComTele& tele) const = 0;
 private:
-    INT32 mSocket = -1;
+    INT32 mSocket;
     ComTele mTele;
 };
 
@@ -128,7 +128,7 @@ public:
     INSTANCE_DEC(TCP_Con_Ctrl)
     NOCOPY(TCP_Con_Ctrl)
 protected:
-    inline void onAccept() const override {}
+    inline void onAccept() const {}
     void forward(const ComTele& tele) const;
 private:
     inline TCP_Con_Ctrl() {}

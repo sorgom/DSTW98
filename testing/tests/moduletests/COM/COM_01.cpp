@@ -103,7 +103,7 @@ namespace test
 
         //  client sends data: 1 ComTele
         STEP(13)
-        ComTele tele{};
+        ComTele tele = {};
         ok = client.send(tele);
         L_CHECK_TRUE(ok);
 

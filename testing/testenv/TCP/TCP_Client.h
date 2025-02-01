@@ -14,7 +14,7 @@ namespace test
     {
     public:
 
-        TCP_Client() {}
+        inline TCP_Client() : mSocket(-1) {}
 
         static bool init();
         static void cleanup();
@@ -44,7 +44,7 @@ namespace test
 
         NOCOPY(TCP_Client)
     private:
-        INT32 mSocket = -1;
+        INT32 mSocket;
         bool send(CPTR data, INT32 size) const;
         bool recv(PTR data, INT32 size) const;
     };

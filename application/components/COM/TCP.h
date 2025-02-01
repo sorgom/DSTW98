@@ -38,8 +38,11 @@ public:
 
     NOCOPY(TCP)
 private:
-    TCP() {}
-    UINT32 mSec = 0;
-    UINT32 mMicro = 10000;
+    inline TCP():
+        mSec(0),
+        mMicro(10000)
+    {}
+    UINT32 mSec;
+    UINT32 mMicro;
 };
 #endif // _H

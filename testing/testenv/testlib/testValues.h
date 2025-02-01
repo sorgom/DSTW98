@@ -35,7 +35,7 @@
 
 namespace test
 {
-    enum E_TcpVals: UINT16
+    enum E_TcpVals
     {
         tcpPortFld  = 8080,
         tcpPortGui  = 8081,
@@ -43,11 +43,10 @@ namespace test
         tcpTimeout  = 10
     };
 
-    enum E_TestVals: UINT8
+    enum E_TestVals
     {
         NO_PARAM = PARAM_UNDEF - 1,
-        PARAM_UNKNOWN = PARAM_UNDEF - 2,
-
+        PARAM_UNKNOWN = PARAM_UNDEF - 2
     };
 } // namespace
 #endif // _H

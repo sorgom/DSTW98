@@ -11,9 +11,9 @@ namespace test
 
     TEST_GROUP_BASE(COM_02, TestGroupBase)
     {
-        constexpr static INT32 validSocket = 0;
-        constexpr static INT32 invalidSocket = -1;
-        bool ok = false;
+        static const INT32 validSocket = 0;
+        static const INT32 invalidSocket = -1;
+        bool ok;
         static void expectComerr()
         {
             m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);

@@ -37,8 +37,11 @@ namespace test
         }
 
     private:
-        M_Reader() : M_Base("Reader") {}
-        const ComSetup setup = { tcpPortFld, tcpPortGui, tcpPortCtrl, tcpTimeout };
+        M_Reader() :
+            M_Base("Reader"),
+            setup(tcpPortFld, tcpPortGui, tcpPortCtrl, tcpTimeout)
+        {}
+        const ComSetup setup;
     };
 } // namespace
 #endif // _H

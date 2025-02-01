@@ -39,12 +39,12 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataGui{stateToGui, ubkToGui};
+            const ComData dataGui(stateToGui, ubkToGui);
             if (stateToGui != NO_PARAM)
             {
                 m_Mapper().expectToGui(mId, dataGui);
             }
-            mSUT().fromFld(ComData{fldState, fldUbk});
+            mSUT().fromFld(ComData(fldState, fldUbk));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }
@@ -59,14 +59,14 @@ namespace test
         {
             SUBSTEPS()
             STEP(1)
-            const ComData dataFld{stateToFld, PARAM_UNDEF};
-            const ComData dataGui{stateToGui, ubkToGui};
+            const ComData dataFld(stateToFld, PARAM_UNDEF);
+            const ComData dataGui(stateToGui, ubkToGui);
             if (stateToFld != NO_PARAM)
             {
                 m_Mapper().expectToFld(mId, dataFld);
                 m_Mapper().expectToGui(mId, dataGui);
             }
-            mSUT().fromGui(ComData{guiState, PARAM_UNDEF});
+            mSUT().fromGui(ComData(guiState, PARAM_UNDEF));
             CHECK_N_CLEAR()
             ENDSTEPS()
         }

@@ -30,8 +30,8 @@ namespace test
     }
 
     //  avoid "not used" warning
-    template<typename ...T>
-    void play(const T&...)
+    template<class T>
+    void play(const T&)
     {}
 
     //  exchangeable non const reference
