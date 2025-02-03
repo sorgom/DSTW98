@@ -30,17 +30,6 @@ else ifeq ($(config),debug)
   gcovapp_config = debug
   gcovtests_config = debug
 
-else ifeq ($(config),98)
-  cpputest_config = 98
-  moduletests_config = 98
-  devtests_config = 98
-  dstw_gen_config = 98
-  dstw_runtime_config = 98
-  systemtests_config = 98
-  dstw_stop_config = 98
-  gcovapp_config = 98
-  gcovtests_config = 98
-
 else
   $(error "invalid configuration $(config)")
 endif
@@ -122,7 +111,6 @@ help:
 	@echo "CONFIGURATIONS:"
 	@echo "  ci"
 	@echo "  debug"
-	@echo "  98"
 	@echo ""
 	@echo "TARGETS:"
 	@echo "   all (default)"

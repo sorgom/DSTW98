@@ -2,10 +2,9 @@
 --  premake5 build settings
 --  ============================================================
 
--- buildoptions_gcc = '-std=c++17 -pedantic-errors -Werror -Wall'
 buildoptions_gcc = '-std=c++98 -pedantic-errors -Werror -Wall'
 
-buildoptions_vs = '/std:c++17 /MP'
+buildoptions_vs = '/MP'
 buildoptions_vs_app = buildoptions_vs .. ' /W4 /wd4100 /wd4103'
 buildoptions_vs_test = buildoptions_vs_app .. ' /wd4127 /D_WINSOCK_DEPRECATED_NO_WARNINGS'
 buildoptions_vs_cpputest = buildoptions_vs_app .. ' /DCPPUTEST_MEM_LEAK_DETECTION_DISABLED /wd4611 /wd4996'
@@ -42,7 +41,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW98'
-    configurations { 'ci', 'debug', '98' }
+    configurations { 'ci', 'debug' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'

@@ -49,13 +49,6 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
 
-else ifeq ($(config),98)
-OBJDIR = ../build/linux/obj/98/gcovapp
-DEFINES +=
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
-
 endif
 
 # Per File Configurations

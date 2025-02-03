@@ -46,9 +46,9 @@ namespace test
     class TestArray : public StackArray<TestData, CAP, sizeof(TestData) + 10>
     {
     public:
-        void add(int v1, int v2 = 0)
+        inline void put(int v1, int v2 = 0)
         {
-            new (this->reserve()) TestData(v1, v2);
+            this->add(TestData(v1, v2));
         }
     };
 
@@ -80,7 +80,7 @@ namespace test
         for (size_t n = 0; n < ta.capacity(); ++n)
         {
             STEP(n)
-            ta.add(2 * ta.capacity() - 2 * n, n);
+            ta.put(2 * ta.capacity() - 2 * n, n);
             L_CHECK_EQUAL(n + 1, ta.size())
         }
         ENDSTEPS()

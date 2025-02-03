@@ -33,53 +33,6 @@ public:
     }
 };
 
-// template <size_t SIZE, size_t CAP>
-// class ByteArray
-// {
-// public:
-//     inline ByteArray(): mSize(0) {}
-
-//     inline static size_t capacity()
-//     {
-//         return CAP;
-//     }
-
-//     inline size_t size() const
-//     {
-//         return mSize;
-//     }
-
-//     PTR at(size_t pos)
-//     {
-//         return mData[pos];
-//     }
-//     CPTR at(size_t pos) const
-//     {
-//         return mData[pos];
-//     }
-
-//     PTR reserve()
-//     {
-//         return mData[mSize++];
-//     }
-
-//     template <class T>
-//     inline void copy(const T& obj)
-//     {
-//         std::memcpy(mData[mSize++], &obj, sizeof(T));
-//     }
-
-//     inline void clear()
-//     {
-//         mSize = 0;
-//     }
-
-// private:
-//     typedef BYTE Segment[SIZE];
-//     Segment mData[CAP];
-//     size_t mSize;
-// };
-
 template <class T, size_t CAP, size_t SIZE = sizeof(T)>
 class StackArray :
     public I_Array<T, CAP>
@@ -102,15 +55,11 @@ public:
         return *reinterpret_cast<T*>(mData[pos]);
     }
 
-    PTR reserve()
+    template <class DT>
+    inline const T& add(const DT& obj)
     {
-        return mData[mSize++];;
-    }
-
-    template <class C>
-    inline void add(const C& obj)
-    {
-        std::memcpy(mData[mSize++], &obj, sizeof(T));
+        std::memcpy(mData[mSize++], &obj, sizeof(DT));
+        return static_cast<const T&>(obj);
     }
 
     inline void clear()
@@ -127,6 +76,8 @@ public:
     {
         return mSize * SIZE;
     }
+
+    NOCOPY(StackArray)
 
 protected:
     typedef BYTE Segment[SIZE];

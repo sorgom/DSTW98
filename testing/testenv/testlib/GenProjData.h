@@ -17,14 +17,14 @@
 #ifndef GENPROJDATA_H
 #define GENPROJDATA_H
 
-#include <ifs/DataTypes.h>
-#include <testlib/NetTest.h>
-#include <testlib/testValues.h>
-#include <testlib/TestLib.h>
-#include <fstream>
-#include <vector>
-#include <setup/Capacity.h>
 #include <BAS/StackArray.h>
+#include <ifs/DataTypes.h>
+#include <setup/Capacity.h>
+#include <testlib/NetTest.h>
+#include <testlib/TestLib.h>
+#include <testlib/testValues.h>
+
+#include <fstream>
 
 namespace test
 {
@@ -50,8 +50,14 @@ namespace test
             items.clear();
             for (size_t n = 0; n < CAP; ++n)
             {
-                const ProjItem item = { genComAddr(CAP - n), { getType(n) } };
+                const ProjItem item = {};
                 items.add(item);
+            }
+            for (size_t n = 0; n < CAP; ++n)
+            {
+                ProjItem& item = items.at(n);
+                genComAddr(item.addr, CAP - n);
+                item.type = getType(n);
             }
         }
 
@@ -76,12 +82,15 @@ namespace test
             if (os.good())
             {
                 os.write(reinterpret_cast<const char*>(&mComSetup), sizeof(mComSetup));
-                os.write((items.data()), items.dsize());
+                for (size_t n = 0; n < items.size(); ++n)
+                {
+                    os.write(reinterpret_cast<const char*>(&items.at(n)), sizeof(ProjItem));
+                }
             }
             os.close();
         }
 
-        ProjItem& at(size_t pos)
+        inline ProjItem& at(size_t pos)
         {
             return items.at(pos);
         }
