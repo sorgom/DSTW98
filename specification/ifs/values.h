@@ -44,10 +44,10 @@ enum E_Param
     PARAM_UNDEF = 255
 };
 
-//  Element types
+//  Element types 21 .. 40
 enum E_ElemType
 {
-    TYPE_LCR = 101,
+    TYPE_LCR = 21,
     TYPE_LCR_UBK,
     TYPE_SEG,
     TYPE_SIG_H,
@@ -57,10 +57,10 @@ enum E_ElemType
     TYPE_TSW
 };
 
-//  SIG states
+//  SIG states 41 .. 60
 enum E_SigState
 {
-    SIG_STATE_H0,
+    SIG_STATE_H0 = 41,
     SIG_STATE_H1,
     SIG_STATE_N0,
     SIG_STATE_N1,
@@ -82,10 +82,10 @@ enum E_SigState
     SIG_STATE_UNDEF = PARAM_UNDEF
 };
 
-//  TSW commands and states
+//  TSW states 61 .. 70
 enum E_TswState
 {
-    TSW_STATE_LEFT,
+    TSW_STATE_LEFT = 61,
     TSW_STATE_RIGHT,
     TSW_STATE_DEFECT,
     TSW_STATE_WAIT_LEFT,
@@ -93,17 +93,18 @@ enum E_TswState
     TSW_STATE_UNDEF = PARAM_UNDEF
 };
 
+//  TSW commands 71 .. 80
 enum E_TswCmd
 {
-    TSW_CMD_WU = 21,
+    TSW_CMD_WU = 71,
     TSW_CMD_LEFT,
     TSW_CMD_RIGHT
 };
 
-//  LCR states
+//  LCR states 81 .. 90
 enum E_LcrState
 {
-    LCR_STATE_OPEN,
+    LCR_STATE_OPEN = 81,
     LCR_STATE_CLOSED,
     LCR_STATE_WAIT_OPEN,
     LCR_STATE_WAIT_CLOSED,
@@ -111,18 +112,19 @@ enum E_LcrState
     LCR_STATE_UNDEF = PARAM_UNDEF
 };
 
+//  LCR UBK states 90 .. 100
 enum E_LcrUbkState
 {
-    LCR_UBK_STATE_OCCUPIED,
+    LCR_UBK_STATE_OCCUPIED = 91,
     LCR_UBK_STATE_FREE,
     LCR_UBK_STATE_DEFECT,
     LCR_UBK_STATE_UNDEF = PARAM_UNDEF
 };
 
-//  COM control
+//  COM control 101 .. 110
 enum E_ComCtrl
 {
-    COM_CTRL_STOP = 131,
+    COM_CTRL_STOP = 101,
     COM_CTRL_PING,
     COM_CTRL_RE_GUI
 };

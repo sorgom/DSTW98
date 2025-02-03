@@ -62,7 +62,7 @@ private:
     template <class T>
     inline void add(size_t pos)
     {
-        new (mElems.reserve()) T(pos);
+        mElems.add(T(pos));
     }
 
 };
