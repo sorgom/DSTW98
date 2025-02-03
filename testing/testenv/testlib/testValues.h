@@ -17,36 +17,17 @@
 #include <codebase/BaseTypes.h>
 #include <ifs/values.h>
 
-#ifndef TEST_NUM_TSW
-#define TEST_NUM_TSW 101
-#endif
-
-#ifndef TEST_NUM_SIG
-#define TEST_NUM_SIG 102
-#endif
-
-#ifndef TEST_NUM_LCR
-#define TEST_NUM_LCR 103
-#endif
-
-#ifndef TEST_NUM_SEG
-#define TEST_NUM_SEG 104
-#endif
-
 namespace test
 {
-    enum E_TcpVals
-    {
-        tcpPortFld  = 8080,
-        tcpPortGui  = 8081,
-        tcpPortCtrl = 8082,
-        tcpTimeout  = 10
-    };
+    //  was: enum enum E_TcpVals
+    static const UINT16 tcpPortFld = 8080;
+    static const UINT16 tcpPortGui = 8081;
+    static const UINT16 tcpPortCtrl = 8082;
+    static const UINT16 tcpTimeout = 10;
 
-    enum E_TestVals
-    {
-        NO_PARAM = PARAM_UNDEF - 1,
-        PARAM_UNKNOWN = PARAM_UNDEF - 2
-    };
+    //  was: enum enum E_TestVals
+    static const UINT8 NO_PARAM = PARAM_UNDEF - 1;
+    static const UINT8 PARAM_UNKNOWN = PARAM_UNDEF - 2;
+
 } // namespace
 #endif // _H

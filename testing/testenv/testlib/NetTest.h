@@ -18,10 +18,6 @@ public:
     {
         return adapt16(h);
     }
-    inline static UINT16 toN(const E_TcpVals h)
-    {
-        return adapt16(h);
-    }
     inline static UINT16 toH(const UINT16 n)
     {
         return adapt16(n);
