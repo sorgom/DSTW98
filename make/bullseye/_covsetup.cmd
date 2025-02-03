@@ -17,8 +17,8 @@ set myReportsDir=%reportsDir%\%_me%
 set pyDir=%subsDir%\sompy
 set vsSolution=%makeDir%\DSTW.sln
 set exeDir=%buildDir%\windows
-set buildCtrl=%myReportsDir%\build.txt
-set covCtrl=%myReportsDir%\coverage.txt
+set buildLog=%myReportsDir%\build.txt
+set covLog=%myReportsDir%\coverage.txt
 set covHtmlDir=%myReportsDir%\html
 set testReport=%myReportsDir%\test_errors.txt
 
@@ -28,7 +28,7 @@ set excludeFile=%myDir%\_covexclude.txt
 set covTodoTxt=%buildDir%\%_me%_todo.txt
 
 set optsTxt=%myDir%\_covoptions.txt
-set vsCall=msbuild %vsSolution%
+set vsCall=msbuild -m %vsSolution%
 set tmpCmd=%buildDir%\tmp.cmd
 set projFile=dstw.proj
 

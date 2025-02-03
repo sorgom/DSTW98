@@ -7,6 +7,7 @@
 #ifndef STACK_ARRAY_H
 #define STACK_ARRAY_H
 
+#include <codebase/checks.h>
 #include <ifs/DataTypes.h>
 #include <BAS/coding.h>
 #include <cstring>
@@ -56,10 +57,16 @@ public:
     }
 
     template <class DT>
-    inline const T& add(const DT& obj)
+    inline void add(const DT& obj)
     {
+        //  static check if object size fits into segment
+        typedef CHAR CT[sizeof(DT) <= SIZE ? 1 : -1];
+        const CT ct = {};
+        use(ct);
+        //  static check if object is derived from T
+        const T& t = static_cast<const T&>(obj);
+        use(t);
         std::memcpy(mData[mSize++], &obj, sizeof(DT));
-        return static_cast<const T&>(obj);
     }
 
     inline void clear()
@@ -78,7 +85,6 @@ public:
     }
 
     NOCOPY(StackArray)
-
 protected:
     typedef BYTE Segment[SIZE];
     Segment mData[CAP];

@@ -14,4 +14,8 @@
 #define ENUM_CHECK(VAL) \
     inline bool enumCheck ## VAL() { return VAL <= 255; }
 
+//  prevent from unused variable warning
+template <class T>
+void use(const T&) {}
+
 #endif // _H

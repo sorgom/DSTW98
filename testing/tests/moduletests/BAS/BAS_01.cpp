@@ -9,58 +9,52 @@
 namespace test
 {
 
-    TEST_GROUP_BASE(BAS_01, TestGroupBase) {};
-
-    // //  test type: equivalence class test
-    // //  ByteArray
-    // TEST(BAS_01, T01)
-    // {
-    //     STEP(1)
-    //     ByteArray<10, 5> ba;
-    //     L_CHECK_EQUAL(0, ba.size())
-
-    //     STEP(2)
-    //     SUBSTEPS()
-    //     for (size_t n = 0; n < ba.capacity(); ++n)
-    //     {
-    //         STEP(n)
-    //         ba.reserve();
-    //         L_CHECK_EQUAL(n + 1, ba.size())
-    //     }
-    //     ENDSTEPS()
-    //     L_CHECK_EQUAL(ba.capacity(), ba.size())
-
-    //     STEP(3)
-    //     ba.clear();
-    //     L_CHECK_EQUAL(0, ba.size())
-    // }
-
-    struct TestData
+    TEST_GROUP_BASE(BAS_01, TestGroupBase)
     {
-        const size_t v1;
-        const size_t v2;
-        inline TestData(size_t v1, size_t v2 = 0) : v1(v1), v2(v2) {}
-    };
-
-    template <size_t CAP>
-    class TestArray : public StackArray<TestData, CAP, sizeof(TestData) + 10>
-    {
-    public:
-        inline void put(int v1, int v2 = 0)
+    protected:
+        INT32 genv(const INT32 n)
         {
-            this->add(TestData(v1, v2));
+            return (n % 2 == 0 ? n : -n);
         }
     };
 
-    template <size_t CAP>
-    class TestIndex : public StackIndex<TestData, CAP, size_t>
+    struct I_Data
+    {
+        virtual INT32 v1() const = 0;
+        virtual INT32 v2() const = 0;
+        virtual ~I_Data() {}
+    };
+
+    struct BaseData : I_Data
+    {
+        inline INT32 v1() const { return m1; }
+        virtual INT32 v2() const { return 0; }
+        inline BaseData(INT32 v1) : m1(v1) {}
+    private:
+        const INT32 m1;
+    };
+
+    struct ExtendedData : BaseData
+    {
+        inline INT32 v2() const { return m2; }
+        inline ExtendedData(INT32 v1, INT32 v2 = 0) : BaseData(v1), m2(v2) {}
+    private:
+        const INT32 m2;
+    };
+
+    template <INT32 CAP>
+    class TestArray : public StackArray<I_Data, CAP, sizeof(ExtendedData)>
+    {};
+
+    template <INT32 CAP>
+    class TestIndex : public StackIndex<I_Data, CAP, INT32>
     {
     public:
-        inline TestIndex(const TestArray<CAP>& array) : StackIndex<TestData, CAP, size_t>(array) {}
+        inline TestIndex(const TestArray<CAP>& array) : StackIndex<I_Data, CAP, INT32>(array) {}
     protected:
-        size_t getKey(const TestData& td) const
+        INT32 getKey(const I_Data& td) const
         {
-            return td.v1;
+            return td.v1();
         }
     };
 
@@ -70,30 +64,27 @@ namespace test
     {
         STEP(1)
         bool ok = false;
-        TestArray<5> ta;
-        TestIndex<5> ti(ta);
+        #define CAP 5
+        TestArray<CAP> ta;
+        TestIndex<CAP> ti(ta);
 
         L_CHECK_EQUAL(0, ta.size())
 
         STEP(2)
-        SUBSTEPS()
-        for (size_t n = 0; n < ta.capacity(); ++n)
+        for (INT32 n = 0; n < CAP; ++n)
         {
-            STEP(n)
-            ta.put(2 * ta.capacity() - 2 * n, n);
-            L_CHECK_EQUAL(n + 1, ta.size())
+            ta.add(ExtendedData(genv(n), n));
         }
-        ENDSTEPS()
-        L_CHECK_EQUAL(ta.capacity(), ta.size())
+        L_CHECK_EQUAL(CAP, ta.size())
 
         STEP(3)
         SUBSTEPS()
-        for (size_t n = 0; n < ta.capacity(); ++n)
+        for (INT32 n = 0; n < CAP; ++n)
         {
             STEP(n)
-            const TestData& td = ta.at(n);
-            L_CHECK_EQUAL(2 * ta.capacity() - 2 * n, td.v1)
-            L_CHECK_EQUAL(n, td.v2)
+            const I_Data& d = ta.at(n);
+            L_CHECK_EQUAL(genv(n), d.v1())
+            L_CHECK_EQUAL(n, d.v2())
         }
         ENDSTEPS()
 
@@ -103,13 +94,13 @@ namespace test
 
         STEP(5)
         SUBSTEPS()
-        for (size_t n = 0; n < ta.capacity(); ++n)
+        for (INT32 n = 0; n < CAP; ++n)
         {
             STEP(n)
-            const size_t key = 2 * ta.capacity() - 2 * n;
+            const INT32 key = genv(n);
             const PosRes pr = ti.find(key);
             L_CHECK_TRUE(pr.valid)
-            L_CHECK_EQUAL(n, pr.pos)
+            L_CHECK_EQUAL(n, static_cast<INT32>(pr.pos))
         }
         ENDSTEPS()
     }
