@@ -155,11 +155,11 @@ namespace test
     TEST(TSW_01, T02)
     {
         STEP(1)
-        m_Ctrl().expectCtrl(COMP_TSW, RET_ERR_MATCH);
+        m_Ctrl().expectLog(COMP_TSW, RET_ERR_MATCH);
         CMD(PARAM_UNKNOWN);
 
         STEP(2)
-        m_Ctrl().expectCtrl(COMP_TSW, RET_ERR_MATCH);
+        m_Ctrl().expectLog(COMP_TSW, RET_ERR_MATCH);
         FLD(PARAM_UNKNOWN);
     }
 }

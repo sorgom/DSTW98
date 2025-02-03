@@ -25,7 +25,6 @@ public:
     inline void clear()
     {
         mData.clear();
-        mIndex.clear();
     }
 
     inline void add(const ComAddr& addr)

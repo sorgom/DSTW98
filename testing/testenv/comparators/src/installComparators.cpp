@@ -15,5 +15,6 @@ namespace test
         ADD_COMP(ComAddr)
         ADD_COMP(ComData)
         ADD_COMP(ComTele)
+        ADD_COMP(ProjItem)
     }
 }

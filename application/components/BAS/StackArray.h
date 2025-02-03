@@ -74,16 +74,6 @@ public:
         mSize = 0;
     }
 
-    inline const BYTE* data() const
-    {
-        return mData;
-    }
-
-    inline size_t dsize() const
-    {
-        return mSize * SIZE;
-    }
-
     NOCOPY(StackArray)
 protected:
     typedef BYTE Segment[SIZE];
@@ -103,11 +93,6 @@ public:
     {
         sort();
         return dupCnt() == 0;
-    }
-
-    inline void clear()
-    {
-        std::memset(mIdx, 0, sizeof(mIdx));
     }
 
     //  find data position by key

@@ -14,7 +14,11 @@ namespace test
     protected:
         INT32 genv(const INT32 n)
         {
-            return (n % 2 == 0 ? n : -n);
+            return (n % 3 == 0 ? n : -n);
+        }
+        INT32 gendup(const INT32 n)
+        {
+            return (n % 3 == 0 ? 123 : -n);
         }
     };
 
@@ -69,13 +73,19 @@ namespace test
         TestIndex<CAP> ti(ta);
 
         L_CHECK_EQUAL(0, ta.size())
+        L_CHECK_EQUAL(CAP, ta.capacity())
 
         STEP(2)
+        SUBSTEPS()
         for (INT32 n = 0; n < CAP; ++n)
         {
+            STEP(n)
+            L_CHECK_TRUE(ta.hasSpace())
             ta.add(ExtendedData(genv(n), n));
         }
+        ENDSTEPS()
         L_CHECK_EQUAL(CAP, ta.size())
+        L_CHECK_FALSE(ta.hasSpace())
 
         STEP(3)
         SUBSTEPS()
@@ -103,5 +113,44 @@ namespace test
             L_CHECK_EQUAL(n, static_cast<INT32>(pr.pos))
         }
         ENDSTEPS()
+
+        STEP(6)
+        {
+            const PosRes pr = ti.find(INT32_MAX);
+            L_CHECK_FALSE(pr.valid)
+        }
+        {
+            const PosRes pr = ti.find(INT32_MIN);
+            L_CHECK_FALSE(pr.valid)
+        }
+        STEP(7)
+        ta.clear();
+        L_CHECK_EQUAL(0, ta.size())
+        {
+            const PosRes pr = ti.find(0);
+            L_CHECK_FALSE(pr.valid)
+        }
+        for (INT32 n = 0; n < CAP; ++n)
+        {
+            ta.add(ExtendedData(n, n));
+        }
+        L_CHECK_EQUAL(CAP, ta.size())
+
+        STEP(8)
+        ok = ti.index();
+        L_CHECK_TRUE(ok)
+
+        STEP(9)
+        ta.clear();
+        L_CHECK_EQUAL(0, ta.size())
+        for (INT32 n = 0; n < CAP; ++n)
+        {
+            ta.add(ExtendedData(gendup(n), n));
+        }
+        L_CHECK_EQUAL(CAP, ta.size())
+
+        STEP(10)
+        ok = ti.index();
+        L_CHECK_FALSE(ok)
     }
 } // namespace

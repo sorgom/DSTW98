@@ -3,16 +3,15 @@
 -   replace standard in premake
 
 ## coding (helpers)
--   replace BaseTypes
--   replace enums by static const UINT8
--   replace static asserts by module tests
--   replace static size asserts by module tests
+-   replace BaseTypes (V)
+-   replace enums by static const UINT8 (V)
+-   replace static asserts by 98 compatible (V)
 
 ## static storage
 ### ByteArray / StackArray / Index
 ### general
 #### CAPACITY
-- use CAPACITY for all StaticArray classes?
+- use CAPACITY for all StaticArray classes (V)
 ## one polymorphic Provider
 ### Provider class
 - StaticArray of I_ELEM
@@ -20,7 +19,14 @@
     - ClassBytes Template
 
 ### Dispatcher class
-- reduction to
+- reduction to Mapper
+
+### Provider / Mapper Class
+- change:
+    -   Provider gets ProjItem
+    -   adds to Mapper with position ComAddr
+    -   Mapper checks position sync
+    -   Mapper interface: ComAddr, position
 
 ## general issues
 -   why does VS react differently on TestSteps line type?

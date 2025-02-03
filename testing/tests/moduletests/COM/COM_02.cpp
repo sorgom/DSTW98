@@ -16,7 +16,7 @@ namespace test
         bool ok;
         static void expectComerr()
         {
-            m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);
+            m_Ctrl().expectLog(COMP_COM, RET_ERR_COM);
         }
     };
 

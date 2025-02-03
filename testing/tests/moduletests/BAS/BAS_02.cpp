@@ -10,7 +10,7 @@
 namespace test
 {
 
-    #define TEST_CAP 10
+    #define CAP 10
 
     TEST_GROUP_BASE(BAS_02, TestGroupBase) {};
 
@@ -18,9 +18,9 @@ namespace test
     //  add and find data
     TEST(BAS_02, T01)
     {
-        AddrMap<TEST_CAP> indx;
+        AddrMap<CAP> indx;
 
-        const UINT8 tSize = TEST_CAP;
+        const UINT8 tSize = CAP;
         const UINT8 tOffs = tSize - 1;
         bool ok = false;
 
@@ -30,9 +30,12 @@ namespace test
         for (UINT8 n = 0; n < tSize; ++n)
         {
             STEP(n)
+            L_CHECK_TRUE(indx.hasSpace())
             indx.add(genComAddr(tOffs - n));
         }
         ENDSTEPS()
+        L_CHECK_EQUAL(CAP, indx.size())
+        L_CHECK_FALSE(indx.hasSpace())
 
         STEP(2)
         ok = indx.index();
@@ -53,5 +56,9 @@ namespace test
             L_CHECK_TRUE(eq)
         }
         ENDSTEPS()
+
+        STEP(4)
+        indx.clear();
+        L_CHECK_EQUAL(0, indx.size())
     }
 } // namespace

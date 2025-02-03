@@ -7,9 +7,6 @@
 #include <SYS/Reader.h>
 #include <SYS/Ctrl.h>
 
-//  TODO
-#if 0
-
 namespace test
 {
     class TestGroupRDR : public TestGroupBase
@@ -24,24 +21,7 @@ namespace test
         void expectFail()
         {
             expectClear();
-            m_Ctrl().expectCtrl(COMP_SYS, RET_ERR_STARTUP);
-        }
-
-        void wrongSize(int dev, const UINT32 n = 1)
-        {
-            std::ofstream os(fname, std::ios::binary);
-            const UINT32 nums[] = { n, n, n, n };
-            os.write(reinterpret_cast<const CHAR*>(nums), 4 * sizeof(UINT32));
-
-            const size_t wSize = sizeof(ProjItem) * n * 4 + sizeof(ComSetup) + dev;
-
-            for (size_t i = 0; i < wSize; ++i)
-            {
-                os << ' ';
-            }
-            os.close();
-            expectFail();
-            Reader::instance().read(fname);
+            m_Ctrl().expectLog(COMP_SYS, RET_ERR_STARTUP);
         }
     };
 
@@ -60,9 +40,9 @@ namespace test
         STEP(1)
         expectClear();
         GenProjData<> data;
-        m_().expectLoad(data.numTSW());
-        m_SIG_Provider().expectLoad(data.numSIG());
-        m_LCR_Provider().expectLoad(data.numLCR());
+        m_Provider().expectAdd(CAPACITY);
+        m_Mapper().expectAdd(CAPACITY);
+        m_Ctrl().expectOk(CAPACITY, true);
         m_Mapper().expectIndex();
         data.dump(fname);
         rdr.read(fname);
@@ -84,65 +64,64 @@ namespace test
         I_Reader& rdr = Reader::instance();
 
         STEP(1)
+        expectClear();
         expectFail();
         rdr.read("does_not_exist.dat");
         CHECK_N_CLEAR()
     }
 
-    //  test type: equivalence class test
-    //  failure: file size mismatch
-    TEST(SYS_01, T03)
-    {
-        STEP(1)
-        //  too small
-        wrongSize(-1);
-        CHECK_N_CLEAR()
+    // //  test type: equivalence class test
+    // //  failure: file size mismatch
+    // TEST(SYS_01, T03)
+    // {
+    //     STEP(1)
+    //     //  too small
+    //     wrongSize(-1);
+    //     CHECK_N_CLEAR()
 
-        STEP(2)
-        //  too large
-        wrongSize(+1);
-        CHECK_N_CLEAR()
+    //     STEP(2)
+    //     //  too large
+    //     wrongSize(+1);
+    //     CHECK_N_CLEAR()
 
-        STEP(3)
-        //  no data
-        wrongSize(0, 0);
-        CHECK_N_CLEAR()
-    }
+    //     STEP(3)
+    //     //  no data
+    //     wrongSize(0, 0);
+    //     CHECK_N_CLEAR()
+    // }
 
-    //  test type: equivalence class test
-    //  failure: file smaller than header
-    TEST(SYS_01, T04)
-    {
-        SETUP()
-        I_Reader& rdr = Reader::instance();
+    // //  test type: equivalence class test
+    // //  failure: file smaller than header
+    // TEST(SYS_01, T04)
+    // {
+    //     SETUP()
+    //     I_Reader& rdr = Reader::instance();
 
-        std::ofstream os(fname, std::ios::binary);
-        for (size_t n = 0; n < 4 * sizeof(UINT32) - 1; ++n)
-        {
-            os << ' ';
-        }
-        os.close();
+    //     std::ofstream os(fname, std::ios::binary);
+    //     for (size_t n = 0; n < 4 * sizeof(UINT32) - 1; ++n)
+    //     {
+    //         os << ' ';
+    //     }
+    //     os.close();
 
-        STEP(1)
-        expectFail();
-        rdr.read(fname);
-        CHECK_N_CLEAR()
-    }
+    //     STEP(1)
+    //     expectFail();
+    //     rdr.read(fname);
+    //     CHECK_N_CLEAR()
+    // }
 
-    //  test type: equivalence class test
-    //  log instance, log, maxerr
-    TEST(SYS_01, T05)
-    {
-        STEP(1)
-        I_Ctrl& logm = Ctrl::instance();
-        logm.log(COMP_SYS, RET_ERR_MATCH);
-        logm.log(COMP_SYS, RET_ERR_STARTUP);
+    // //  test type: equivalence class test
+    // //  log instance, log, maxerr
+    // TEST(SYS_01, T05)
+    // {
+    //     STEP(1)
+    //     I_Ctrl& logm = Ctrl::instance();
+    //     logm.log(COMP_SYS, RET_ERR_MATCH);
+    //     logm.log(COMP_SYS, RET_ERR_STARTUP);
 
-        STEP(2)
-        const I_Ctrl& logc = Ctrl::instance();
-        const E_Ret ret = logc.maxerr();
-        L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
-    }
+    //     STEP(2)
+    //     const I_Ctrl& logc = Ctrl::instance();
+    //     const E_Ret ret = logc.maxerr();
+    //     L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
+    // }
 }
-
-#endif // TODO

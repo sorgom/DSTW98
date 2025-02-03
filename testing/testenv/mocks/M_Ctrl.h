@@ -21,7 +21,7 @@ namespace test
         {
             call("log").PARAM(comp).PARAM(ret);
         }
-        inline void expectCtrl(E_Comp comp, E_Ret ret) const
+        inline void expectLog(E_Comp comp, E_Ret ret) const
         {
             expect("log").PARAM(comp).PARAM(ret);
         }
@@ -59,7 +59,12 @@ namespace test
         }
         inline void expectOk(bool ret = true) const
         {
-            expect("ok").AND_RETURN(ret);
+            expect("ok").AND_RETURN_BOOL(ret);
+        }
+
+        inline void expectOk(UINT16 num, bool ret = true) const
+        {
+            expect(num, "ok").AND_RETURN_BOOL(ret);
         }
     private:
         M_Ctrl() : M_Base("Ctrl") {}

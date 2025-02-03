@@ -23,12 +23,12 @@ namespace test
 
         void expectErrStartup()
         {
-            m_Ctrl().expectCtrl(COMP_COM, RET_ERR_STARTUP);
+            m_Ctrl().expectLog(COMP_COM, RET_ERR_STARTUP);
         }
 
         void expectErrRuntime()
         {
-            m_Ctrl().expectCtrl(COMP_COM, RET_ERR_COM);
+            m_Ctrl().expectLog(COMP_COM, RET_ERR_COM);
         }
     };
 
