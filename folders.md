@@ -4,10 +4,6 @@
 │   ├── CppUTest
 │   │   ├── include
 │   │   └── src
-├── CppUTestSteps
-│   ├── TestSteps
-│   │   ├── include
-│   │   └── src
 ├── application
 │   ├── components
 │   │   ├── BAS
