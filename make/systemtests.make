@@ -18,6 +18,15 @@ endif
 # Configurations
 # #############################################
 
+ifeq ($(origin CC), default)
+  CC = gcc
+endif
+ifeq ($(origin CXX), default)
+  CXX = g++
+endif
+ifeq ($(origin AR), default)
+  AR = ar
+endif
 RESCOMP = windres
 TARGETDIR = ../build/linux/bin
 TARGET = $(TARGETDIR)/systemtests
