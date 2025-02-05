@@ -70,11 +70,10 @@ namespace test
             static const UINT8 types[] = {
                 TYPE_LCR,
                 TYPE_LCR_UBK,
-                TYPE_SEG,
+                // TYPE_SEG,
                 TYPE_SIG_H,
                 TYPE_SIG_H_N,
                 TYPE_SIG_N,
-                TYPE_SIG_S,
                 TYPE_TSW
             };
             return types[n % sizeof(types)];
@@ -112,6 +111,10 @@ namespace test
         inline UINT8 type(size_t pos)
         {
             return items.at(pos).type;
+        }
+        inline const ComAddr& addr(size_t pos)
+        {
+            return items.at(pos).addr;
         }
 
     private:

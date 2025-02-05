@@ -31,7 +31,7 @@ namespace test
     TEST_GROUP_BASE(SYS_01, TestGroupRDR) {};
 
     //  test type: equivalence class test
-    //  successfully load data
+    //  Reader: successfully load data
     TEST(SYS_01, T01)
     {
         SETUP()
@@ -68,7 +68,7 @@ namespace test
     }
 
     //  test type: equivalence class test
-    //  failure: file does not exist
+    //  Reader: file does not exist
     TEST(SYS_01, T02)
     {
         SETUP()
@@ -82,7 +82,7 @@ namespace test
     }
 
     //  test type: equivalence class test
-    //  data size errors
+    //  Reader: data size errors
     TEST(SYS_01, T03)
     {
         SETUP()
@@ -114,58 +114,31 @@ namespace test
         CHECK_N_CLEAR()
     }
 
-// //  test type: equivalence class test
-    // //  failure: file size mismatch
-    // TEST(SYS_01, T03)
-    // {
-    //     STEP(1)
-    //     //  too small
-    //     wrongSize(-1);
-    //     CHECK_N_CLEAR()
+    //  test type: equivalence class test
+    //  log instance, log, maxerr
+    TEST(SYS_01, T05)
+    {
+        SETUP()
+        I_Ctrl& ctrl = Ctrl::instance();
+        const I_Ctrl& ctrlc = Ctrl::instance();
 
-    //     STEP(2)
-    //     //  too large
-    //     wrongSize(+1);
-    //     CHECK_N_CLEAR()
+        STEP(1)
+        ctrl.clear();
+        CHECK_N_CLEAR()
+        L_CHECK_TRUE(ctrlc.ok())
 
-    //     STEP(3)
-    //     //  no data
-    //     wrongSize(0, 0);
-    //     CHECK_N_CLEAR()
-    // }
+        STEP(2)
+        ctrl.log(COMP_SYS, RET_ERR_MATCH);
+        ctrl.log(COMP_SYS, RET_ERR_STARTUP);
+        CHECK_N_CLEAR()
+        L_CHECK_FALSE(ctrlc.ok())
+        L_CHECK_EQUAL(RET_ERR_STARTUP, ctrlc.maxerr())
 
-    // //  test type: equivalence class test
-    // //  failure: file smaller than header
-    // TEST(SYS_01, T04)
-    // {
-    //     SETUP()
-    //     I_Reader& rdr = Reader::instance();
-
-    //     std::ofstream os(fname, std::ios::binary);
-    //     for (size_t n = 0; n < 4 * sizeof(UINT32) - 1; ++n)
-    //     {
-    //         os << ' ';
-    //     }
-    //     os.close();
-
-    //     STEP(1)
-    //     expectFail();
-    //     rdr.read(fname);
-    //     CHECK_N_CLEAR()
-    // }
-
-    // //  test type: equivalence class test
-    // //  log instance, log, maxerr
-    // TEST(SYS_01, T05)
-    // {
-    //     STEP(1)
-    //     I_Ctrl& logm = Ctrl::instance();
-    //     logm.log(COMP_SYS, RET_ERR_MATCH);
-    //     logm.log(COMP_SYS, RET_ERR_STARTUP);
-
-    //     STEP(2)
-    //     const I_Ctrl& logc = Ctrl::instance();
-    //     const E_Ret ret = logc.maxerr();
-    //     L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
-    // }
+        STEP(1)
+        ctrl.clear();
+        L_CHECK_TRUE(ctrlc.ok())
+        ctrl.stop();
+        CHECK_N_CLEAR()
+        L_CHECK_FALSE(ctrlc.ok())
+    }
 }

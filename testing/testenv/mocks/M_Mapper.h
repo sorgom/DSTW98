@@ -33,11 +33,11 @@ namespace test
             expect("index");
         }
 
-        inline void add(size_t pos, const ComAddr addr)
+        inline void add(size_t pos, const ComAddr& addr)
         {
             call("add").PARAM(pos).TPARAM(ComAddr, addr);
         }
-        inline void expectAdd(size_t pos, const ComAddr addr) const
+        inline void expectAdd(size_t pos, const ComAddr& addr) const
         {
             expect("add").PARAM(pos).TPARAM(ComAddr, addr);
         }

@@ -5,7 +5,7 @@
 
 INSTANCE_DEF(Mapper)
 
-void Mapper::add(const size_t pos, const ComAddr addr)
+void Mapper::add(const size_t pos, const ComAddr& addr)
 {
     if (mMap.hasSpace() and pos == mMap.size())
     {

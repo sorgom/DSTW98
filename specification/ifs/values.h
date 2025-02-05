@@ -49,8 +49,7 @@ static const UINT8 TYPE_SEG = 23;
 static const UINT8 TYPE_SIG_H = 24;
 static const UINT8 TYPE_SIG_H_N = 25;
 static const UINT8 TYPE_SIG_N = 26;
-static const UINT8 TYPE_SIG_S = 27;
-static const UINT8 TYPE_TSW = 28;
+static const UINT8 TYPE_TSW = 27;
 
 //  SIG states 41 .. 60
 //  was: enum enum E_SigState

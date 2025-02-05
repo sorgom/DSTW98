@@ -1,10 +1,10 @@
-#include <SYS/Reader.h>
+#include <BAS/Net.h>
 #include <ifs/DataTypes.h>
+#include <setup/Capacity.h>
 #include <SYS/IL.h>
+#include <SYS/Reader.h>
 
 #include <fstream>
-#include <BAS/Net.h>
-#include <setup/Capacity.h>
 
 INSTANCE_DEF(Reader)
 
