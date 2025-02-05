@@ -45,7 +45,7 @@ static const UINT8 PARAM_UNDEF = 255;
 //  was: enum enum E_ElemType
 static const UINT8 TYPE_LCR = 21;
 static const UINT8 TYPE_LCR_UBK = 22;
-static const UINT8 TYPE_SEG = 23;
+static const UINT8 TYPE_SEG = 23; //  not used
 static const UINT8 TYPE_SIG_H = 24;
 static const UINT8 TYPE_SIG_H_N = 25;
 static const UINT8 TYPE_SIG_N = 26;
