@@ -36,17 +36,17 @@ namespace test
     {
         SETUP()
         I_Reader& rdr = Reader::instance();
+        GenProjData<> data(fname);
+        data.dump();
 
         STEP(1)
         expectClear();
-        GenProjData<> data(fname);
         for (size_t n = 0; n < CAPACITY; ++n)
         {
             m_Provider().expectAdd(data.at(n));
             m_Ctrl().expectOk();
         }
         m_Mapper().expectIndex();
-        data.dump();
         rdr.read(fname);
         CHECK_N_CLEAR()
 
@@ -56,6 +56,15 @@ namespace test
         L_CHECK_EQUAL(tcpPortGui,  cs.portGui)
         L_CHECK_EQUAL(tcpPortCtrl, cs.portCtrl)
         L_CHECK_EQUAL(tcpTimeout,  cs.timeout)
+
+        STEP(3)
+        //  Ctrl reports error
+        expectClear();
+        m_Provider().expectAdd(data.at(0));
+        m_Ctrl().expectOk(false);
+        expectFail();
+        rdr.read(fname);
+        CHECK_N_CLEAR()
     }
 
     //  test type: equivalence class test
@@ -72,7 +81,40 @@ namespace test
         CHECK_N_CLEAR()
     }
 
-    // //  test type: equivalence class test
+    //  test type: equivalence class test
+    //  data size errors
+    TEST(SYS_01, T03)
+    {
+        SETUP()
+        I_Reader& rdr = Reader::instance();
+        GenProjData<> data(fname);
+
+        STEP(1)
+        // file smaller than header
+        data.dumpTooSmall();
+        expectClear();
+        expectFail();
+        rdr.read(fname);
+        CHECK_N_CLEAR()
+
+        STEP(2)
+        // too many items announced
+        data.dump(CAPACITY + 1);
+        expectClear();
+        expectFail();
+        rdr.read(fname);
+        CHECK_N_CLEAR()
+
+        STEP(3)
+        // less items than announced
+        data.dump(CAPACITY, CAPACITY - 1);
+        expectClear();
+        expectFail();
+        rdr.read(fname);
+        CHECK_N_CLEAR()
+    }
+
+// //  test type: equivalence class test
     // //  failure: file size mismatch
     // TEST(SYS_01, T03)
     // {

@@ -18,6 +18,7 @@ void Reader::read(const CONST_C_STRING filename)
     provider.clear();
 
     std::ifstream is(filename, std::ios::binary);
+    static const UINT32 hsize = sizeof(ComSetup) + sizeof(UINT32);
     bool ok = is.good();
     if (ok)
     {
@@ -35,30 +36,35 @@ void Reader::read(const CONST_C_STRING filename)
 #ifdef _WIN32
 #pragma warning(default:4244)
 #endif
-        const UINT32 dsize = fsize - sizeof(ComSetup);
-        const UINT32 numd = dsize / sizeof(ProjItem);
-        ok =
-            fsize >= sizeof(ComSetup)
-            and (dsize % sizeof(ProjItem)) == 0
-            and numd <= CAPACITY;
+        ok = fsize >= hsize;
 
         if (ok)
         {
-            {
-                UINT16 netVals[4] = {};
-                is.read(reinterpret_cast<CHAR*>(&netVals), sizeof(ComSetup));
-                mComSetup.portFld  = Net::toH(netVals[0]);
-                mComSetup.portGui  = Net::toH(netVals[1]);
-                mComSetup.portCtrl = Net::toH(netVals[2]);
-                mComSetup.timeout  = Net::toH(netVals[3]);
-            }
+            UINT32 numN = 0;
+            is.read(reinterpret_cast<CHAR*>(&numN), sizeof(UINT32));
+            const UINT32 numd = Net::toH(numN);
+            ok =
+                numd <= CAPACITY and
+                (fsize - hsize) >= numd * sizeof(ProjItem);
 
-            for (UINT32 n = 0; ok and n < numd; ++n)
+            if (ok)
             {
-                ProjItem item = {};
-                is.read(reinterpret_cast<CHAR*>(&item), sizeof(ProjItem));
-                provider.add(item);
-                ok = ctrl.ok();
+                {
+                    UINT16 netVals[4] = {};
+                    is.read(reinterpret_cast<CHAR*>(&netVals), sizeof(ComSetup));
+                    mComSetup.portFld  = Net::toH(netVals[0]);
+                    mComSetup.portGui  = Net::toH(netVals[1]);
+                    mComSetup.portCtrl = Net::toH(netVals[2]);
+                    mComSetup.timeout  = Net::toH(netVals[3]);
+                }
+
+                for (UINT32 n = 0; ok and n < numd; ++n)
+                {
+                    ProjItem item = {};
+                    is.read(reinterpret_cast<CHAR*>(&item), sizeof(ProjItem));
+                    provider.add(item);
+                    ok = ctrl.ok();
+                }
             }
         }
     }

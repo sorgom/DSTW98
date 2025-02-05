@@ -56,7 +56,7 @@ namespace test
                 items.add(item);
             }
             //  alternating types
-            //  COM addresses in 
+            //  COM addresses in reversed order
             for (size_t n = 0; n < CAP; ++n)
             {
                 ProjItem& item = items.at(n);
@@ -80,36 +80,26 @@ namespace test
             return types[n % sizeof(types)];
         }
 
-        void dump(size_t more = 0)
+        void dump(UINT32 num = CAPACITY, size_t size = CAPACITY)
         {
-            if openOs()
+            if (openOs())
             {
+                writeNum(num);
                 writeSetup();
-                for (size_t n = 0; n < items.size(); ++n)
+                for (size_t n = 0; (n < size) and  n < CAPACITY; ++n)
                 {
-                    write(n);
-                }
-                for (size_t n = 0; (n < more) and (n < items.size()); ++n)
-                {
-                    write(n);
+                    writeItem(n);
                 }
                 os.close();
             }
         }
+
+        //  file size less than header
         void dumpTooSmall()
         {
-            if openOs()
-            {
-                writeSetup(-1);
-                os.close();
-            }
-        }
-        void dumpOdd()
-        {
-            if openOs()
+            if (openOs())
             {
                 writeSetup();
-                os.write('_');
                 os.close();
             }
         }
@@ -125,20 +115,25 @@ namespace test
         }
 
     private:
-        void write(size_t pos)
+        void writeNum(UINT32 num = CAPACITY)
         {
-            os.write(reinterpret_cast<const char*>(&items.at(pos)), sizeof(ProjItem));
+            const UINT32 numN = NetTest::toN(num);
+            os.write(reinterpret_cast<const char*>(&numN), sizeof(UINT32));
         }
         void writeSetup(INT32 err = 0)
         {
             os.write(reinterpret_cast<const char*>(&setup), sizeof(setup) + err);
+        }
+        void writeItem(size_t pos)
+        {
+            os.write(reinterpret_cast<const char*>(&items.at(pos)), sizeof(ProjItem));
         }
 
         bool openOs()
         {
             os.open(filename);
             const bool ok = os.good();
-            if (not ok) os.close()
+            if (not ok) os.close();
             return ok;
         }
 
