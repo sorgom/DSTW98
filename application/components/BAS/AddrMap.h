@@ -70,7 +70,7 @@ private:
     public:
         inline AddrIndex(const AddrArray& array) : StackIndex<ComAddr, CAP, const ComAddr&>(array) {}
     protected:
-        const ComAddr& getKey(const ComAddr& a) const
+        inline ComAddr& getKey(const ComAddr& a) const
         {
             return a;
         }

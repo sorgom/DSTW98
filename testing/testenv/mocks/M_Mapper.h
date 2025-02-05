@@ -33,13 +33,13 @@ namespace test
             expect("index");
         }
 
-        inline void add(const ProjItem& data)
+        inline void add(size_t pos, const ComAddr addr)
         {
-            call("add").TPARAM(ProjItem, data);
+            call("add").PARAM(pos).TPARAM(ComAddr, addr);
         }
-        inline void expectAdd(const ProjItem& data) const
+        inline void expectAdd(size_t pos, const ComAddr addr) const
         {
-            expect("add").TPARAM(ProjItem, data);
+            expect("add").PARAM(pos).TPARAM(ComAddr, addr);
         }
         inline void expectAdd(const UINT16 numCalls) const
         {

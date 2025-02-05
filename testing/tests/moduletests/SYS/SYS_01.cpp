@@ -39,15 +39,14 @@ namespace test
 
         STEP(1)
         expectClear();
-        GenProjData<> data;
+        GenProjData<> data(fname);
         for (size_t n = 0; n < CAPACITY; ++n)
         {
             m_Provider().expectAdd(data.at(n));
-            m_Mapper().expectAdd(data.at(n));
             m_Ctrl().expectOk();
         }
         m_Mapper().expectIndex();
-        data.dump(fname);
+        data.dump();
         rdr.read(fname);
         CHECK_N_CLEAR()
 

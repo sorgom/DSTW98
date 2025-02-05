@@ -15,8 +15,8 @@ public:
     virtual void clear() = 0;
     virtual void index() = 0;
 
-    //  add ProjItem
-    virtual void add(const ProjItem& data) = 0;
+    //  add COM address, check if position in sync with provider
+    virtual void add(size_t pos, const ComAddr addr) = 0;
 
     //  field state telegrams shall be dispatched to components
     virtual void fromFld(const ComTele& tele) const = 0;

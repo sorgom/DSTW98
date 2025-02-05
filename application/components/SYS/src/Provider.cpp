@@ -9,6 +9,7 @@ void Provider::add(const ProjItem& item)
     if (mElems.hasSpace())
     {
         const size_t pos = mElems.size();
+        bool ok = true;
         switch (item.type)
         {
             case TYPE_LCR:
@@ -30,8 +31,16 @@ void Provider::add(const ProjItem& item)
                 add<TSW>(pos);
                 break;
             default:
-                IL::getCtrl().log(COMP_SYS, RET_ERR_PROJ);
+                ok = false;
                 break;
+        }
+        if (ok)
+        {
+            IL::getMapper().add(pos, item.addr);
+        }
+        else
+        {
+            IL::getCtrl().log(COMP_SYS, RET_ERR_PROJ);
         }
     }
     else

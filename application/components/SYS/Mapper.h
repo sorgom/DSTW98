@@ -18,7 +18,7 @@ public:
     inline void clear() { mMap.clear(); }
     void index();
 
-    void add(const ProjItem& data);
+    void add(size_t pos, const ComAddr addr);
 
     void fromFld(const ComTele& tele) const;
     void fromGui(const ComTele& tele) const;

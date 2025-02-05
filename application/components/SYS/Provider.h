@@ -39,9 +39,6 @@ public:
         mElems.clear();
     }
 
-    // deprecated
-    inline void load(const ProjItem* data, UINT32 num) {}
-
     void add(const ProjItem& data);
 
     INSTANCE_DEC(Provider)

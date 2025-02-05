@@ -14,8 +14,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef GENPROJDATA_H
-#define GENPROJDATA_H
+#ifndef GEN_PROJDATA_H
+#define GEN_PROJDATA_H
 
 #include <BAS/StackArray.h>
 #include <ifs/DataTypes.h>
@@ -32,10 +32,12 @@ namespace test
     class GenProjData
     {
     public:
-        const ComSetup mComSetup;
+        const CONST_C_STRING filename;
+        const ComSetup setup;
 
-        GenProjData() :
-            mComSetup(
+        GenProjData(CONST_C_STRING filename = "dstw.proj") :
+            filename(filename),
+            setup(
                 NetTest::toN(tcpPortFld),
                 NetTest::toN(tcpPortGui),
                 NetTest::toN(tcpPortCtrl),
@@ -53,6 +55,8 @@ namespace test
                 const ProjItem item = {};
                 items.add(item);
             }
+            //  alternating types
+            //  COM addresses in 
             for (size_t n = 0; n < CAP; ++n)
             {
                 ProjItem& item = items.at(n);
@@ -61,7 +65,7 @@ namespace test
             }
         }
 
-        static UINT8 getType(const size_t pos)
+        static UINT8 getType(const size_t n)
         {
             static const UINT8 types[] = {
                 TYPE_LCR,
@@ -73,30 +77,73 @@ namespace test
                 TYPE_SIG_S,
                 TYPE_TSW
             };
-            return types[pos % sizeof(types)];
+            return types[n % sizeof(types)];
         }
 
-        void dump(CONST_C_STRING filename) const
+        void dump(size_t more = 0)
         {
-            std::ofstream os(filename, std::ios::binary);
-            if (os.good())
+            if openOs()
             {
-                os.write(reinterpret_cast<const char*>(&mComSetup), sizeof(mComSetup));
+                writeSetup();
                 for (size_t n = 0; n < items.size(); ++n)
                 {
-                    os.write(reinterpret_cast<const char*>(&items.at(n)), sizeof(ProjItem));
+                    write(n);
                 }
+                for (size_t n = 0; (n < more) and (n < items.size()); ++n)
+                {
+                    write(n);
+                }
+                os.close();
             }
-            os.close();
+        }
+        void dumpTooSmall()
+        {
+            if openOs()
+            {
+                writeSetup(-1);
+                os.close();
+            }
+        }
+        void dumpOdd()
+        {
+            if openOs()
+            {
+                writeSetup();
+                os.write('_');
+                os.close();
+            }
         }
 
-        inline ProjItem& at(size_t pos)
+        inline const ProjItem& at(size_t pos)
         {
             return items.at(pos);
         }
 
-        StackArray<ProjItem, CAP> items;
+        inline UINT8 type(size_t pos)
+        {
+            return items.at(pos).type;
+        }
 
+    private:
+        void write(size_t pos)
+        {
+            os.write(reinterpret_cast<const char*>(&items.at(pos)), sizeof(ProjItem));
+        }
+        void writeSetup(INT32 err = 0)
+        {
+            os.write(reinterpret_cast<const char*>(&setup), sizeof(setup) + err);
+        }
+
+        bool openOs()
+        {
+            os.open(filename);
+            const bool ok = os.good();
+            if (not ok) os.close()
+            return ok;
+        }
+
+        StackArray<ProjItem, CAP> items;
+        std::ofstream os;
         NOCOPY(GenProjData)
     };
 } // namespace

@@ -58,7 +58,6 @@ void Reader::read(const CONST_C_STRING filename)
                 ProjItem item = {};
                 is.read(reinterpret_cast<CHAR*>(&item), sizeof(ProjItem));
                 provider.add(item);
-                mapper.add(item);
                 ok = ctrl.ok();
             }
         }
