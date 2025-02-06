@@ -5,7 +5,7 @@
 
 ### systemtests
 -   main
-    -   Ctrl loop
+    -   Ctrl loop (V)
 -   gen_data
     - parameter n
     - -h

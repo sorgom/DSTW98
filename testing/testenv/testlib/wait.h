@@ -1,13 +1,13 @@
 //  ============================================================
-//  sample proj data generator
+//  wait fo milliseconds
 //  ============================================================
 //  created by Manfred Sorgo
 
-#include <testlib/GenProjData.h>
+#ifndef WAIT_H
+#define WAIT_H
 
-int main()
-{
-    test::GenProjData<> data("dstw.proj");
-    data.dump();
-    return 0;
-}
+#include <codebase/BaseTypes.h>
+
+void wait(UINT32 ms);
+
+#endif // _H

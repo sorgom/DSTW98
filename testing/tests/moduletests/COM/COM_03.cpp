@@ -179,7 +179,7 @@ namespace test
             setTele(COM_CTRL_STOP, COM_CTRL_STOP);
             m_TCP().expectSelect(validSocket, SELECT_READY);
             m_TCP().expectRecv(validSocket, tele);
-            m_Com().expectStop();
+            m_Ctrl().expectStop();
             ok = client.select();
             CHECK_N_CLEAR()
             L_CHECK_TRUE(ok)

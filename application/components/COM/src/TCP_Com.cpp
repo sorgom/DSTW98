@@ -190,7 +190,7 @@ void TCP_Con_Ctrl::forward(const ComTele& tele) const
         switch (tele.data.param1)
         {
         case COM_CTRL_STOP:
-            IL::getCom().stop();
+            IL::getCtrl().stop();
             break;
         case COM_CTRL_PING:
             send(tele);

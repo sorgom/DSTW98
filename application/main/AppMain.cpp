@@ -1,28 +1,33 @@
 #include <SYS/IL.h>
 #include <iostream>
 #include <iomanip>
-using std::cout, std::setw;
+using std::cout;
+using std::setw;
 
 int main(const INT32 argc, const CONST_C_STRING* const argv)
 {
+    I_Ctrl& ctrl = IL::getCtrl();
+    I_Com& com = IL::getCom();
+
     IL::getReader().read("dstw.proj");
 
-    E_Ret res = IL::getCtrl().maxerr();
+    if (ctrl.ok())
+    {
+        com.start();
+    }
+
     cout
-        << "TSW: " << setw(5) << IL::getTSW_Provider().size() << '\n'
-        << "SIG: " << setw(5) << IL::getSIG_Provider().size() << '\n'
-        << "LCR: " << setw(5) << IL::getLCR_Provider().size() << '\n'
-        << "ERR: " << setw(5) << static_cast<UINT16>(res) << '\n'
+        << "NUM: " << setw(5) << IL::getProvider().size() << '\n'
+        << "ERR: " << setw(5) << ctrl.maxerr() << '\n'
     ;
 
-    if (res == RET_NO_ERR and argc > 1)
+    if (argc > 1)
     {
-        cout << "run .." << '\n';
-        IL::getCom().run();
-        res = IL::getCtrl().maxerr();
-        cout
-            << "ERR: " << setw(5) << static_cast<UINT16>(res) << '\n'
-        ;
+        while (ctrl.ok())
+        {
+            com.check();
+        }
     }
-    return res;
+    com.stop();
+    return ctrl.maxerr();
 }

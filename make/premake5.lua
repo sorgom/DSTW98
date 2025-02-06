@@ -32,7 +32,6 @@ includedirs_test = {
     base_teststeps .. '/include',
     includedirs_app
 }
-defines_test = { 'CPPUTEST_USE_LONG_LONG=0' }
 
 files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 
@@ -47,7 +46,11 @@ workspace 'DSTW98'
     objdir  '../build/%{_TARGET_OS}/obj'
     kind 'ConsoleApp'
     libdirs { '../build/%{_TARGET_OS}/lib' }
-    defines { 'CAPACITY=30' }
+    defines {
+        'CAPACITY=30',
+        'CPPUTEST_USE_LONG_LONG=0',
+        'CPPUTEST_MEM_LEAK_DETECTION_DISABLED'
+    }
 
     filter { 'action:vs*' }
         targetdir '../build/%{_TARGET_OS}'
@@ -75,7 +78,6 @@ workspace 'DSTW98'
         targetdir '../build/%{_TARGET_OS}/lib'
         defines { 'NDEBUG' }
 
-        defines { defines_test, 'CPPUTEST_MEM_LEAK_DETECTION_DISABLED' }
         includedirs { includedirs_cpputest }
         files {
             base_cpputest .. '/src/CppUTest/*.cpp',
@@ -95,7 +97,6 @@ workspace 'DSTW98'
     project 'moduletests'
         files { files_app, files_testenv, files_moduletest }
         includedirs { includedirs_test }
-        defines { defines_test }
         links { 'cpputest' }
 
         filter { 'action:vs*' }
@@ -104,7 +105,6 @@ workspace 'DSTW98'
     project 'devtests'
         files { files_app, files_testenv, '../testing/tests/devtests/*.cpp' }
         includedirs { includedirs_test, '../devel' }
-        defines { defines_test }
         links { 'cpputest' }
 
         filter { 'action:vs*' }
@@ -132,7 +132,7 @@ workspace 'DSTW98'
     project 'systemtests'
         files { files_testenv, '../testing/tests/systemtests/SYST_*.cpp' }
         includedirs { includedirs_test }
-        defines { defines_test, 'REQUIRE_PARAM' }
+        defines { 'REQUIRE_PARAM' }
         links { 'cpputest' }
 
         filter { 'action:vs*' }
@@ -163,6 +163,5 @@ workspace 'DSTW98'
         filter { 'action:gmake*' }
             files { files_testenv, files_moduletest }
             includedirs { includedirs_test }
-            defines { defines_test }
             links { 'gcovapp', 'gcov', 'cpputest' }
             linkoptions { '--coverage' }

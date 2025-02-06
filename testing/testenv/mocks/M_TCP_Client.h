@@ -9,8 +9,7 @@
 #include "M_Base.h"
 #include <TCP/TCP_Client.h>
 #include <ifs/DataTypes.h>
-#include <chrono>
-#include <thread>
+#include <testlib/wait.h>
 
 namespace test
 {
@@ -48,7 +47,7 @@ namespace test
             for (UINT16 i = 0; (not ok) and i < timeout * 2; ++i)
             {
                 ok = mClient.connect(port);
-                if (not ok) std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                if (not ok) wait(500);
             }
             L_CHECK_TRUE(ok)
         }

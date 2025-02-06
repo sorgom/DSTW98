@@ -1,13 +1,5 @@
 //  ============================================================
-//  number of elements in test data
-//  - track switches
-//  - signals
-//  - level crossings
-//  - segments
-//
-//  pre-defined here
-//  definable at compile time
-//  e.g.: -DTEST_NUM_SIG=500
+//  test values
 //  ============================================================
 //  created by Manfred Sorgo
 
