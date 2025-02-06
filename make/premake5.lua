@@ -47,6 +47,7 @@ workspace 'DSTW98'
     objdir  '../build/%{_TARGET_OS}/obj'
     kind 'ConsoleApp'
     libdirs { '../build/%{_TARGET_OS}/lib' }
+    defines { 'CAPACITY=30' }
 
     filter { 'action:vs*' }
         targetdir '../build/%{_TARGET_OS}'

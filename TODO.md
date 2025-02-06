@@ -1,5 +1,5 @@
 ### coverage
--   module tests
+-   module tests (V)
     -   complete Mapper
     -   premake: apply decent CAPACITY (5 times all types)
 
@@ -12,12 +12,17 @@
 -   sleep by select
 -   use GenProjData to run tests
 
+### gcov
+
 ### vscode
 -   white preview
 
 ### PC setup
 -   StarUML
 -   move linux?
+-   chrome for sombeam
+-   valgrind
+
 
 # Transfer from C++ 2017 to C++98
 ## 98
@@ -35,12 +40,12 @@
 - use CAPACITY for all StaticArray classes (V)
 ## one polymorphic Provider (V)
 ### Provider class
-- StaticArray of I_ELEM
-- Size by byte union
+- StaticArray of I_ELEM (V)
+- Size by byte union (V)
     - ClassBytes Template
 
 ### Dispatcher class -> Mapper (V)
-- reduction to Mapper
+- reduction to Mapper (V)
 
 ### Provider / Mapper Class (V)
 - change:
@@ -54,7 +59,7 @@
 -   why does VS react differently on TestSteps line type?
     - use unsigned (instead of short)
 
-
+### howto
 sudo apt-get update
 sudo apt-get install gcc
 sudo apt-get install build-essential

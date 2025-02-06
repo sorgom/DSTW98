@@ -157,11 +157,52 @@ namespace test
         cmapper.reGui();
         CHECK_N_CLEAR()
 
-        // TODO from coverage:
-        //  - invalid address fromFld, fromGui
-        //  - invalid id toFld, toGui
-        //  - invalid position add
-        //  - add with no space left
-        //  - duplicate address add
+        STEP(8)
+        //  invalid address fromFld
+        const ComTele teleNN = { genComAddr(CAPACITY + 10, "NN"), cd };
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_MATCH);
+        cmapper.fromFld(teleNN);
+        CHECK_N_CLEAR()
+
+        STEP(9)
+        //  invalid address fromGui
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_MATCH);
+        cmapper.fromGui(teleNN);
+        CHECK_N_CLEAR()
+
+        STEP(10)
+        //  invalid id toFld
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_SYNC);
+        cmapper.toFld(CAPACITY, cd);
+        CHECK_N_CLEAR()
+
+        STEP(11)
+        //  invalid id toGui
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_SYNC);
+        cmapper.toGui(CAPACITY, cd);
+        CHECK_N_CLEAR()
+
+        STEP(12)
+        //  add with no space left
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_STARTUP);
+        mapper.add(CAPACITY, data.addr(0));
+        CHECK_N_CLEAR()
+
+        STEP(13)
+        //  duplicate address add / index fails
+        mapper.clear();
+        mapper.add(0, data.addr(0));
+        mapper.add(1, data.addr(1));
+        mapper.add(2, data.addr(2));
+        mapper.add(3, data.addr(0));
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_STARTUP);
+        mapper.index();
+        CHECK_N_CLEAR()
+
+        STEP(14)
+        //  invalid position add
+        m_Ctrl().expectLog(COMP_SYS, RET_ERR_STARTUP);
+        mapper.add(3, data.addr(0));
+        CHECK_N_CLEAR()
     }
 } // namespace

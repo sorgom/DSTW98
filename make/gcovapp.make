@@ -46,14 +46,14 @@ endef
 
 ifeq ($(config),ci)
 OBJDIR = ../build/linux/obj/ci/gcovapp
-DEFINES += -DNDEBUG
+DEFINES += -DCAPACITY=30 -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
 
 else ifeq ($(config),debug)
 OBJDIR = ../build/linux/obj/debug/gcovapp
-DEFINES += -DDEBUG
+DEFINES += -DCAPACITY=30 -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread

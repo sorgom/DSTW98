@@ -13,7 +13,7 @@ void Mapper::add(const size_t pos, const ComAddr& addr)
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_RANGE);
+        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
     }
 }
 
@@ -60,6 +60,10 @@ void Mapper::toFld(const size_t id, const ComData& data) const
         const ComTele tele = { mMap.at(id), data };
         IL::getCom().toFld(tele);
     }
+    else
+    {
+        IL::getCtrl().log(COMP_SYS, RET_ERR_SYNC);
+    }
 }
 
 void Mapper::toGui(const size_t id, const ComData& data) const
@@ -68,6 +72,10 @@ void Mapper::toGui(const size_t id, const ComData& data) const
     {
         const ComTele tele = { mMap.at(id), data };
         IL::getCom().toGui(tele);
+    }
+    else
+    {
+        IL::getCtrl().log(COMP_SYS, RET_ERR_SYNC);
     }
 }
 

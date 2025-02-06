@@ -29,6 +29,8 @@ enum E_Ret
     RET_ERR_MATCH,
     //  element position out of range
     RET_ERR_RANGE,
+    //  comonents sync error
+    RET_ERR_SYNC,
     //  startup error in component
     RET_ERR_STARTUP,
     //  communication error

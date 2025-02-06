@@ -46,14 +46,14 @@ endef
 
 ifeq ($(config),ci)
 OBJDIR = ../build/linux/obj/ci/systemtests
-DEFINES += -DNDEBUG -DCPPUTEST_USE_LONG_LONG=0 -DREQUIRE_PARAM
+DEFINES += -DCAPACITY=30 -DNDEBUG -DCPPUTEST_USE_LONG_LONG=0 -DREQUIRE_PARAM
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
 
 else ifeq ($(config),debug)
 OBJDIR = ../build/linux/obj/debug/systemtests
-DEFINES += -DDEBUG -DCPPUTEST_USE_LONG_LONG=0 -DREQUIRE_PARAM
+DEFINES += -DCAPACITY=30 -DDEBUG -DCPPUTEST_USE_LONG_LONG=0 -DREQUIRE_PARAM
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread

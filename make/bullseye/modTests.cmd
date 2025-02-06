@@ -11,7 +11,7 @@ rem minmal coverage setup
 rem - minimal function coverage %
 set minFunctionCov=100
 rem - minimal decision coverage %
-set minDecisionCov=99
+set minDecisionCov=100
 
 call %myDir%\_covbuild.cmd --on moduletests
 if %errorlevel% NEQ 0 exit /b 1
