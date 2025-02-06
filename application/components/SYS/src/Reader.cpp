@@ -27,8 +27,7 @@ void Reader::read(const CONST_C_STRING filename)
         is.seekg(0, is.beg);
 
 #ifdef _WIN32
-//  warning C4244: 'initializing': conversion from 'std::streamoff' to 'UINT32', possible loss of data
-//  warning C4244: 'initializing': conversion from 'std::streamoff' to 'const UINT32', possible loss of data
+//  warning C4244: conversion from 'std::streamoff' to 'UINT32', possible loss of data
 //  UINT32_MAX cannot be exceeded in this context
 #pragma warning(disable:4244)
 #endif

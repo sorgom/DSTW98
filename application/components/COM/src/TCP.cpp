@@ -60,7 +60,7 @@ E_Select TCP::select(const INT32 socket) const
 #ifdef _WIN32
 #pragma warning(disable:4389)
 #endif
- // interns of fd_set macros must not be coverage instrumented
+// interns of fd_set macros must not be coverage instrumented
 COVERAGE_PAUSE
     FD_ZERO(&readfds);
     FD_SET(socket, &readfds);

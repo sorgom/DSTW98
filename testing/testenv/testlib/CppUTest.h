@@ -1,38 +1,23 @@
 //  ============================================================
-//  frequently used includes of CppUTest
-//  but also
-//  - the TestSteps
-//  - some useful macros
+//  CppUTest mocking macros
 //  ============================================================
 //  created by Manfred Sorgo
 
 #ifndef CPPUTEST_H
 #define CPPUTEST_H
 
-#include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
 
-//! standard check 'n' clear
+//  standard check 'n' clear
+//  should be called after each test step
+//  - check expectations
+//  - clear mock
 #ifndef CHECK_N_CLEAR
 #define CHECK_N_CLEAR() mock().checkExpectations(); mock().clear();
 #endif
 
-//! a bit (of) check
-#define CHECK_BIT(bit, value) CHECK_TRUE((value & bit) not_eq 0)
-
-//  ============================================================
 //  CppUTest parameter macros
-//  raw typing:
-//      .withParameterOfType("SomeStruct", "param", param)
-//  use:
-//    .TPARAM(SomeStruct, param)
-//
-//  raw typing:
-//      .withParameter("param", param)
-//  use:
-//      .PARAM(param)
-//  ============================================================
-//! must be in namespace test
+//  common
 #define TPARAM(TYPE, NAME) \
     withParameterOfType(#TYPE, #NAME, &NAME)
 
@@ -42,6 +27,7 @@
 #define PPARAM(NAME) \
     withPointerParameter(#NAME, (PTR) NAME)
 
+//  call return defaults
 #define RETURN_DEF_INT(VAL) \
     returnIntValueOrDefault(VAL)
 
@@ -51,6 +37,7 @@
 #define RETURN_DEF_UNSIGNED(VAL) \
     returnUnsignedIntValueOrDefault(VAL)
 
+//  expectations
 #define AND_RETURN(VAL) \
     andReturnValue(VAL)
 
@@ -59,4 +46,5 @@
 
 #define IGNORE() \
     ignoreOtherParameters()
+
 #endif // _H
