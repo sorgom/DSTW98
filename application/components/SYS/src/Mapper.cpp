@@ -74,8 +74,9 @@ void Mapper::toGui(const size_t id, const ComData& data) const
 void Mapper::reGui() const
 {
     const I_Provider& prov = IL::getProvider();
-    for (size_t i = 0; i < prov.size(); ++i)
+    const size_t size = prov.size();
+    for (size_t n = 0; n < size; ++n)
     {
-        prov.at(i).toGui();
+        prov.at(n).toGui();
     }
 }

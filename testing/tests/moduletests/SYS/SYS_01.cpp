@@ -115,7 +115,7 @@ namespace test
     }
 
     //  test type: equivalence class test
-    //  log instance, log, maxerr
+    //  Ctrl instance, log, maxerr
     TEST(SYS_01, T05)
     {
         SETUP()
@@ -128,8 +128,8 @@ namespace test
         L_CHECK_TRUE(ctrlc.ok())
 
         STEP(2)
-        ctrl.log(COMP_SYS, RET_ERR_MATCH);
         ctrl.log(COMP_SYS, RET_ERR_STARTUP);
+        ctrl.log(COMP_SYS, RET_ERR_MATCH);
         CHECK_N_CLEAR()
         L_CHECK_FALSE(ctrlc.ok())
         L_CHECK_EQUAL(RET_ERR_STARTUP, ctrlc.maxerr())

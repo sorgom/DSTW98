@@ -4,11 +4,7 @@
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
-
-#define CAPTSW 40
-#define CAPSIG 30
-#define CAPLCR 20
-#define CAPSEG 10
+#include <sstream>
 
 namespace test
 {
@@ -18,55 +14,35 @@ namespace test
     TEST(DT_03, T01)
     {
         SETUP()
-        GenProjData<CAPTSW, CAPSIG, CAPLCR, CAPSEG> projData;
+        GenProjData<10> data;
 
         STEP(1)
-        //  check content TSW
-        L_CHECK_EQUAL(CAPTSW, projData.numTSW())
-        SUBSTEPS()
-        for (UINT32 n = 0; n < CAPTSW; ++n)
-        {
-            LSTEP(n)
-            const ComAddr& addr = genComAddr(CAPTSW - n, "TSW");
-            L_CHECK_TRUE(addr == projData.pTSW()[n].addr)
-        }
-        ENDSTEPS()
+        const ComSetup& s = data.setup;
+        L_CHECK_EQUAL(tcpPortFld,  NetTest::toH(s.portFld))
+        L_CHECK_EQUAL(tcpPortGui,  NetTest::toH(s.portGui))
+        L_CHECK_EQUAL(tcpPortCtrl, NetTest::toH(s.portCtrl))
+        L_CHECK_EQUAL(tcpTimeout,  NetTest::toH(s.timeout))
 
         STEP(2)
-        //  check content SIG
-        L_CHECK_EQUAL(CAPSIG, projData.numSIG())
-        SUBSTEPS()
-        for (UINT32 n = 0; n < CAPSIG; ++n)
-        {
-            LSTEP(n)
-            const ComAddr& addr = genComAddr(CAPSIG - n, "SIG");
-            L_CHECK_TRUE(addr == projData.pSIG()[n].addr)
-        }
-        ENDSTEPS()
+        std::ostringstream os;
+        os << fixT(data.at(9).addr.chars);
+        STRCMP_EQUAL("ELEM 0001   ", os.str().c_str());
+
+        os.str("");
+        os << fixT(data.at(0).addr.chars);
+        STRCMP_EQUAL("ELEM 0010   ", os.str().c_str());
 
         STEP(3)
-        //  check content LCR
-        L_CHECK_EQUAL(CAPLCR, projData.numLCR())
-        SUBSTEPS()
-        for (UINT32 n = 0; n < CAPLCR; ++n)
-        {
-            LSTEP(n)
-            const ComAddr& addr = genComAddr(CAPLCR - n, "LCR");
-            L_CHECK_TRUE(addr == projData.pLCR()[n].addr)
-        }
-        ENDSTEPS()
-
-        STEP(4)
-        //  check content SEG
-        SUBSTEPS()
-        L_CHECK_EQUAL(CAPSEG, projData.numSEG())
-        for (UINT32 n = 0; n < CAPSEG; ++n)
-        {
-            LSTEP(n)
-            const ComAddr& addr = genComAddr(CAPSEG - n, "SEG");
-            L_CHECK_TRUE(addr == projData.pSEG()[n].addr)
-        }
-        ENDSTEPS()
+        L_CHECK_EQUAL(TYPE_LCR,     data.type(0))
+        L_CHECK_EQUAL(TYPE_LCR_UBK, data.type(1))
+        L_CHECK_EQUAL(TYPE_SIG_H,   data.type(2))
+        L_CHECK_EQUAL(TYPE_SIG_H_N, data.type(3))
+        L_CHECK_EQUAL(TYPE_SIG_N,   data.type(4))
+        L_CHECK_EQUAL(TYPE_TSW,     data.type(5))
+        L_CHECK_EQUAL(TYPE_LCR,     data.type(6))
+        L_CHECK_EQUAL(TYPE_LCR_UBK, data.type(7))
+        L_CHECK_EQUAL(TYPE_SIG_H,   data.type(8))
+        L_CHECK_EQUAL(TYPE_SIG_H_N, data.type(9))
     }
 
 } // namespace

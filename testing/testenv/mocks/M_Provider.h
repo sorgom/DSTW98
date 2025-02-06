@@ -11,7 +11,7 @@
 
 #include <ifs/I_Provider.h>
 #include "M_Base.h"
-#include "M_Elem.h"
+#include "M_Elems.h"
 
 namespace test
 {
@@ -55,12 +55,12 @@ namespace test
 
         inline const I_Elem& at(size_t pos) const
         {
-            return M_Elem::instance();
+            return M_Elems::instance().at(pos);
         }
 
         inline I_Elem& at(size_t pos)
         {
-            return M_Elem::instance();
+            return M_Elems::instance().at(pos);
         }
 
         NOCOPY(M_Provider)

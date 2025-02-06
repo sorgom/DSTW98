@@ -1,13 +1,13 @@
 
 #include <mocks/M_Instances.h>
 
-#include <mocks/M_Elem.h>
-#include <mocks/M_Ctrl.h>
-#include <mocks/M_Provider.h>
-#include <mocks/M_Reader.h>
-#include <mocks/M_TCP_Con.h>
-#include <mocks/M_TCP_Listener.h>
-#include <mocks/M_TCP.h>
+// #include <mocks/M_Elem.h>
+// #include <mocks/M_Ctrl.h>
+// #include <mocks/M_Provider.h>
+// #include <mocks/M_Reader.h>
+// #include <mocks/M_TCP_Con.h>
+// #include <mocks/M_TCP_Listener.h>
+// #include <mocks/M_TCP.h>
 
 #include <BAS/coding.h>
 
@@ -15,7 +15,7 @@ namespace test
 {
     INSTANCE_DEF(M_Com)
     INSTANCE_DEF(M_Ctrl)
-    INSTANCE_DEF(M_Elem)
+    INSTANCE_DEF(M_Elems)
     INSTANCE_DEF(M_Mapper)
     INSTANCE_DEF(M_Provider)
     INSTANCE_DEF(M_Reader)

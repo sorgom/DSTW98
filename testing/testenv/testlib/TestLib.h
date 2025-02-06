@@ -14,15 +14,15 @@
 namespace test
 {
     //  preset ComAddr for testing
-    void genComAddr(ComAddr& cName, UINT32 num, CONST_C_STRING addr = "ELM");
+    void genComAddr(ComAddr& cName, UINT32 num, CONST_C_STRING addr = "ELEM");
 
     template <class T>
-    void adrrElement(T& elem, UINT32 num, CONST_C_STRING addr = "ELM")
+    void adrrElement(T& elem, UINT32 num, CONST_C_STRING addr = "ELEM")
     {
         genComAddr(elem.addr, num, addr);
     }
 
-    const ComAddr& genComAddr(UINT32 num, CONST_C_STRING addr = "ELM");
+    const ComAddr& genComAddr(UINT32 num, CONST_C_STRING addr = "ELEM");
 
     inline bool operator==(const ComAddr& n1, const ComAddr& n2)
     {

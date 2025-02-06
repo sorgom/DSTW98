@@ -14,7 +14,7 @@ namespace test
     class M_Elem : public I_Elem, private M_Base
     {
     public:
-        INSTANCE_DEC(M_Elem)
+        inline M_Elem(size_t num = 0) : M_Base("Elem"), mNum(num) {}
 
         inline void fromFld(const ComData& data)
         {
@@ -46,10 +46,17 @@ namespace test
         {
             expect(num, "toGui");
         }
+    protected:
+        inline std::ostringstream& begin() const
+        {
+            mStream.str("");
+            mStream << mName << '_' << mNum << "::";
+            return mStream;
+        }
 
         NOCOPY(M_Elem)
     private:
-        inline M_Elem() : M_Base("Elem") {}
+        const size_t mNum;
     };
 } // namespace
 #endif // _H

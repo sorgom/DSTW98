@@ -17,7 +17,7 @@ namespace test
     {
         std::memset(cAddr.chars, ' ', ComAddrSize);
         static CHAR buf[sizeof(ComAddr) + 1];
-        const int sz = std::snprintf(buf, sizeof(buf), "%s %03u ", addr, num);
+        const int sz = std::snprintf(buf, sizeof(buf), "%s %04u ", addr, num);
         if (sz > 0)
         {
             std::memcpy(cAddr.chars, buf, sz - 1);

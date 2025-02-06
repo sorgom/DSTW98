@@ -41,8 +41,8 @@ namespace test
         NOCOPY(M_Base)
         NODEF(M_Base)
 
-    private:
-        inline std::ostringstream& begin() const
+    protected:
+        inline virtual std::ostringstream& begin() const
         {
             mStream.str("");
             mStream << mName << "::";
