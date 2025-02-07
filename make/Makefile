@@ -12,6 +12,7 @@ ifeq ($(config),ci)
   cpputest_config = ci
   moduletests_config = ci
   devtests_config = ci
+  buildfail_config = ci
   dstw_gen_config = ci
   dstw_runtime_config = ci
   systemtests_config = ci
@@ -23,6 +24,7 @@ else ifeq ($(config),debug)
   cpputest_config = debug
   moduletests_config = debug
   devtests_config = debug
+  buildfail_config = debug
   dstw_gen_config = debug
   dstw_runtime_config = debug
   systemtests_config = debug
@@ -30,11 +32,23 @@ else ifeq ($(config),debug)
   gcovapp_config = debug
   gcovtests_config = debug
 
+else ifeq ($(config),fail)
+  cpputest_config = fail
+  moduletests_config = fail
+  devtests_config = fail
+  buildfail_config = fail
+  dstw_gen_config = fail
+  dstw_runtime_config = fail
+  systemtests_config = fail
+  dstw_stop_config = fail
+  gcovapp_config = fail
+  gcovtests_config = fail
+
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := cpputest moduletests devtests dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := cpputest moduletests devtests buildfail dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -56,6 +70,12 @@ devtests: cpputest
 ifneq (,$(devtests_config))
 	@echo "==== Building devtests ($(devtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f devtests.make config=$(devtests_config)
+endif
+
+buildfail:
+ifneq (,$(buildfail_config))
+	@echo "==== Building buildfail ($(buildfail_config)) ===="
+	@${MAKE} --no-print-directory -C . -f buildfail.make config=$(buildfail_config)
 endif
 
 dstw_gen:
@@ -98,6 +118,7 @@ clean:
 	@${MAKE} --no-print-directory -C . -f cpputest.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
 	@${MAKE} --no-print-directory -C . -f devtests.make clean
+	@${MAKE} --no-print-directory -C . -f buildfail.make clean
 	@${MAKE} --no-print-directory -C . -f dstw_gen.make clean
 	@${MAKE} --no-print-directory -C . -f dstw_runtime.make clean
 	@${MAKE} --no-print-directory -C . -f systemtests.make clean
@@ -111,6 +132,7 @@ help:
 	@echo "CONFIGURATIONS:"
 	@echo "  ci"
 	@echo "  debug"
+	@echo "  fail"
 	@echo ""
 	@echo "TARGETS:"
 	@echo "   all (default)"
@@ -118,6 +140,7 @@ help:
 	@echo "   cpputest"
 	@echo "   moduletests"
 	@echo "   devtests"
+	@echo "   buildfail"
 	@echo "   dstw_gen"
 	@echo "   dstw_runtime"
 	@echo "   systemtests"

@@ -65,3 +65,7 @@ sudo apt-get install gcc
 sudo apt-get install build-essential
 
 sudo apt-get install valgrind
+sudo apt-get install cloc
+
+vs code: GitHub Markdown Preview
+https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-preview

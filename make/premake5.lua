@@ -40,14 +40,14 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW98'
-    configurations { 'ci', 'debug' }
+    configurations { 'ci', 'debug', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'
     kind 'ConsoleApp'
     libdirs { '../build/%{_TARGET_OS}/lib' }
     defines {
-        'CAPACITY=30',
+        'CAPACITY=20',
         'CPPUTEST_USE_LONG_LONG=0',
         'CPPUTEST_MEM_LEAK_DETECTION_DISABLED'
     }
@@ -70,6 +70,8 @@ workspace 'DSTW98'
         defines { 'DEBUG' }
         symbols 'On'
 
+    filter { 'configurations:fail' }
+        defines { 'NDEBUG', 'STATIC_FAIL' }
     --  ============================================================
     --  cpputest
     --  ============================================================
@@ -109,6 +111,11 @@ workspace 'DSTW98'
 
         filter { 'action:vs*' }
         links { 'winmm' }
+
+    project 'buildfail'
+        kind 'StaticLib'
+        files { '../testing/tests/buildfail/*.cpp' }
+        includedirs { includedirs_app }
 
     --  ============================================================
     --  system tests

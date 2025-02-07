@@ -73,7 +73,6 @@ namespace test
         TestIndex<CAP> ti(ta);
 
         L_CHECK_EQUAL(0, ta.size())
-        L_CHECK_EQUAL(CAP, ta.capacity())
 
         STEP(2)
         SUBSTEPS()

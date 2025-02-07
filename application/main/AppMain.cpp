@@ -1,10 +1,7 @@
 #include <SYS/IL.h>
-#include <iostream>
-#include <iomanip>
-using std::cout;
-using std::setw;
+#include <cstdio>
 
-int main(const INT32 argc, const CONST_C_STRING* const argv)
+int main(const INT32 argc, const CONST_C_STRING* const)
 {
     I_Ctrl& ctrl = IL::getCtrl();
     I_Com& com = IL::getCom();
@@ -13,13 +10,9 @@ int main(const INT32 argc, const CONST_C_STRING* const argv)
 
     if (ctrl.ok())
     {
+        printf("NUM: %5lu\n", IL::getProvider().size());
         com.start();
     }
-
-    cout
-        << "NUM: " << setw(5) << IL::getProvider().size() << '\n'
-        << "ERR: " << setw(5) << ctrl.maxerr() << '\n'
-    ;
 
     if (argc > 1)
     {
@@ -29,5 +22,6 @@ int main(const INT32 argc, const CONST_C_STRING* const argv)
         }
     }
     com.stop();
+    printf("ERR: %5d\n", ctrl.maxerr());
     return ctrl.maxerr();
 }

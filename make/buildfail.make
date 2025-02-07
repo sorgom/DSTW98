@@ -29,14 +29,14 @@ ifeq ($(origin AR), default)
 endif
 RESCOMP = windres
 TARGETDIR = ../build/linux/bin
-TARGET = $(TARGETDIR)/dstw_stop
-INCLUDES += -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include -I../specification -I../application/components
+TARGET = $(TARGETDIR)/libbuildfail.a
+INCLUDES += -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS +=
 LDDEPS +=
-LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
 define PREBUILDCMDS
 endef
 define PRELINKCMDS
@@ -45,21 +45,21 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
-OBJDIR = ../build/linux/obj/ci/dstw_stop
+OBJDIR = ../build/linux/obj/ci/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
 
 else ifeq ($(config),debug)
-OBJDIR = ../build/linux/obj/debug/dstw_stop
+OBJDIR = ../build/linux/obj/debug/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
 
 else ifeq ($(config),fail)
-OBJDIR = ../build/linux/obj/fail/dstw_stop
+OBJDIR = ../build/linux/obj/fail/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
@@ -77,10 +77,8 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/TCP_Client.o
-GENERATED += $(OBJDIR)/stopAppMain.o
-OBJECTS += $(OBJDIR)/TCP_Client.o
-OBJECTS += $(OBJDIR)/stopAppMain.o
+GENERATED += $(OBJDIR)/buildfail_01.o
+OBJECTS += $(OBJDIR)/buildfail_01.o
 
 # Rules
 # #############################################
@@ -90,7 +88,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking dstw_stop
+	@echo Linking buildfail
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -111,7 +109,7 @@ else
 endif
 
 clean:
-	@echo Cleaning dstw_stop
+	@echo Cleaning buildfail
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -144,10 +142,7 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/TCP_Client.o: ../testing/testenv/TCP/src/TCP_Client.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/stopAppMain.o: ../testing/tests/systemtests/stopAppMain.cpp
+$(OBJDIR)/buildfail_01.o: ../testing/tests/buildfail/buildfail_01.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

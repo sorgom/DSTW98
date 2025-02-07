@@ -5,6 +5,6 @@ rem ========================================================================
 rem system tests: run app in background
 rem ========================================================================
 echo running > %tmpFile%
-%exeDir%\%1.exe loop >NUL
+%exeDir%\%1.exe loop
 rm -f %tmpFile%
 exit 0

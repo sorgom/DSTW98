@@ -11,17 +11,11 @@
 #include <ifs/DataTypes.h>
 #include <BAS/coding.h>
 #include <cstring>
-#include <new>
 
 template <class T, size_t CAP>
 class I_Array
 {
 public:
-    inline static size_t capacity()
-    {
-        return CAP;
-    }
-
     //  current number of objects
     virtual size_t size() const = 0;
 
@@ -57,21 +51,21 @@ public:
     }
 
     template <class DT>
-    inline void add(const DT& obj)
+    inline const T& add(const DT& obj)
     {
         //  static check if object size fits into segment
         typedef CHAR CT[sizeof(DT) <= SIZE ? 1 : -1];
         const CT ct = {};
         use(ct);
-        //  static check if object is derived from T
-        const T& t = static_cast<const T&>(obj);
-        use(t);
         std::memcpy(mData[mSize++], &obj, sizeof(DT));
+        //  static check if object is derived from T
+        return static_cast<const T&>(obj);
     }
 
     inline void clear()
     {
         mSize = 0;
+        std::memset(mData, 0, sizeof(mData));
     }
 
     NOCOPY(StackArray)

@@ -46,17 +46,24 @@ endef
 
 ifeq ($(config),ci)
 OBJDIR = ../build/linux/obj/ci/devtests
-DEFINES += -DCAPACITY=30 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
 
 else ifeq ($(config),debug)
 OBJDIR = ../build/linux/obj/debug/devtests
-DEFINES += -DCAPACITY=30 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
+
+else ifeq ($(config),fail)
+OBJDIR = ../build/linux/obj/fail/devtests
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
 
 endif
 
@@ -73,7 +80,6 @@ OBJECTS :=
 GENERATED += $(OBJDIR)/Com.o
 GENERATED += $(OBJDIR)/Comparator.o
 GENERATED += $(OBJDIR)/Ctrl.o
-GENERATED += $(OBJDIR)/DT_00.o
 GENERATED += $(OBJDIR)/DT_01.o
 GENERATED += $(OBJDIR)/DT_02.o
 GENERATED += $(OBJDIR)/DT_03.o
@@ -101,7 +107,6 @@ GENERATED += $(OBJDIR)/wait.o
 OBJECTS += $(OBJDIR)/Com.o
 OBJECTS += $(OBJDIR)/Comparator.o
 OBJECTS += $(OBJDIR)/Ctrl.o
-OBJECTS += $(OBJDIR)/DT_00.o
 OBJECTS += $(OBJDIR)/DT_01.o
 OBJECTS += $(OBJDIR)/DT_02.o
 OBJECTS += $(OBJDIR)/DT_03.o
@@ -259,9 +264,6 @@ $(OBJDIR)/TestMain.o: ../testing/testenv/testlib/src/TestMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/DT_00.o: ../testing/tests/devtests/DT_00.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/DT_01.o: ../testing/tests/devtests/DT_01.cpp
