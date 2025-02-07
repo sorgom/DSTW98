@@ -56,7 +56,7 @@ namespace test
                 items.add(item);
             }
             //  alternating types
-            //  COM addresses in reversed order
+            //  COM addresses in reversed order from CAP down to 1
             for (size_t n = 0; n < CAP; ++n)
             {
                 ProjItem& item = items.at(n);
