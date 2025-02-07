@@ -28,7 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/linux/bin
+TARGETDIR = ../build/fail
 TARGET = $(TARGETDIR)/libbuildfail.a
 INCLUDES += -I../specification -I../application/components
 FORCE_INCLUDE +=

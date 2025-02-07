@@ -116,6 +116,7 @@ workspace 'DSTW98'
         kind 'StaticLib'
         files { '../testing/tests/buildfail/*.cpp' }
         includedirs { includedirs_app }
+        targetdir '../build/fail'
 
     --  ============================================================
     --  system tests
