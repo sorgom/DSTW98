@@ -58,10 +58,14 @@ workspace 'DSTW98'
         links { 'ws2_32' }
         warnings 'high'
 
+    filter { 'action:vs*', 'kind:ConsoleApp' }
+        links { 'winmm' }
+
     filter { 'action:gmake*' }
         targetdir '../build/%{_TARGET_OS}/bin'
         buildoptions { buildoptions_gcc }
         linkoptions { '-pthread' }
+
 
     filter { 'configurations:ci' }
         defines { 'NDEBUG' }
@@ -101,16 +105,10 @@ workspace 'DSTW98'
         includedirs { includedirs_test }
         links { 'cpputest' }
 
-        filter { 'action:vs*' }
-        links { 'winmm' }
-
     project 'devtests'
         files { files_app, files_testenv, '../testing/tests/devtests/*.cpp' }
         includedirs { includedirs_test, '../devel' }
         links { 'cpputest' }
-
-        filter { 'action:vs*' }
-        links { 'winmm' }
 
     project 'buildfail'
         kind 'StaticLib'
@@ -142,10 +140,6 @@ workspace 'DSTW98'
         includedirs { includedirs_test }
         defines { 'REQUIRE_PARAM' }
         links { 'cpputest' }
-
-        filter { 'action:vs*' }
-        links { 'winmm' }
-
 
     --  run last to stop application in background
     project 'dstw_stop'

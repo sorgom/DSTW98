@@ -30,33 +30,10 @@ If testing a single application module (SUT, software under test)
 -   trigger the SUT by method calls
 -   and check if the mocked modules were called as expected.
 
-### sample: test of dispatcher
+### sample: test of Mapper
 #### mocks and calls scheme
 
-![test Dispatcher](../specification/doc/test_dispatcher.svg)
-
-#### sample test code
-with comments
-```cpp
-        SETUP()
-        //  following tests call const methods
-        const I_Dispatcher& dsp = Dispatcher::instance();
-        //  setup test data and telegram
-        const ComData data{55, 66};
-        ComTele teleExp{{}, data};
-
-        STEP(1)
-        //  prepare expected telegram for TSW
-        adrrElement(teleExp, 1, "TSW");
-        //  describe expectation for mock:
-        //  Com method toFld must be called with telegram
-        m_Com().expectToFld(teleExp);
-        //  call the Dispatcher's toFld method with data
-        dsp.toFld(0, data);
-        //  check if exactly this has happened
-        //  and clear CppUTest expectations stack
-        CHECK_N_CLEAR()
-```
+![test Mapper](../specification/doc/moduletest_mapper.svg)
 
 ## system tests
 Here we have
