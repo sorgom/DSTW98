@@ -9,6 +9,7 @@ set myDir=%cd%
 cd ..
 set buildDir=%cd%\build
 set bindir=windows
+set projfile=systest.proj
 cd %myDir%
 echo - build
 msbuild DSTW.sln -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
@@ -19,10 +20,10 @@ set tmpfile=tmp_%random%.txt
 cd %buildDir%
 echo - run
 rem gen required proj data file
-%binDir%\dstw_gen.exe
+%binDir%\dstw_gen.exe %projfile%
 rem start app in background
 echo run > %tmpfile%
-start /B %myDir%\runSub.cmd %tmpfile% %binDir%\dstw_runtime.exe 1
+start /B %myDir%\runSub.cmd %tmpfile% %binDir%\dstw_runtime.exe %projfile%
 rem run tests
 %binDir%\systemtests.exe -b -v
 set ret=%errorlevel%
