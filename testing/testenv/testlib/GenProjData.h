@@ -19,12 +19,16 @@
 
 #include <BAS/StackArray.h>
 #include <ifs/DataTypes.h>
-#include <setup/Capacity.h>
+#include <SYS/Capacity.h>
 #include <testlib/NetTest.h>
 #include <testlib/TestLib.h>
 #include <testlib/testValues.h>
 
 #include <fstream>
+
+#ifndef DEF_PROJ_FILE
+#define DEF_PROJ_FILE "dstw.proj"
+#endif
 
 namespace test
 {
@@ -35,7 +39,7 @@ namespace test
         const CONST_C_STRING filename;
         const ComSetup setup;
 
-        GenProjData(CONST_C_STRING filename = "dstw.proj") :
+        GenProjData(CONST_C_STRING filename = DEF_PROJ_FILE) :
             filename(filename),
             setup(
                 NetTest::toN(tcpPortFld),

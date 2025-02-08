@@ -12,7 +12,7 @@
 #include <comparators/ostreams.h>
 #include <ifs/values.h>
 #include <mocks/M_Instances.h>
-#include <setup/Capacity.h>
+#include <SYS/Capacity.h>
 #include <SYS/IL.h>
 #include <testlib/GenProjData.h>
 #include <testlib/NetTest.h>

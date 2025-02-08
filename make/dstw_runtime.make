@@ -81,6 +81,7 @@ GENERATED += $(OBJDIR)/AppMain.o
 GENERATED += $(OBJDIR)/Com.o
 GENERATED += $(OBJDIR)/Ctrl.o
 GENERATED += $(OBJDIR)/LCR_X.o
+GENERATED += $(OBJDIR)/Main.o
 GENERATED += $(OBJDIR)/Mapper.o
 GENERATED += $(OBJDIR)/Net.o
 GENERATED += $(OBJDIR)/Provider.o
@@ -93,6 +94,7 @@ OBJECTS += $(OBJDIR)/AppMain.o
 OBJECTS += $(OBJDIR)/Com.o
 OBJECTS += $(OBJDIR)/Ctrl.o
 OBJECTS += $(OBJDIR)/LCR_X.o
+OBJECTS += $(OBJDIR)/Main.o
 OBJECTS += $(OBJDIR)/Mapper.o
 OBJECTS += $(OBJDIR)/Net.o
 OBJECTS += $(OBJDIR)/Provider.o
@@ -183,6 +185,9 @@ $(OBJDIR)/SIG_X.o: ../application/components/SIG/src/SIG_X.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Ctrl.o: ../application/components/SYS/src/Ctrl.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Main.o: ../application/components/SYS/src/Main.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp

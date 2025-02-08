@@ -5,9 +5,9 @@
 
 #include <testlib/GenProjData.h>
 
-int main()
+INT32 main(INT32 argc, const CONST_C_STRING* argv)
 {
-    test::GenProjData<> data("dstw.proj");
+    test::GenProjData<> data(argc > 1 ? argv[1] : DEF_PROJ_FILE);
     data.dump();
     return 0;
 }

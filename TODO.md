@@ -1,7 +1,11 @@
+### doc
+-   mocking image
+
 ### coverage
 -   module tests (V)
     -   complete Mapper
     -   premake: apply decent CAPACITY (5 times all types)
+-   merge results
 
 ### systemtests
 -   main
