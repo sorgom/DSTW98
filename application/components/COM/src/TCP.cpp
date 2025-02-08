@@ -58,6 +58,7 @@ E_Select TCP::select(const INT32 socket) const
 {
     fd_set readfds;
 #ifdef _WIN32
+//  msvc signed / unsigned mismatch warning from own headers
 #pragma warning(disable:4389)
 #endif
 // interns of fd_set macros must not be coverage instrumented
