@@ -91,6 +91,7 @@ GENERATED += $(OBJDIR)/NetTest.o
 GENERATED += $(OBJDIR)/SIG_01.o
 GENERATED += $(OBJDIR)/SYS_01.o
 GENERATED += $(OBJDIR)/SYS_02.o
+GENERATED += $(OBJDIR)/SYS_03.o
 GENERATED += $(OBJDIR)/TCP_Client.o
 GENERATED += $(OBJDIR)/TSW_01.o
 GENERATED += $(OBJDIR)/TestGroupBase.o
@@ -116,6 +117,7 @@ OBJECTS += $(OBJDIR)/NetTest.o
 OBJECTS += $(OBJDIR)/SIG_01.o
 OBJECTS += $(OBJDIR)/SYS_01.o
 OBJECTS += $(OBJDIR)/SYS_02.o
+OBJECTS += $(OBJDIR)/SYS_03.o
 OBJECTS += $(OBJDIR)/TCP_Client.o
 OBJECTS += $(OBJDIR)/TSW_01.o
 OBJECTS += $(OBJDIR)/TestGroupBase.o
@@ -260,6 +262,9 @@ $(OBJDIR)/SYS_01.o: ../testing/tests/moduletests/SYS/SYS_01.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/SYS_02.o: ../testing/tests/moduletests/SYS/SYS_02.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/SYS_03.o: ../testing/tests/moduletests/SYS/SYS_03.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TSW_01.o: ../testing/tests/moduletests/TSW/TSW_01.cpp

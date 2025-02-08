@@ -30,6 +30,6 @@ set covTodoTxt=%buildDir%\%_me%_todo.txt
 set optsTxt=%myDir%\_covoptions.txt
 set vsCall=msbuild -m %vsSolution%
 set tmpCmd=%buildDir%\tmp.cmd
-set projFile=dstw.proj
+set projFile=systests.proj
 
 md %buildDir% >NUL 2>&1

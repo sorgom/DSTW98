@@ -19,11 +19,11 @@ namespace test
 
         inline void read(CONST_C_STRING filename)
         {
-            call("read");
+            call("read").PARAM(filename);
         }
-        inline void expectRead() const
+        inline void expectRead(CONST_C_STRING filename) const
         {
-            expect("read");
+            expect("read").PARAM(filename);
         }
 
         inline const ComSetup& getComSetup() const

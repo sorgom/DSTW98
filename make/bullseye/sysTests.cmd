@@ -24,20 +24,22 @@ cd /d %buildDir%
 
 DEL /Q %projFile% >NUL 2>&1
 
+set app=%exeDir%\dstw_runtime.exe
+
 echo - launch application without data
-%exeDir%\dstw_runtime.exe X
+%app% %projFile%
 
 echo - gen data
-%exeDir%\dstw_gen.exe >NUL
+%exeDir%\dstw_gen.exe %projFile% >NUL
 
 echo - launch application without parameter
-%exeDir%\dstw_runtime.exe
+%app%%
 
 set /a "myID=%random%"
 set tmpFile=%buildDir%\run.%myID%.tmp
 
 echo - launch application
-start /B %myDir%\_runapp.cmd dstw_runtime
+start /B %myDir%\_runapp.cmd %app% %projFile%
 
 timeout /t 2 /nobreak >NUL 2>&1
 if not exist %tmpFile% (

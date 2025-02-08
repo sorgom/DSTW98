@@ -37,7 +37,6 @@ if %_r% (
 set _genhtml=%_Hu%
 set _update=%_u%
 set _gentodo=%_t%
-set _genmd=%_m%
 
 md %myReportsDir% >NUL 2>&1
 

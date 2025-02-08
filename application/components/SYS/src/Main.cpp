@@ -1,12 +1,12 @@
 #include <SYS/Main.h>
 #include <SYS/IL.h>
-#include <cstdio>
 
 INSTANCE_DEF(Main)
 
 INT32 Main::smain(const INT32 argc, const CONST_C_STRING* const argv)
 {
     I_Ctrl& ctrl = IL::getCtrl();
+    ctrl.clear();
 
     if (argc > 1)
     {
@@ -16,12 +16,7 @@ INT32 Main::smain(const INT32 argc, const CONST_C_STRING* const argv)
 
         if (ctrl.ok())
         {
-            printf("NUM: %5lu\n", IL::getProvider().size());
             com.start();
-        }
-
-        if (argc > 1)
-        {
             while (ctrl.ok())
             {
                 com.check();
@@ -29,7 +24,5 @@ INT32 Main::smain(const INT32 argc, const CONST_C_STRING* const argv)
         }
         com.stop();
     }
-
-    printf("ERR: %5d\n", ctrl.maxerr());
     return ctrl.maxerr();
 }
