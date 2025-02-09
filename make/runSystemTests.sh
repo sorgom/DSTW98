@@ -12,7 +12,7 @@ bindir=linux/bin
 projfile=systest.proj
 
 cd $myDir
-make -j dstw_gen dstw_runtime dstw_stop systemtests
+make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
 
 cd $buildDir
 ret=0

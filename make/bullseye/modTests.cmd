@@ -15,19 +15,16 @@ if not exist %covfile% (
     exit /b 1
 )
 
-del /Q %buildLog% >NUL 2>&1
-
 rem rewind coverage file if it was not removed before
 call covclear -q
 
 echo - run
-echo %DATE% %TIME% > %testReport%
 set elevel=0
 for %%t in (moduletests moduletestsIL) do (
     echo -- %%t
-    %exeDir%\%%t.exe -b -v >> %testReport% 2>&1
+    %exeDir%\%%t.exe -b -v >> %testLog% 2>&1
     if %elevel% NEQ 0 set /A elevel=elevel+1
 )
-if %elevel% == 0 rm -f %testReport%
+if %elevel% == 0 del /Q %testLog%
 
 call %myDir%\_report.cmd

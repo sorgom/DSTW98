@@ -1,7 +1,7 @@
 @echo off
 if "%_me%" == "" exit /b 1
 rem ========================================================================
-rem Bullseye coverage: base directories
+rem Bullseye coverage: common setup
 rem ========================================================================
 cd /d %~dp0
 set myDir=%cd%
@@ -18,7 +18,7 @@ set vsSolution=%makeDir%\DSTW98.sln
 set exeDir=%buildDir%\windows
 set buildLog=%reportsDir%\build_%_me%.txt
 set covLog=%reportsDir%\coverage_%_me%.txt
-set testReport=%reportsDir%\test_errors_%_me%.txt
+set testLog=%reportsDir%\test_errors_%_me%.txt
 
 set covcopt=--srcdir %dstwDir% --macro
 set covfile=%reportsDir%\%_me%.cov
@@ -26,7 +26,7 @@ set excludeFile=%myDir%\_exclude.txt
 set covTodoTxt=%buildDir%\todo_%_me%.txt
 
 set optsTxt=%myDir%\_options.txt
-set vsCall=msbuild -m %vsSolution%
+set vsCall=msbuild -m %vsSolution% -p:configuration=ci
 set tmpCmd=%buildDir%\tmp.cmd
 set projFile=systests.proj
 

@@ -6,9 +6,9 @@ rem ========================================================================
 
 del /Q %buildLog% >NUL 2>&1
 
-if exist %testReport% (
+if exist %testLog% (
     echo - test errors
-    type %testReport%
+    type %testLog%
     exit /b 1
 )
 
@@ -22,6 +22,6 @@ if %_gentodo% (
 )
 
 echo - report
-call covdir -q --by-name --srcdir . >> %covLog%
+covdir -q --by-name --srcdir . >> %covLog%
 
 type %covLog%

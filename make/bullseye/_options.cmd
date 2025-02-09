@@ -26,6 +26,8 @@ if not exist %vsSolution% (
     exit /b 1
 )
 
+del /Q %buildLog% %covLog% %testLog% >NUL 2>&1
+
 if %_c% (
     echo - clean
     del /Q %covfile% >NUL 2>&1
