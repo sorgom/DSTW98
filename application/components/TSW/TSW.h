@@ -9,32 +9,32 @@
 #ifndef TSW_H
 #define TSW_H
 
-#include <ifs/values.h>
-#include <ifs/I_Elem.h>
-#include <BAS/coding.h>
+#include <BAS/BAS_Elem.h>
 
-class TSW : public I_Elem
+class TSW : public BAS_Elem<COMP_TSW>
 {
 public:
     inline TSW(size_t id):
-        mId(id),
+        BAS_Elem<COMP_TSW>(id),
         mState(TSW_STATE_UNDEF)
     {}
 
-    void toGui() const;
+    inline void reGui() const
+    {
+        toGui(mState);
+    }
+
     void fromFld(const ComData& data);
     void fromGui(const ComData& data);
 
     NOCOPY(TSW)
     NODEF(TSW)
 private:
-    const size_t mId;
     UINT8 mState;
 
     void wu();
     void swLeft();
     void swRight();
     void chgState(UINT8 state);
-    void toFld(UINT8 state) const;
 };
 #endif // _H

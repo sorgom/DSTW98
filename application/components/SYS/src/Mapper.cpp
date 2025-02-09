@@ -85,6 +85,6 @@ void Mapper::reGui() const
     const size_t size = prov.size();
     for (size_t n = 0; n < size; ++n)
     {
-        prov.at(n).toGui();
+        prov.at(n).reGui();
     }
 }

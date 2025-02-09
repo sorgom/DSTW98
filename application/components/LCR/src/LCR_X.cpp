@@ -3,13 +3,13 @@
 
 void LCR_X::open()
 {
-    switch (mStateToGui)
+    switch (mState)
     {
         case LCR_STATE_UNDEF:
         case LCR_STATE_CLOSED:
         case LCR_STATE_WAIT_CLOSED:
-            mStateToGui = LCR_STATE_WAIT_OPEN;
-            toGui();
+            mState = LCR_STATE_WAIT_OPEN;
+            reGui();
             toFld(LCR_STATE_OPEN);
             break;
         default:
@@ -19,23 +19,18 @@ void LCR_X::open()
 
 void LCR_X::close()
 {
-    switch (mStateToGui)
+    switch (mState)
     {
         case LCR_STATE_UNDEF:
         case LCR_STATE_OPEN:
         case LCR_STATE_WAIT_OPEN:
-            mStateToGui = LCR_STATE_WAIT_CLOSED;
-            toGui();
+            mState = LCR_STATE_WAIT_CLOSED;
+            reGui();
             toFld(LCR_STATE_CLOSED);
             break;
         default:
             break;
     }
-}
-
-void LCR_X::toFld(const UINT8 state) const
-{
-    IL::getMapper().toFld(mId, ComData(state));
 }
 
 void LCR_X::fromGui(const ComData& data)
@@ -49,7 +44,7 @@ void LCR_X::fromGui(const ComData& data)
             open();
             break;
         default:
-            IL::getCtrl().log(COMP_LCR, RET_ERR_MATCH);
+            logMismatch();
             break;
     }
 }
@@ -66,7 +61,7 @@ bool LCR_X::validState(const UINT8 state)
         ok = true;
         break;
     default:
-        IL::getCtrl().log(COMP_LCR, RET_ERR_MATCH);
+        logMismatch();
         break;
     };
     return ok;
@@ -75,16 +70,11 @@ bool LCR_X::validState(const UINT8 state)
 void LCR::fromFld(const ComData& data)
 {
     const UINT8 state = data.param1;
-    if (validState(state) and state != mStateToGui)
+    if (validState(state) and state != mState)
     {
-        mStateToGui = state;
-        toGui();
+        mState = state;
+        reGui();
     }
-}
-
-void LCR::toGui() const
-{
-    IL::getMapper().toGui(mId, ComData(mStateToGui));
 }
 
 bool LCR_UBK::validUbk(const UINT8 state)
@@ -99,7 +89,7 @@ bool LCR_UBK::validUbk(const UINT8 state)
         ok = true;
         break;
     default:
-        IL::getCtrl().log(COMP_LCR, RET_ERR_MATCH);
+        logMismatch();
         break;
     };
     return ok;
@@ -111,20 +101,15 @@ void LCR_UBK::fromFld(const ComData& data)
     const UINT8 ubk   = data.param2;
     if (
         (
-            (state != mStateToGui) or
-            (ubk   != mUbkToGui)
+            (state != mState) or
+            (ubk   != mStateUbk)
         ) and
         validState(state) and
         validUbk(ubk)
     )
     {
-        mStateToGui = state;
-        mUbkToGui = ubk;
-        toGui();
+        mState = state;
+        mStateUbk = ubk;
+        reGui();
     }
-}
-
-void LCR_UBK::toGui() const
-{
-    IL::getMapper().toGui(mId, ComData(mStateToGui, mUbkToGui));
 }

@@ -1,22 +1,9 @@
+-   BAS_Elem
+-   howto launch cmd
+
 ### doc
--   mocking image
+-   mocking image (V)
 
-### coverage
--   module tests (V)
-    -   complete Mapper
-    -   premake: apply decent CAPACITY (5 times all types)
--   merge results
-
-### systemtests
--   main
-    -   Ctrl loop (V)
--   gen_data
-    - parameter n
-    - -h
--   sleep by select
--   use GenProjData to run tests
-
-### gcov
 
 ### vscode
 -   white preview
@@ -27,15 +14,6 @@
 -   chrome for sombeam
 -   valgrind
 
-
-# Transfer from C++ 2017 to C++98
-## 98
--   replace standard in premake (V)
-
-## coding (helpers)
--   replace BaseTypes (V)
--   replace enums by static const UINT8 (V)
--   replace static asserts by 98 compatible (V)
 
 ## static storage
 ### ByteArray / StackArray / Index

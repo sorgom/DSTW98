@@ -8,7 +8,7 @@ void SIG_X::procFromFld(const UINT8 state)
     if (mStateToGui != state)
     {
         mStateToGui = state;
-        toGui();
+        reGui();
     }
 }
 
@@ -32,7 +32,7 @@ void SIG_XS::procFromFld(const UINT8 state, UINT8 speed)
     {
         mStateToGui = state;
         mSpeedToGui = speed;
-        toGui();
+        reGui();
     }
 }
 
@@ -40,22 +40,8 @@ void SIG_X::procFromGui(const UINT8 stateFld, const UINT8 stateGui)
 {
     mStateToFld = stateFld;
     mStateToGui = stateGui;
-    toGui();
+    reGui();
     toFld(mStateToFld);
-}
-void SIG_X::toGui() const
-{
-    IL::getMapper().toGui(mId, ComData(mStateToGui));
-}
-
-void SIG_X::toFld(const UINT8 state, const UINT8 speed) const
-{
-    IL::getMapper().toFld(mId, ComData(state, speed));
-}
-
-void SIG_XS::toGui() const
-{
-    IL::getMapper().toGui(mId, ComData(mStateToGui, mSpeedToGui));
 }
 
 void SIG_XS::procFromGui(const UINT8 stateFld, const UINT8 stateGui, const UINT8 speed)
@@ -63,7 +49,7 @@ void SIG_XS::procFromGui(const UINT8 stateFld, const UINT8 stateGui, const UINT8
     mStateToFld = stateFld;
     mSpeedToFld = speed;
     mStateToGui = stateGui;
-    toGui();
+    reGui();
     toFld(mStateToFld, mSpeedToFld);
 }
 
@@ -82,11 +68,6 @@ void SIG_XS::speedToFld(const UINT8 speed)
             }
             break;
     };
-}
-
-void SIG_X::logMismatch()
-{
-    IL::getCtrl().log(COMP_SIG, RET_ERR_MATCH);
 }
 
 void SIG_H::fromFld(const ComData& data)

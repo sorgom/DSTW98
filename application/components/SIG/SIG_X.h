@@ -6,41 +6,41 @@
 #ifndef SIG_X_H
 #define SIG_X_H
 
-#include <ifs/values.h>
-#include <ifs/I_Elem.h>
-#include <BAS/coding.h>
+#include <BAS/BAS_Elem.h>
 
-class SIG_X : public I_Elem
+class SIG_X : public BAS_Elem<COMP_SIG>
 {
 public:
-    void toGui() const;
+    inline void reGui() const
+    {
+        toGui(mStateToGui);
+    }
 
     NOCOPY(SIG_X)
     NODEF(SIG_X)
 
 protected:
     inline SIG_X(size_t id):
-        mId(id),
+        BAS_Elem<COMP_SIG>(id),
         mStateToFld(SIG_STATE_UNDEF),
         mStateToGui(SIG_STATE_UNDEF)
     {}
 
-    const size_t mId;
     UINT8 mStateToFld;
     UINT8 mStateToGui;
 
     void procFromFld(UINT8 state);
     void procFromGui(UINT8 stateFld, UINT8 stateGui);
 
-    void toFld(UINT8 state, UINT8 speed = PARAM_UNDEF) const;
-
-    static void logMismatch();
 };
 
 class SIG_XS : public SIG_X
 {
 public:
-    void toGui() const;
+    inline void reGui() const
+    {
+        toGui(mStateToGui, mSpeedToGui);
+    }
 
     NOCOPY(SIG_XS)
     NODEF(SIG_XS)

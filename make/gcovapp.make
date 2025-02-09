@@ -77,6 +77,7 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/BAS_Elem.o
 GENERATED += $(OBJDIR)/Com.o
 GENERATED += $(OBJDIR)/Ctrl.o
 GENERATED += $(OBJDIR)/LCR_X.o
@@ -89,6 +90,7 @@ GENERATED += $(OBJDIR)/SIG_X.o
 GENERATED += $(OBJDIR)/TCP.o
 GENERATED += $(OBJDIR)/TCP_Com.o
 GENERATED += $(OBJDIR)/TSW.o
+OBJECTS += $(OBJDIR)/BAS_Elem.o
 OBJECTS += $(OBJDIR)/Com.o
 OBJECTS += $(OBJDIR)/Ctrl.o
 OBJECTS += $(OBJDIR)/LCR_X.o
@@ -164,6 +166,9 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/BAS_Elem.o: ../application/components/BAS/src/BAS_Elem.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Net.o: ../application/components/BAS/src/Net.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

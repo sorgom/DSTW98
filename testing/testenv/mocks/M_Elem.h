@@ -34,11 +34,11 @@ namespace test
             expect("fromGui").TPARAM(ComData, data);
         }
 
-        inline void toGui() const
+        inline void reGui() const
         {
             call("toGui");
         }
-        inline void expectToGui() const
+        inline void expectReGui() const
         {
             expect("toGui");
         }

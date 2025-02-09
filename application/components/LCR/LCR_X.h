@@ -6,11 +6,9 @@
 #ifndef LCR_X_H
 #define LCR_X_H
 
-#include <ifs/I_Elem.h>
-#include <BAS/coding.h>
-#include <ifs/values.h>
+#include <BAS/BAS_Elem.h>
 
-class LCR_X : public I_Elem
+class LCR_X : public BAS_Elem<COMP_LCR>
 {
 public:
 
@@ -20,18 +18,15 @@ public:
     NODEF(LCR_X)
 
 protected:
-    inline LCR_X(size_t id):
-        mId(id),
-        mStateToGui(LCR_STATE_UNDEF)
+    inline LCR_X(size_t id) :
+        BAS_Elem<COMP_LCR>(id),
+        mState(LCR_STATE_UNDEF)
     {}
 
-    const size_t mId;
-    UINT8 mStateToGui;
+    UINT8 mState;
 
     void open();
     void close();
-
-    void toFld(UINT8 state) const;
 
     static bool validState(UINT8 state);
 };
@@ -45,7 +40,10 @@ public:
     inline LCR(size_t id): LCR_X(id) {}
 
     void fromFld(const ComData& data);
-    void toGui() const;
+    inline void reGui() const
+    {
+        toGui(mState);
+    }
 
     NOCOPY(LCR)
     NODEF(LCR)
@@ -59,17 +57,20 @@ class LCR_UBK : public LCR_X
 public:
     inline LCR_UBK(size_t id):
         LCR_X(id),
-        mUbkToGui(LCR_UBK_STATE_UNDEF)
+        mStateUbk(LCR_UBK_STATE_UNDEF)
     {}
 
     void fromFld(const ComData& data);
-    void toGui() const;
+    inline void reGui() const
+    {
+        toGui(mState, mStateUbk);
+    }
 
     NOCOPY(LCR_UBK)
     NODEF(LCR_UBK)
 
 private:
-    UINT8 mUbkToGui;
+    UINT8 mStateUbk;
     static bool validUbk(UINT8 ubk);
 };
 #endif // _H

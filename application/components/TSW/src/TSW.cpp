@@ -13,7 +13,7 @@ void TSW::fromFld(const ComData& data)
         chgState(state);
         break;
     default:
-        IL::getCtrl().log(COMP_TSW, RET_ERR_MATCH);
+        logMismatch();
         break;
     }
 }
@@ -33,7 +33,7 @@ void TSW::fromGui(const ComData& data)
         swRight();
         break;
     default:
-        IL::getCtrl().log(COMP_TSW, RET_ERR_MATCH);
+        logMismatch();
         break;
     };
 }
@@ -90,16 +90,6 @@ void TSW::chgState(const UINT8 state)
     if (state != mState)
     {
         mState = state;
-        toGui();
+        reGui();
     }
-}
-
-void TSW::toGui() const
-{
-    IL::getMapper().toGui(mId, ComData(mState));
-}
-
-void TSW::toFld(const UINT8 state) const
-{
-    IL::getMapper().toFld(mId, ComData(state));
 }

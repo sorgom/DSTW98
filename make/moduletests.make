@@ -80,6 +80,7 @@ OBJECTS :=
 GENERATED += $(OBJDIR)/BAS_01.o
 GENERATED += $(OBJDIR)/BAS_02.o
 GENERATED += $(OBJDIR)/BAS_03.o
+GENERATED += $(OBJDIR)/BAS_Elem.o
 GENERATED += $(OBJDIR)/COM_01.o
 GENERATED += $(OBJDIR)/COM_02.o
 GENERATED += $(OBJDIR)/COM_03.o
@@ -118,6 +119,7 @@ GENERATED += $(OBJDIR)/wait.o
 OBJECTS += $(OBJDIR)/BAS_01.o
 OBJECTS += $(OBJDIR)/BAS_02.o
 OBJECTS += $(OBJDIR)/BAS_03.o
+OBJECTS += $(OBJDIR)/BAS_Elem.o
 OBJECTS += $(OBJDIR)/COM_01.o
 OBJECTS += $(OBJDIR)/COM_02.o
 OBJECTS += $(OBJDIR)/COM_03.o
@@ -216,6 +218,9 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/BAS_Elem.o: ../application/components/BAS/src/BAS_Elem.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Net.o: ../application/components/BAS/src/Net.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
