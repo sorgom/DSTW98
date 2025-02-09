@@ -78,6 +78,9 @@ protected:
 template <class T, size_t CAP, class KEY>
 class StackIndex
 {
+protected:
+    virtual KEY getKey(const T&) const = 0;
+
 public:
     typedef I_Array<T, CAP> Array;
 
@@ -93,40 +96,8 @@ public:
     //  requires that index() has been called once before
     const PosRes find(KEY key) const
     {
-        bool found = false;
-        size_t pos = 0;
-        if (size() > 0)
-        {
-            size_t left = 0;
-            size_t right = size() - 1;
-            while ((left <= right) and (not found))
-            {
-                const int mid = left + (right - left) / 2;
-                const KEY km = getKey(mid);
-                if (key > km)
-                {
-                    left = mid + 1;
-                }
-                else if (km > key)
-                {
-                    if (mid == 0)
-                    {
-                        break;
-                    }
-                    right = mid - 1;
-                }
-                else
-                {
-                    found = true;
-                    pos = mIdx[mid];
-                }
-            }
-        }
-        return PosRes(found, pos);
+        return search(key);
     }
-
-protected:
-    virtual KEY getKey(const T&) const = 0;
 
 private:
     const Array& mArray;
@@ -169,6 +140,7 @@ private:
             }
         }
     }
+
     size_t dupCnt()
     {
         size_t dups = 0;
@@ -180,6 +152,40 @@ private:
             }
         }
         return dups;
+    }
+
+    const PosRes search(KEY key) const
+    {
+        bool found = false;
+        size_t pos = 0;
+        if (size() > 0)
+        {
+            size_t left = 0;
+            size_t right = size() - 1;
+            while ((left <= right) and (not found))
+            {
+                const int mid = left + (right - left) / 2;
+                const KEY km = getKey(mid);
+                if (key > km)
+                {
+                    left = mid + 1;
+                }
+                else if (km > key)
+                {
+                    if (mid == 0)
+                    {
+                        break;
+                    }
+                    right = mid - 1;
+                }
+                else
+                {
+                    found = true;
+                    pos = mIdx[mid];
+                }
+            }
+        }
+        return PosRes(found, pos);
     }
 
     NODEF(StackIndex)

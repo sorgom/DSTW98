@@ -1,12 +1,14 @@
--   BAS_Elem
 -   howto launch cmd
+-   CppUTestSteps:
+    -   redirect L_ macros to base ones
+    -   add PARAM and other macros
 
 ### doc
 -   mocking image (V)
 
 
 ### vscode
--   white preview
+-   white preview: documet how
 
 ### PC setup
 -   StarUML
