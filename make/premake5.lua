@@ -13,6 +13,7 @@ base_cpputest = '../submodules/cpputest'
 includedirs_cpputest = { base_cpputest .. '/include' }
 
 base_teststeps = '../submodules/CppUTestSteps/TestSteps'
+includedirs_teststeps = { base_teststeps .. '/include' }
 
 includedirs_app = {
     '../specification',
@@ -26,11 +27,20 @@ files_testenv = {
     base_teststeps .. '/src/*.cpp'
 }
 
+-- leads to test env IL interface
 includedirs_test = {
     includedirs_testenv,
     includedirs_cpputest,
-    base_teststeps .. '/include',
+    includedirs_teststeps,
     includedirs_app
+}
+
+-- leads to application IL interface
+includedirs_test_IL = {
+    includedirs_app,
+    includedirs_testenv,
+    includedirs_cpputest,
+    includedirs_teststeps
 }
 
 files_moduletest = { '../testing/tests/moduletests/**.cpp' }
@@ -65,7 +75,6 @@ workspace 'DSTW98'
         targetdir '../build/%{_TARGET_OS}/bin'
         buildoptions { buildoptions_gcc }
         linkoptions { '-pthread' }
-
 
     filter { 'configurations:ci' }
         defines { 'NDEBUG' }
@@ -103,6 +112,11 @@ workspace 'DSTW98'
     project 'moduletests'
         files { files_app, files_testenv, files_moduletest }
         includedirs { includedirs_test }
+        links { 'cpputest' }
+
+    project 'moduletestsIL'
+        files { files_app, files_testenv, '../testing/tests/moduletestsIL/*.cpp' }
+        includedirs { includedirs_test_IL }
         links { 'cpputest' }
 
     project 'devtests'

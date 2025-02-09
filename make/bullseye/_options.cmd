@@ -3,7 +3,7 @@ if "%_me%" == "" exit /b 1
 rem ========================================================================
 rem Bullseye coverage: CLI options
 rem ========================================================================
-call %~dp0_covsetup.cmd %*
+call %~dp0_setup.cmd %*
 
 %pyDir%\somutil\docopts.py %optsTxt% %* > %tmpCmd%
 if %errorlevel% NEQ 0 exit /b 1
@@ -31,18 +31,13 @@ if %_c% (
     del /Q %covfile% >NUL 2>&1
     %vsCall% -t:Clean >NUL
 )
-if %_r% (
-    rmdir /S /Q %myReportsDir% >NUL 2>&1
-)
-set _genhtml=%_Hu%
-set _update=%_u%
 set _gentodo=%_t%
 
-md %myReportsDir% >NUL 2>&1
+md %reportsDir% >NUL 2>&1
 
 echo - build
 
-call %myDir%\_covbuild.cmd --off cpputest
+call %myDir%\_build.cmd --off cpputest
 if %errorlevel% NEQ 0 exit /b 1
 
 cd %myDir%

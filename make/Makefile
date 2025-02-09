@@ -11,6 +11,7 @@ endif
 ifeq ($(config),ci)
   cpputest_config = ci
   moduletests_config = ci
+  moduletestsIL_config = ci
   devtests_config = ci
   buildfail_config = ci
   dstw_gen_config = ci
@@ -23,6 +24,7 @@ ifeq ($(config),ci)
 else ifeq ($(config),debug)
   cpputest_config = debug
   moduletests_config = debug
+  moduletestsIL_config = debug
   devtests_config = debug
   buildfail_config = debug
   dstw_gen_config = debug
@@ -35,6 +37,7 @@ else ifeq ($(config),debug)
 else ifeq ($(config),fail)
   cpputest_config = fail
   moduletests_config = fail
+  moduletestsIL_config = fail
   devtests_config = fail
   buildfail_config = fail
   dstw_gen_config = fail
@@ -48,7 +51,7 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := cpputest moduletests devtests buildfail dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := cpputest moduletests moduletestsIL devtests buildfail dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -64,6 +67,12 @@ moduletests: cpputest
 ifneq (,$(moduletests_config))
 	@echo "==== Building moduletests ($(moduletests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
+endif
+
+moduletestsIL: cpputest
+ifneq (,$(moduletestsIL_config))
+	@echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
+	@${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
 endif
 
 devtests: cpputest
@@ -117,6 +126,7 @@ endif
 clean:
 	@${MAKE} --no-print-directory -C . -f cpputest.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
+	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
 	@${MAKE} --no-print-directory -C . -f devtests.make clean
 	@${MAKE} --no-print-directory -C . -f buildfail.make clean
 	@${MAKE} --no-print-directory -C . -f dstw_gen.make clean
@@ -139,6 +149,7 @@ help:
 	@echo "   clean"
 	@echo "   cpputest"
 	@echo "   moduletests"
+	@echo "   moduletestsIL"
 	@echo "   devtests"
 	@echo "   buildfail"
 	@echo "   dstw_gen"

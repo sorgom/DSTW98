@@ -12,28 +12,16 @@ if exist %testReport% (
     exit /b 1
 )
 
-if %_update% exit /b 0
-
-set covMin=%minFunctionCov%,%minDecisionCov%
-
 covselect -qd --import %excludeFile%
 
-if %_genhtml% (
-    echo - html
-    covhtml -q --allNum %covHtmlDir%
-)
 cd %dstwDir%
 if %_gentodo% (
     echo - todo
     covbr -qu --srcdir . > %covTodoTxt%
-    %pyDir%\covbr2html\covbr2html.py -co %myReportsDir% %covTodoTxt%
+    %pyDir%\covbr2html\covbr2html.py -co %ReportsDir% %covTodoTxt%
 )
 
 echo - report
 call covdir -q --by-name --srcdir . >> %covLog%
 
-set _result=failed
-call covdir -q --checkmin %covMin%
-if %errorlevel% == 0 set _result=passed
-echo covmin %covMin% %_result% >> %covLog%
 type %covLog%

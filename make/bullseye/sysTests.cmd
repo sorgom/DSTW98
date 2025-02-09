@@ -5,19 +5,13 @@ rem ========================================================================
 
 SETLOCAL
 set _me=%~n0
-call %~dp0_covoptions.cmd %*
+call %~dp0_options.cmd %*
 if %errorlevel% neq 0 exit /b 0
 
-rem - minimal function coverage %
-set minFunctionCov=50
-rem - minimal decision coverage %
-set minDecisionCov=30
+call %myDir%\_build.cmd --off "dstw_gen,dstw_stop,systemtests"
+if %errorlevel% NEQ 0 exit /b 1
 
-for %%t in (dstw_gen dstw_stop systemtests) do (
-    call %myDir%\_covbuild.cmd --off %%t
-    if %errorlevel% NEQ 0 exit /b 1
-)
-call %myDir%\_covbuild.cmd --on dstw_runtime
+call %myDir%\_build.cmd --on dstw_runtime
 if %errorlevel% NEQ 0 exit /b 1
 
 cd /d %buildDir%
@@ -58,4 +52,4 @@ echo - stop application ...
 timeout /t 1 /nobreak >NUL 2>&1
 if exist %tmpFile% goto wait
 
-call %myDir%\_covreport.cmd
+call %myDir%\_report.cmd

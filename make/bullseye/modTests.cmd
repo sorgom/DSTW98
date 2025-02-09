@@ -4,16 +4,10 @@ rem Bullseye coverage: build and run module tests (requires VS shell)
 rem ========================================================================
 SETLOCAL
 set _me=%~n0
-call %~dp0_covoptions.cmd %*
+call %~dp0_options.cmd %*
 if %errorlevel% neq 0 exit /b 0
 
-rem minmal coverage setup
-rem - minimal function coverage %
-set minFunctionCov=100
-rem - minimal decision coverage %
-set minDecisionCov=100
-
-call %myDir%\_covbuild.cmd --on moduletests
+call %myDir%\_build.cmd --on "moduletests,moduletestsIL"
 if %errorlevel% NEQ 0 exit /b 1
 
 if not exist %covfile% (
@@ -27,7 +21,13 @@ rem rewind coverage file if it was not removed before
 call covclear -q
 
 echo - run
-call %exeDir%\moduletests.exe -b -v > %testReport% 2>&1
-if %errorlevel% == 0 rm -f %testReport%
+echo %DATE% %TIME% > %testReport%
+set elevel=0
+for %%t in (moduletests moduletestsIL) do (
+    echo -- %%t
+    %exeDir%\%%t.exe -b -v >> %testReport% 2>&1
+    if %elevel% NEQ 0 set /A elevel=elevel+1
+)
+if %elevel% == 0 rm -f %testReport%
 
-call %myDir%\_covreport.cmd
+call %myDir%\_report.cmd

@@ -11,23 +11,21 @@ cd ..
 set dstwDir=%cd%
 set buildDir=%cd%\build
 set subsDir=%cd%\submodules
-set ReportsDir=%cd%\reports
-set myReportsDir=%reportsDir%\%_me%
+set reportsDir=%cd%\reports
 
 set pyDir=%subsDir%\sompy
-set vsSolution=%makeDir%\DSTW.sln
+set vsSolution=%makeDir%\DSTW98.sln
 set exeDir=%buildDir%\windows
-set buildLog=%myReportsDir%\build.txt
-set covLog=%myReportsDir%\coverage.txt
-set covHtmlDir=%myReportsDir%\html
-set testReport=%myReportsDir%\test_errors.txt
+set buildLog=%reportsDir%\build_%_me%.txt
+set covLog=%reportsDir%\coverage_%_me%.txt
+set testReport=%reportsDir%\test_errors_%_me%.txt
 
 set covcopt=--srcdir %dstwDir% --macro
 set covfile=%reportsDir%\%_me%.cov
-set excludeFile=%myDir%\_covexclude.txt
-set covTodoTxt=%buildDir%\%_me%_todo.txt
+set excludeFile=%myDir%\_exclude.txt
+set covTodoTxt=%buildDir%\todo_%_me%.txt
 
-set optsTxt=%myDir%\_covoptions.txt
+set optsTxt=%myDir%\_options.txt
 set vsCall=msbuild -m %vsSolution%
 set tmpCmd=%buildDir%\tmp.cmd
 set projFile=systests.proj

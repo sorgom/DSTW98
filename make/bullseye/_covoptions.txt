@@ -1,7 +1,0 @@
-options:
--c  force clean build
--r  remove reports
--H  generate HTML
--u  just update coverage file (no report, no HTML)
--t  write todo files
--h  this help
