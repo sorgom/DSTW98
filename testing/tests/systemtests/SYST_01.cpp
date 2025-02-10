@@ -5,6 +5,7 @@
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
+#include <testlib/GenProjData.h>
 #include <testlib/wait.h>
 #include <mocks/M_TCP_Client.h>
 #include <COM/TCP.h>

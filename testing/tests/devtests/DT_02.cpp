@@ -5,6 +5,7 @@
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
+#include <comparators/ostreams.h>
 
 #include <sstream>
 

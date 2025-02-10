@@ -3,7 +3,11 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
+#include <comparators/ostreams.h>
+#include <testlib/GenProjData.h>
+#include <testlib/NetTest.h>
 #include <testlib/TestGroupBase.h>
+
 #include <sstream>
 
 namespace test

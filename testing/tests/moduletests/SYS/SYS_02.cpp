@@ -3,6 +3,7 @@
 //  ============================================================
 //  created by Manfred Sorgo
 #include <testlib/TestGroupBase.h>
+#include <testlib/GenProjData.h>
 #include <SYS/Provider.h>
 #include <SYS/Mapper.h>
 

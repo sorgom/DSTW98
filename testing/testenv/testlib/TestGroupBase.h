@@ -6,16 +6,9 @@
 #ifndef TESTGROUPBASE_H
 #define TESTGROUPBASE_H
 
-#include <testlib/CppUTest.h>
-
-#include <codebase/Mem.h>
-#include <comparators/ostreams.h>
 #include <ifs/values.h>
 #include <mocks/M_Instances.h>
-#include <SYS/Capacity.h>
 #include <SYS/IL.h>
-#include <testlib/GenProjData.h>
-#include <testlib/NetTest.h>
 #include <testlib/TestLib.h>
 #include <testlib/testValues.h>
 #include <TestSteps/TestSteps.h>

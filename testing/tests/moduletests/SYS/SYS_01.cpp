@@ -4,6 +4,7 @@
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
+#include <testlib/GenProjData.h>
 #include <SYS/Reader.h>
 #include <SYS/Ctrl.h>
 

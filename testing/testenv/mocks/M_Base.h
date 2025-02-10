@@ -6,7 +6,7 @@
 #ifndef M_BASE_H
 #define M_BASE_H
 
-#include <testlib/CppUTest.h>
+#include <TestSteps/MockMacros.h>
 #include <codebase/BaseTypes.h>
 #include <BAS/coding.h>
 
