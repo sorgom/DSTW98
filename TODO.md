@@ -1,7 +1,7 @@
 -   howto launch cmd
 -   CppUTestSteps:
-    -   redirect L_ macros to base ones
-    -   add PARAM and other macros
+    -   redirect L_ macros to base ones (not pssible)
+    -   add PARAM and other macros -> MockMacros.h
 -   CFG/Capcity.h
 -   sompy: cleanMdj, cleanSvg line endings
 
