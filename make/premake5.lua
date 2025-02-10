@@ -48,7 +48,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  premake5 build rules
 --  ============================================================
 
-workspace 'DSTW98'
+workspace 'DSTW'
     configurations { 'ci', 'debug', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'

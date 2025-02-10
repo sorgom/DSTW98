@@ -20,12 +20,13 @@ But cppcheck can be extended by commercial _premium_ packages
 as for example Cert C++.
 
 ### compiler flags gcc
-The gcc compiler itself turned out to be a very strong SCA tool with the appropriate flags set (C++ 2017):
+The gcc compiler itself turned out to be a very strong SCA tool with the appropriate flags set:
 
--std=c++17 -pedantic-errors -Werror -Wall
+-std=c++98 -pedantic-errors -Werror -Wall
 
 |Flag|Effect|
 |----|----|
+|-std=c++98|must compile with C++ 98 standard|
 |-pedantic-errors|self explaining|
 |-Werror|tread warnings as errors|
 |-Wall|do not suppress any warning|
@@ -33,14 +34,14 @@ The gcc compiler itself turned out to be a very strong SCA tool with the appropr
 ### compiler flags VS
 Visual Studio turned out to be an even more pedantic code analyzer with the right options set:
 
-/std:c++17 /MP /W4
+/MP /W4
 
 |Flag|Effect|
 |----|----|
 |/W4|highest warning level|
 |/MP|multi processor build|
 
-Additional flags see header of [premake5_vs.lua](make/premake5_vs.lua)
+Additional flags see header of [premake5.lua](make/premake5.lua)
 
 ## code coverage
 Application code coverage by tests must be 100%.
