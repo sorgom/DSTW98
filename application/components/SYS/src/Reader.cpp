@@ -1,6 +1,6 @@
 #include <BAS/Net.h>
 #include <ifs/DataTypes.h>
-#include <SYS/Capacity.h>
+#include <CFG/Capacity.h>
 #include <SYS/IL.h>
 #include <SYS/Reader.h>
 

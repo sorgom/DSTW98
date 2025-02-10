@@ -19,7 +19,7 @@
 
 #include <BAS/StackArray.h>
 #include <ifs/DataTypes.h>
-#include <SYS/Capacity.h>
+#include <CFG/Capacity.h>
 #include <testlib/NetTest.h>
 #include <testlib/TestLib.h>
 #include <testlib/testValues.h>
