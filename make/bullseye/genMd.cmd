@@ -4,7 +4,7 @@ rem Bullseye coverage: generate md file
 rem ========================================================================
 SETLOCAL
 set _me=%~n0
-call %~dp0_covsetup.cmd
+call %~dp0_setup.cmd
 
 set md=%dstwDir%\testing\coverage_bullseye.md
 set srcs=modTests.cov sysTests.cov

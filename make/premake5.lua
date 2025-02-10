@@ -71,10 +71,13 @@ workspace 'DSTW98'
     filter { 'action:vs*', 'kind:ConsoleApp' }
         links { 'winmm' }
 
-    filter { 'action:gmake*' }
+    filter { 'action:gmake*', 'kind:ConsoleApp' }
         targetdir '../build/%{_TARGET_OS}/bin'
         buildoptions { buildoptions_gcc }
         linkoptions { '-pthread' }
+
+    filter { 'kind:StaticLib' }
+        targetdir '../build/%{_TARGET_OS}/lib'
 
     filter { 'configurations:ci' }
         defines { 'NDEBUG' }
@@ -90,7 +93,6 @@ workspace 'DSTW98'
     --  ============================================================
     project 'cpputest'
         kind 'StaticLib'
-        targetdir '../build/%{_TARGET_OS}/lib'
         defines { 'NDEBUG' }
 
         includedirs { includedirs_cpputest }

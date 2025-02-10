@@ -47,23 +47,23 @@ endef
 ifeq ($(config),ci)
 OBJDIR = ../build/linux/obj/ci/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
 
 else ifeq ($(config),debug)
 OBJDIR = ../build/linux/obj/debug/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -fprofile-arcs -ftest-coverage
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -fprofile-arcs -ftest-coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib
 
 else ifeq ($(config),fail)
 OBJDIR = ../build/linux/obj/fail/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall -fprofile-arcs -ftest-coverage
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
 
 endif
 
