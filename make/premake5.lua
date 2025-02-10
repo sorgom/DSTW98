@@ -4,10 +4,9 @@
 
 buildoptions_gcc = '-std=c++98 -pedantic-errors -Werror -Wall'
 
-buildoptions_vs = '/MP'
-buildoptions_vs_app = buildoptions_vs .. ' /W4 /wd4100 /wd4103'
-buildoptions_vs_test = buildoptions_vs_app .. ' /wd4127 /D_WINSOCK_DEPRECATED_NO_WARNINGS'
-buildoptions_vs_cpputest = buildoptions_vs_app .. ' /DCPPUTEST_MEM_LEAK_DETECTION_DISABLED /wd4611 /wd4996'
+buildoptions_vs = '/MP /W4 /wd4100 /wd4103'
+buildoptions_vs_test = buildoptions_vs .. ' /wd4127'
+buildoptions_vs_cpputest = buildoptions_vs .. ' /wd4611 /wd4996'
 
 base_cpputest = '../submodules/cpputest'
 includedirs_cpputest = { base_cpputest .. '/include' }
@@ -67,6 +66,7 @@ workspace 'DSTW98'
         buildoptions { buildoptions_vs_test }
         links { 'ws2_32' }
         warnings 'high'
+        defines { '_WINSOCK_DEPRECATED_NO_WARNINGS' }
 
     filter { 'action:vs*', 'kind:ConsoleApp' }
         links { 'winmm' }
