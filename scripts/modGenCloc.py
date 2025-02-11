@@ -7,6 +7,7 @@
 from modUtilz import checkLinux, mdCode, procOut, repoDir, writeFile
 from os.path import basename, exists
 from os import chdir
+from shutil import which
 import re
 
 rxCont = re.compile(r'^-------------.*', re.M | re.S)
@@ -14,7 +15,9 @@ rxCont = re.compile(r'^-------------.*', re.M | re.S)
 mdf = 'CLOC.md'
 
 def genCloc(dirs, ext="h,cpp"):
-    checkLinux()
+    if not which('cloc'):
+        print("cloc not found")
+        return
     chdir(repoDir())
     res = []
     for dir in dirs:
