@@ -23,19 +23,24 @@ out () {
     printf "%-25s: %4d\n" $1 $2
 }
 
-out files $(ls *.cpp.gcov | wc -l)
+files=$(ls *.cpp.gcov 2> /dev/null)
+if test -z $files; then
+    echo "No coverage data found"
+    exit 0
+fi 
+
+echo uncovered LOC:
 tot=0
-for cf in *.cpp.gcov; do
-    nuc=$(cat $cf | grep '#####:' | wc -l)
-    if test $nuc -ne 0; then
-        if test $tot -eq 0; then echo; echo uncovered LOC:; fi
-        tot=$((tot+nuc))
-        out ${cf%.*} $nuc
-    fi
+for cf in $files; do
+    nuc=$(cat $cf | grep -c '#####:')
+    tot=$((tot+nuc))
+    out ${cf%.*} $nuc
 done
+echo  
 if test $tot -ne 0; then
     out TOTAL $tot
 else echo OK
 fi
+out files $(echo $files | wc -w)
 rm *.gcov
 exit $tot
