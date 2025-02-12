@@ -15,7 +15,7 @@
 class I_Reader
 {
 public:
-    virtual void read(CONST_C_STRING filename) = 0;
+    virtual void read() = 0;
     virtual const ComSetup& getComSetup() const = 0;
 };
 #endif // _H

@@ -14,7 +14,7 @@ set subsDir=%cd%\submodules
 set reportsDir=%cd%\reports
 
 set pyDir=%subsDir%\sompy
-set vsSolution=%makeDir%\DSTW98.sln
+set vsSolution=%makeDir%\DSTW.sln
 set exeDir=%buildDir%\windows
 set buildLog=%reportsDir%\build_%_me%.txt
 set covLog=%reportsDir%\coverage_%_me%.txt
@@ -28,6 +28,6 @@ set covTodoTxt=%buildDir%\todo_%_me%.txt
 set optsTxt=%myDir%\_options.txt
 set vsCall=msbuild -m %vsSolution% -p:configuration=ci
 set tmpCmd=%buildDir%\tmp.cmd
-set projFile=systests.proj
+set projFile=dstw.proj
 
 md %buildDir% >NUL 2>&1

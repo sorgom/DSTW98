@@ -1,6 +1,6 @@
 #include <BAS/Net.h>
 #include <ifs/DataTypes.h>
-#include <CFG/Capacity.h>
+#include <CFG/Setup.h>
 #include <SYS/IL.h>
 #include <SYS/Reader.h>
 
@@ -8,7 +8,7 @@
 
 INSTANCE_DEF(Reader)
 
-void Reader::read(const CONST_C_STRING filename)
+void Reader::read()
 {
     I_Mapper& mapper = IL::getMapper();
     I_Provider& provider = IL::getProvider();
@@ -17,7 +17,7 @@ void Reader::read(const CONST_C_STRING filename)
     mapper.clear();
     provider.clear();
 
-    std::ifstream is(filename, std::ios::binary);
+    std::ifstream is(PROJ_FILE, std::ios::binary);
     static const UINT32 hsize = sizeof(ComSetup) + sizeof(UINT32);
     bool ok = is.good();
     if (ok)

@@ -3,20 +3,20 @@
 
 INSTANCE_DEF(Main)
 
-INT32 Main::smain(const INT32 argc, const CONST_C_STRING* const argv)
+INT32 Main::main(const INT32 argc, const CONST_C_STRING* const) const
 {
     I_Ctrl& ctrl = IL::getCtrl();
     ctrl.clear();
 
-    if (argc > 1)
+    IL::getReader().read();
+
+    if (ctrl.ok())
     {
         I_Com& com = IL::getCom();
+        com.start();
 
-        IL::getReader().read(argv[1]);
-
-        if (ctrl.ok())
+        if (argc > 1)
         {
-            com.start();
             while (ctrl.ok())
             {
                 com.check();

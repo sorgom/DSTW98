@@ -9,7 +9,7 @@
 #include <BAS/coding.h>
 #include <ifs/I_Mapper.h>
 #include <ifs/I_Provider.h>
-#include <CFG/Capacity.h>
+#include <CFG/Setup.h>
 
 class Mapper : public I_Mapper
 {

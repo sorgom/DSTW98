@@ -19,16 +19,12 @@
 
 #include <BAS/StackArray.h>
 #include <ifs/DataTypes.h>
-#include <CFG/Capacity.h>
+#include <CFG/Setup.h>
 #include <testlib/NetTest.h>
 #include <testlib/TestLib.h>
 #include <testlib/testValues.h>
 
 #include <fstream>
-
-#ifndef DEF_PROJ_FILE
-#define DEF_PROJ_FILE "dstw.proj"
-#endif
 
 namespace test
 {
@@ -36,11 +32,9 @@ namespace test
     class GenProjData
     {
     public:
-        const CONST_C_STRING filename;
         const ComSetup setup;
 
-        GenProjData(CONST_C_STRING filename = DEF_PROJ_FILE) :
-            filename(filename),
+        GenProjData() :
             setup(
                 NetTest::toN(tcpPortFld),
                 NetTest::toN(tcpPortGui),
@@ -138,7 +132,7 @@ namespace test
 
         bool openOs()
         {
-            os.open(filename);
+            os.open(PROJ_FILE, std::ios::binary);
             const bool ok = os.good();
             if (not ok) os.close();
             return ok;

@@ -9,7 +9,6 @@ myDir=$(pwd)
 cd ..
 buildDir=$(pwd)/build
 bindir=linux/ci
-projfile=systest.proj
 
 cd $myDir
 make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
@@ -21,9 +20,9 @@ $bindir/dstw_stop
 sleep 1
 
 #   gen required proj data file
-$bindir/dstw_gen $projfile
+$bindir/dstw_gen
 #   start app in background
-$bindir/dstw_runtime $projfile & pid=$!
+$bindir/dstw_runtime X & pid=$!
 #   run tests
 $bindir/systemtests -b -v
 ret=$((ret+$?))

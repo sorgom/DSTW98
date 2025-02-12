@@ -21,10 +21,10 @@ DEL /Q %projFile% >NUL 2>&1
 set app=%exeDir%\dstw_runtime.exe
 
 echo - launch application without data
-%app% %projFile%
+%app% X
 
 echo - gen data
-%exeDir%\dstw_gen.exe %projFile% >NUL
+%exeDir%\dstw_gen.exe >NUL
 
 echo - launch application without parameter
 %app%%
@@ -33,7 +33,7 @@ set /a "myID=%random%"
 set tmpFile=%buildDir%\run.%myID%.tmp
 
 echo - launch application
-start /B %myDir%\_runapp.cmd %app% %projFile%
+start /B %myDir%\_runapp.cmd %app% X
 
 timeout /t 2 /nobreak >NUL 2>&1
 if not exist %tmpFile% (
@@ -42,8 +42,7 @@ if not exist %tmpFile% (
 )
 
 echo - run tests
-%exeDir%\systemtests.exe -b -v > %testLog% 2>&1
-if %errorlevel% == 0 del %testLog%
+%exeDir%\systemtests.exe -b -v
 
 echo - stop application ...
 %exeDir%\dstw_stop.exe

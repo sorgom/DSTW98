@@ -17,13 +17,13 @@ namespace test
     public:
         INSTANCE_DEC(M_Reader)
 
-        inline void read(CONST_C_STRING filename)
+        inline void read()
         {
-            call("read").PARAM(filename);
+            call("read");
         }
-        inline void expectRead(CONST_C_STRING filename) const
+        inline void expectRead() const
         {
-            expect("read").PARAM(filename);
+            expect("read");
         }
 
         inline const ComSetup& getComSetup() const

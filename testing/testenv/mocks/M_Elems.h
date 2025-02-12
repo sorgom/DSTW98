@@ -8,7 +8,7 @@
 
 #include "M_Elem.h"
 #include <BAS/StackArray.h>
-#include <CFG/Capacity.h>
+#include <CFG/Setup.h>
 #include <sstream>
 
 namespace test

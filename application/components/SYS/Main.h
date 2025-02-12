@@ -13,16 +13,12 @@
 class Main : public I_Main
 {
 public:
-    inline INT32 main(INT32 argc, const CONST_C_STRING* argv) const
-    {
-        return smain(argc, argv);
-    }
+    INT32 main(INT32 argc, const CONST_C_STRING* argv) const;
 
     INSTANCE_DEC(Main)
     NOCOPY(Main)
 private:
     inline Main() {}
-    static INT32 smain(INT32 argc, const CONST_C_STRING* argv);
 };
 
 #endif // _H

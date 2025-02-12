@@ -10,7 +10,7 @@
 class Reader : public I_Reader
 {
 public:
-    void read(CONST_C_STRING filename);
+    void read();
     inline const ComSetup& getComSetup() const { return mComSetup; }
 
     INSTANCE_DEC(Reader)

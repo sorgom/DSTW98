@@ -142,6 +142,8 @@ CommandLine: "K:\MyDownloads\Docker_Desktop_Installer.exe" "install" -package "r
 ```
 -i, --interactive                 Keep STDIN open even if not attached
 
+--mount mount                     Attach a filesystem mount to the
+                                  container
 --name string                     Assign a name to the container
 
 -rm                               Automatically remove the

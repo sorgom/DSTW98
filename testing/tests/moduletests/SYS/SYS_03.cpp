@@ -16,24 +16,26 @@ namespace test
     {
         SETUP()
         const I_Main& main = Main::instance();
-        CONST_C_STRING fname = "test.proj";
-        CONST_C_STRING argv[2] = { "call", fname };
+        CONST_C_STRING argv[2] = { "call", "X" };
         INT32 ret = 0;
 
         STEP(1)
-        // call with no file
+        // OK but no run
         m_Ctrl().expectClear();
-        m_Ctrl().expectMaxerr(RET_NO_ERR);
+        m_Reader().expectRead();
+        m_Ctrl().expectOk(true);
+        m_Com().expectStart();
+        m_Com().expectStop();
+        m_Ctrl().expectMaxerr(RET_ERR_PROJ);
         ret = main.main(1, argv);
         CHECK_N_CLEAR()
-        L_CHECK_EQUAL(RET_NO_ERR, ret)
+        L_CHECK_EQUAL(RET_ERR_PROJ, ret)
 
         STEP(2)
         // NOK after Reader::read
         m_Ctrl().expectClear();
-        m_Reader().expectRead(fname);
+        m_Reader().expectRead();
         m_Ctrl().expectOk(false);
-        m_Com().expectStop();
 
         m_Ctrl().expectMaxerr(RET_ERR_STARTUP);
         ret = main.main(2, argv);
@@ -43,7 +45,7 @@ namespace test
         STEP(3)
         // NOK after Com::start
         m_Ctrl().expectClear();
-        m_Reader().expectRead(fname);
+        m_Reader().expectRead();
         m_Ctrl().expectOk(true);
         m_Com().expectStart();
         m_Ctrl().expectOk(false);
@@ -56,7 +58,7 @@ namespace test
         STEP(4)
         // NOK after 1st Com::check
         m_Ctrl().expectClear();
-        m_Reader().expectRead(fname);
+        m_Reader().expectRead();
         m_Ctrl().expectOk(true);
         m_Com().expectStart();
         m_Ctrl().expectOk(true);
@@ -71,7 +73,7 @@ namespace test
         STEP(5)
         // NOK after 2nd Com::check
         m_Ctrl().expectClear();
-        m_Reader().expectRead(fname);
+        m_Reader().expectRead();
         m_Ctrl().expectOk(true);
         m_Com().expectStart();
         m_Ctrl().expectOk(true);

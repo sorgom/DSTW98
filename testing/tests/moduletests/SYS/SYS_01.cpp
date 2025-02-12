@@ -8,12 +8,13 @@
 #include <SYS/Reader.h>
 #include <SYS/Ctrl.h>
 
+#include <cstdio>
+
 namespace test
 {
     class TestGroupRDR : public TestGroupBase
     {
     protected:
-        static const CONST_C_STRING fname;
         void expectClear()
         {
             m_Mapper().expectClear();
@@ -26,8 +27,6 @@ namespace test
         }
     };
 
-    const CONST_C_STRING TestGroupRDR::fname = "tmp.dat";
-
 
     TEST_GROUP_BASE(SYS_01, TestGroupRDR) {};
 
@@ -37,7 +36,7 @@ namespace test
     {
         SETUP()
         I_Reader& rdr = Reader::instance();
-        GenProjData<> data(fname);
+        GenProjData<> data;
         data.dump();
 
         STEP(1)
@@ -48,7 +47,7 @@ namespace test
             m_Ctrl().expectOk();
         }
         m_Mapper().expectIndex();
-        rdr.read(fname);
+        rdr.read();
         CHECK_N_CLEAR()
 
         STEP(2)
@@ -64,7 +63,7 @@ namespace test
         m_Provider().expectAdd(data.at(0));
         m_Ctrl().expectOk(false);
         expectFail();
-        rdr.read(fname);
+        rdr.read();
         CHECK_N_CLEAR()
     }
 
@@ -74,11 +73,12 @@ namespace test
     {
         SETUP()
         I_Reader& rdr = Reader::instance();
+        std::remove(PROJ_FILE);
 
         STEP(1)
         expectClear();
         expectFail();
-        rdr.read("does_not_exist.dat");
+        rdr.read();
         CHECK_N_CLEAR()
     }
 
@@ -88,14 +88,14 @@ namespace test
     {
         SETUP()
         I_Reader& rdr = Reader::instance();
-        GenProjData<> data(fname);
+        GenProjData<> data;
 
         STEP(1)
         // file smaller than header
         data.dumpTooSmall();
         expectClear();
         expectFail();
-        rdr.read(fname);
+        rdr.read();
         CHECK_N_CLEAR()
 
         STEP(2)
@@ -103,7 +103,7 @@ namespace test
         data.dump(CAPACITY + 1);
         expectClear();
         expectFail();
-        rdr.read(fname);
+        rdr.read();
         CHECK_N_CLEAR()
 
         STEP(3)
@@ -111,7 +111,7 @@ namespace test
         data.dump(CAPACITY, CAPACITY - 1);
         expectClear();
         expectFail();
-        rdr.read(fname);
+        rdr.read();
         CHECK_N_CLEAR()
     }
 

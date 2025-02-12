@@ -8,7 +8,7 @@
 
 #include <BAS/StackArray.h>
 #include <ifs/I_Provider.h>
-#include <CFG/Capacity.h>
+#include <CFG/Setup.h>
 
 #include <TSW/TSW.h>
 #include <SIG/SIG_X.h>
