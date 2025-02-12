@@ -1,6 +1,6 @@
 #!/bin/bash
 #   ====================================
-#   run DSTW in Docker container (ubuntu)
+#   run DSTW in ubuntu Docker container
 #   ====================================
 #   created by Manfred Sorgo
 
@@ -9,7 +9,6 @@ myDir=$(pwd)
 cd ..
 buildDir=$(pwd)/build
 bindir=linux/docker
-projfile=dstw.proj
 
 cd $myDir
 make -j dstw_gen dstw_runtime config=docker
@@ -18,4 +17,4 @@ cd $buildDir
 #   gen required proj data file
 $bindir/dstw_gen $projfile
 #   start app with valgrind
-valgrind $bindir/dstw_runtime $projfile
+valgrind --leak-check=full $bindir/dstw_runtime X

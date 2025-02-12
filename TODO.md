@@ -1,9 +1,5 @@
--   howto launch cmd
--   CppUTestSteps:
-    -   redirect L_ macros to base ones (not pssible)
-    -   add PARAM and other macros -> MockMacros.h
--   CFG/Capcity.h
--   sompy: cleanMdj, cleanSvg line endings
+### TCP
+-   improve client select, greater buffer
 
 ### doc
 -   mocking image (V)
