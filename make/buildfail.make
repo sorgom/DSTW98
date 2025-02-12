@@ -49,21 +49,28 @@ OBJDIR = ../build/linux/obj/ci/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
 
 else ifeq ($(config),debug)
 OBJDIR = ../build/linux/obj/debug/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
+
+else ifeq ($(config),docker)
+OBJDIR = ../build/linux/obj/docker/buildfail
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s
 
 else ifeq ($(config),fail)
 OBJDIR = ../build/linux/obj/fail/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s
 
 endif
 

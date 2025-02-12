@@ -28,8 +28,6 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/linux/bin
-TARGET = $(TARGETDIR)/dstw_stop
 INCLUDES += -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
@@ -45,25 +43,40 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
+TARGETDIR = ../build/linux/ci
+TARGET = $(TARGETDIR)/dstw_stop
 OBJDIR = ../build/linux/obj/ci/dstw_stop
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread
 
 else ifeq ($(config),debug)
+TARGETDIR = ../build/linux/debug
+TARGET = $(TARGETDIR)/dstw_stop
 OBJDIR = ../build/linux/obj/debug/dstw_stop
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread
+
+else ifeq ($(config),docker)
+TARGETDIR = ../build/linux/docker
+TARGET = $(TARGETDIR)/dstw_stop
+OBJDIR = ../build/linux/obj/docker/dstw_stop
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s -pthread
 
 else ifeq ($(config),fail)
+TARGETDIR = ../build/linux/fail
+TARGET = $(TARGETDIR)/dstw_stop
 OBJDIR = ../build/linux/obj/fail/dstw_stop
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread
 
 endif
 

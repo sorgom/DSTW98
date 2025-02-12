@@ -28,14 +28,10 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/linux/bin
-TARGET = $(TARGETDIR)/devtests
 INCLUDES += -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include -I../specification -I../application/components -I../devel
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += ../build/linux/lib/libcpputest.a
-LDDEPS += ../build/linux/lib/libcpputest.a
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -45,25 +41,48 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
+TARGETDIR = ../build/linux/ci
+TARGET = $(TARGETDIR)/devtests
 OBJDIR = ../build/linux/obj/ci/devtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+LIBS += ../build/linux/lib/ci/libcpputest.a
+LDDEPS += ../build/linux/lib/ci/libcpputest.a
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread
 
 else ifeq ($(config),debug)
+TARGETDIR = ../build/linux/debug
+TARGET = $(TARGETDIR)/devtests
 OBJDIR = ../build/linux/obj/debug/devtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -pthread
+LIBS += ../build/linux/lib/debug/libcpputest.a
+LDDEPS += ../build/linux/lib/debug/libcpputest.a
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread
+
+else ifeq ($(config),docker)
+TARGETDIR = ../build/linux/docker
+TARGET = $(TARGETDIR)/devtests
+OBJDIR = ../build/linux/obj/docker/devtests
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+LIBS += ../build/linux/lib/docker/libcpputest.a
+LDDEPS += ../build/linux/lib/docker/libcpputest.a
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s -pthread
 
 else ifeq ($(config),fail)
+TARGETDIR = ../build/linux/fail
+TARGET = $(TARGETDIR)/devtests
 OBJDIR = ../build/linux/obj/fail/devtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s -pthread
+LIBS += ../build/linux/lib/fail/libcpputest.a
+LDDEPS += ../build/linux/lib/fail/libcpputest.a
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread
 
 endif
 

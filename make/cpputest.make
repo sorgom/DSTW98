@@ -28,8 +28,6 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/linux/lib
-TARGET = $(TARGETDIR)/libcpputest.a
 INCLUDES += -I../submodules/cpputest/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
@@ -45,25 +43,40 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
+TARGETDIR = ../build/linux/lib/ci
+TARGET = $(TARGETDIR)/libcpputest.a
 OBJDIR = ../build/linux/obj/ci/cpputest
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
 
 else ifeq ($(config),debug)
+TARGETDIR = ../build/linux/lib/debug
+TARGET = $(TARGETDIR)/libcpputest.a
 OBJDIR = ../build/linux/obj/debug/cpputest
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
+
+else ifeq ($(config),docker)
+TARGETDIR = ../build/linux/lib/docker
+TARGET = $(TARGETDIR)/libcpputest.a
+OBJDIR = ../build/linux/obj/docker/cpputest
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s
 
 else ifeq ($(config),fail)
+TARGETDIR = ../build/linux/lib/fail
+TARGET = $(TARGETDIR)/libcpputest.a
 OBJDIR = ../build/linux/obj/fail/cpputest
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib -s
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s
 
 endif
 

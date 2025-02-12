@@ -76,6 +76,7 @@ https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-prev
 sudo apt-get install gcc
 sudo apt-get install build-essential
 sudo apt-get install cloc
+sudo apt install net-tools
 ```
 
 9. find home drive, sample:
@@ -130,5 +131,22 @@ The ``install`` command accepts the following flags:
 (Powershell did not work)
 ```shell
 cd /d K:/MyDownloads
-start /w "" Docker_Desktop_Installer install --installation-dir=D:/programs/docker --accept-license --no-windows-containers
+start /w "" Docker_Desktop_Installer install --installation-dir=D:/programs/docker --accept-license --no-windows-containers --always-run-service
+```
+Docker installation output:
+```shell
+CommandLine: "K:\MyDownloads\Docker_Desktop_Installer.exe" "install" -package "res:DockerDesktop" --installation-dir="D:\programs\docker" --accept-license --no-windows-containers --always-run-service --relaunch-as-admin
+```
+
+#### docker run options
+```
+-i, --interactive                 Keep STDIN open even if not attached
+
+--name string                     Assign a name to the container
+
+-rm                               Automatically remove the
+                                  container and its associated
+                                  anonymous volumes when it exits
+
+-t, --tty                         Allocate a pseudo-TTY
 ```

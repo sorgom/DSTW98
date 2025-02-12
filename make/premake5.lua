@@ -49,12 +49,12 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW'
-    configurations { 'ci', 'debug', 'fail' }
+    configurations { 'ci', 'debug', 'docker', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'
     kind 'ConsoleApp'
-    libdirs { '../build/%{_TARGET_OS}/lib' }
+    libdirs { '../build/%{_TARGET_OS}/lib/%{cfg.name}' }
     defines {
         'CAPACITY=20',
         'CPPUTEST_USE_LONG_LONG=0',
@@ -72,14 +72,17 @@ workspace 'DSTW'
         links { 'winmm' }
 
     filter { 'action:gmake*', 'kind:ConsoleApp' }
-        targetdir '../build/%{_TARGET_OS}/bin'
+        targetdir '../build/%{_TARGET_OS}/%{cfg.name}'
         buildoptions { buildoptions_gcc }
         linkoptions { '-pthread' }
 
     filter { 'kind:StaticLib' }
-        targetdir '../build/%{_TARGET_OS}/lib'
+        targetdir '../build/%{_TARGET_OS}/lib/%{cfg.name}'
 
     filter { 'configurations:ci' }
+        defines { 'NDEBUG' }
+
+    filter { 'configurations:docker' }
         defines { 'NDEBUG' }
 
     filter { 'configurations:debug' }

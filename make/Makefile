@@ -34,6 +34,19 @@ else ifeq ($(config),debug)
   gcovapp_config = debug
   gcovtests_config = debug
 
+else ifeq ($(config),docker)
+  cpputest_config = docker
+  moduletests_config = docker
+  moduletestsIL_config = docker
+  devtests_config = docker
+  buildfail_config = docker
+  dstw_gen_config = docker
+  dstw_runtime_config = docker
+  systemtests_config = docker
+  dstw_stop_config = docker
+  gcovapp_config = docker
+  gcovtests_config = docker
+
 else ifeq ($(config),fail)
   cpputest_config = fail
   moduletests_config = fail
@@ -142,6 +155,7 @@ help:
 	@echo "CONFIGURATIONS:"
 	@echo "  ci"
 	@echo "  debug"
+	@echo "  docker"
 	@echo "  fail"
 	@echo ""
 	@echo "TARGETS:"
