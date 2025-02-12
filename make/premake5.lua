@@ -49,7 +49,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW'
-    configurations { 'ci', 'debug', 'docker', 'fail' }
+    configurations { 'ci', 'debug', 'docker', 'bullseye', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'
@@ -61,33 +61,42 @@ workspace 'DSTW'
         'CPPUTEST_MEM_LEAK_DETECTION_DISABLED'
     }
 
-    filter { 'action:vs*' }
-        targetdir '../build/%{_TARGET_OS}'
-        buildoptions { buildoptions_vs_test }
-        links { 'ws2_32' }
-        warnings 'high'
-        defines { '_WINSOCK_DEPRECATED_NO_WARNINGS' }
-
-    filter { 'action:vs*', 'kind:ConsoleApp' }
-        links { 'winmm' }
-
-    filter { 'action:gmake*', 'kind:ConsoleApp' }
+    filter { 'kind:ConsoleApp' }
         targetdir '../build/%{_TARGET_OS}/%{cfg.name}'
-        buildoptions { buildoptions_gcc }
-        linkoptions { '-pthread' }
 
     filter { 'kind:StaticLib' }
         targetdir '../build/%{_TARGET_OS}/lib/%{cfg.name}'
 
+    filter { 'action:vs*' }
+        buildoptions { buildoptions_vs_test }
+        warnings 'high'
+        defines { '_WINSOCK_DEPRECATED_NO_WARNINGS' }
+
+    filter { 'action:gmake*' }
+        buildoptions { buildoptions_gcc }
+
+    filter { 'kind:ConsoleApp', 'action:vs*',  }
+        links { 'winmm', 'ws2_32' }
+
+    filter { 'kind:ConsoleApp', 'action:gmake*' }
+        linkoptions { '-pthread' }
+
     filter { 'configurations:ci' }
+        filter { 'configurations:ci' }
         defines { 'NDEBUG' }
 
     filter { 'configurations:docker' }
         defines { 'NDEBUG' }
 
+    filter { 'configurations:bullseye' }
+        defines { 'NDEBUG' }
+
     filter { 'configurations:debug' }
         defines { 'DEBUG' }
         symbols 'On'
+
+    filter { 'configurations:fail' }
+        defines { 'STATIC_FAIL' }
 
     --  ============================================================
     --  cpputest
@@ -131,8 +140,6 @@ workspace 'DSTW'
         kind 'StaticLib'
         files { '../testing/tests/buildfail/*.cpp' }
         includedirs { includedirs_app }
-        filter { 'configurations:fail' }
-            defines { 'STATIC_FAIL' }
     --  ============================================================
     --  system tests
     --  ============================================================

@@ -15,7 +15,7 @@ set reportsDir=%cd%\reports
 
 set pyDir=%subsDir%\sompy
 set vsSolution=%makeDir%\DSTW.sln
-set exeDir=%buildDir%\windows
+set exeDir=%buildDir%\windows\bullseye
 set buildLog=%reportsDir%\build_%_me%.txt
 set covLog=%reportsDir%\coverage_%_me%.txt
 set testLog=%reportsDir%\test_errors_%_me%.txt
@@ -26,7 +26,7 @@ set excludeFile=%myDir%\_exclude.txt
 set covTodoTxt=%buildDir%\todo_%_me%.txt
 
 set optsTxt=%myDir%\_options.txt
-set vsCall=msbuild -m %vsSolution% -p:configuration=ci
+set vsCall=msbuild -m %vsSolution% -p:configuration=bullseye
 set tmpCmd=%buildDir%\tmp.cmd
 set projFile=dstw.proj
 

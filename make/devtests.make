@@ -73,11 +73,22 @@ LIBS += ../build/linux/lib/docker/libcpputest.a
 LDDEPS += ../build/linux/lib/docker/libcpputest.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s -pthread
 
+else ifeq ($(config),bullseye)
+TARGETDIR = ../build/linux/bullseye
+TARGET = $(TARGETDIR)/devtests
+OBJDIR = ../build/linux/obj/bullseye/devtests
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+LIBS += ../build/linux/lib/bullseye/libcpputest.a
+LDDEPS += ../build/linux/lib/bullseye/libcpputest.a
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread
+
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/devtests
 OBJDIR = ../build/linux/obj/fail/devtests
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/fail/libcpputest.a

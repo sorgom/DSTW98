@@ -47,6 +47,19 @@ else ifeq ($(config),docker)
   gcovapp_config = docker
   gcovtests_config = docker
 
+else ifeq ($(config),bullseye)
+  cpputest_config = bullseye
+  moduletests_config = bullseye
+  moduletestsIL_config = bullseye
+  devtests_config = bullseye
+  buildfail_config = bullseye
+  dstw_gen_config = bullseye
+  dstw_runtime_config = bullseye
+  systemtests_config = bullseye
+  dstw_stop_config = bullseye
+  gcovapp_config = bullseye
+  gcovtests_config = bullseye
+
 else ifeq ($(config),fail)
   cpputest_config = fail
   moduletests_config = fail
@@ -156,6 +169,7 @@ help:
 	@echo "  ci"
 	@echo "  debug"
 	@echo "  docker"
+	@echo "  bullseye"
 	@echo "  fail"
 	@echo ""
 	@echo "TARGETS:"
