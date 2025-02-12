@@ -8,7 +8,7 @@ cd $(dirname $0)
 myDir=$(pwd)
 cd ..
 buildDir=$(pwd)/build
-bindir=linux/bin
+bindir=linux/ci
 projfile=systest.proj
 
 cd $myDir

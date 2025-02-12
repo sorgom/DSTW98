@@ -47,8 +47,8 @@ OBJDIR = ../build/linux/obj/ci/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/ci/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/ci/libcpputest.a
+LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libcpputest.a -lgcov
+LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libcpputest.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread --coverage
 
 else ifeq ($(config),debug)
@@ -58,8 +58,8 @@ OBJDIR = ../build/linux/obj/debug/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/debug/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/debug/libcpputest.a
+LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libcpputest.a -lgcov
+LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libcpputest.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread --coverage
 
 else ifeq ($(config),docker)
@@ -69,19 +69,19 @@ OBJDIR = ../build/linux/obj/docker/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/docker/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/docker/libcpputest.a
+LIBS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libcpputest.a -lgcov
+LDDEPS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libcpputest.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s -pthread --coverage
 
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/fail/gcovtests
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/fail/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/libgcovapp.a ../build/linux/lib/fail/libcpputest.a
+LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libcpputest.a -lgcov
+LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libcpputest.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread --coverage
 
 endif

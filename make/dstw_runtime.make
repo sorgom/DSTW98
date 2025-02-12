@@ -73,7 +73,7 @@ else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/dstw_runtime
 OBJDIR = ../build/linux/obj/fail/dstw_runtime
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread

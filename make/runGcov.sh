@@ -6,10 +6,10 @@ cd $(dirname $0)
 myDir=$(pwd)
 cd ..
 repo=$(pwd)
-appDir=../application/components
+appDir=$repo/application/components
 buildDir=$repo/build
 objDir=linux/obj/debug/gcovapp
-bindir=$buildDir/linux/bin
+bindir=$buildDir/linux/debug
 
 cd $myDir
 make -j config=debug gcovapp gcovtests

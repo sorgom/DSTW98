@@ -77,7 +77,7 @@ else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/moduletestsIL
 OBJDIR = ../build/linux/obj/fail/moduletestsIL
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/fail/libcpputest.a

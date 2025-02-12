@@ -77,7 +77,7 @@ else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/systemtests
 OBJDIR = ../build/linux/obj/fail/systemtests
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL -DREQUIRE_PARAM
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DREQUIRE_PARAM
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/fail/libcpputest.a

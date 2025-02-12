@@ -89,8 +89,6 @@ workspace 'DSTW'
         defines { 'DEBUG' }
         symbols 'On'
 
-    filter { 'configurations:fail' }
-        defines { 'NDEBUG', 'STATIC_FAIL' }
     --  ============================================================
     --  cpputest
     --  ============================================================
@@ -133,8 +131,8 @@ workspace 'DSTW'
         kind 'StaticLib'
         files { '../testing/tests/buildfail/*.cpp' }
         includedirs { includedirs_app }
-        targetdir '../build/fail'
-
+        filter { 'configurations:fail' }
+            defines { 'STATIC_FAIL' }
     --  ============================================================
     --  system tests
     --  ============================================================
@@ -173,7 +171,6 @@ workspace 'DSTW'
 
         filter { 'action:gmake*' }
             kind 'StaticLib'
-            targetdir '../build/%{_TARGET_OS}/lib'
             includedirs { includedirs_test }
             files { files_app }
             buildoptions {'-fprofile-arcs -ftest-coverage' }

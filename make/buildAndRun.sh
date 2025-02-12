@@ -6,10 +6,10 @@ cd $(dirname $0)
 myDir=$(pwd)
 cd ..
 buildDir=$(pwd)/build
-bindir=$buildDir/linux/bin
+bindir=$buildDir/linux/ci
 
 cd $myDir
-make -j
+make -j config=ci
 
 cd $buildDir
 tot=0

@@ -28,8 +28,6 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/linux/lib
-TARGET = $(TARGETDIR)/libgcovapp.a
 INCLUDES += -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
@@ -45,6 +43,8 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
+TARGETDIR = ../build/linux/lib/ci
+TARGET = $(TARGETDIR)/libgcovapp.a
 OBJDIR = ../build/linux/obj/ci/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
@@ -52,6 +52,8 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
 
 else ifeq ($(config),debug)
+TARGETDIR = ../build/linux/lib/debug
+TARGET = $(TARGETDIR)/libgcovapp.a
 OBJDIR = ../build/linux/obj/debug/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -fprofile-arcs -ftest-coverage
@@ -59,6 +61,8 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
 
 else ifeq ($(config),docker)
+TARGETDIR = ../build/linux/lib/docker
+TARGET = $(TARGETDIR)/libgcovapp.a
 OBJDIR = ../build/linux/obj/docker/gcovapp
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
@@ -66,8 +70,10 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s
 
 else ifeq ($(config),fail)
+TARGETDIR = ../build/linux/lib/fail
+TARGET = $(TARGETDIR)/libgcovapp.a
 OBJDIR = ../build/linux/obj/fail/gcovapp
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fprofile-arcs -ftest-coverage
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s

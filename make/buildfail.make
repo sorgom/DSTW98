@@ -28,8 +28,6 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-TARGETDIR = ../build/fail
-TARGET = $(TARGETDIR)/libbuildfail.a
 INCLUDES += -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
@@ -45,6 +43,8 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),ci)
+TARGETDIR = ../build/linux/lib/ci
+TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/ci/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
@@ -52,6 +52,8 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
 
 else ifeq ($(config),debug)
+TARGETDIR = ../build/linux/lib/debug
+TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/debug/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -59,6 +61,8 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
 
 else ifeq ($(config),docker)
+TARGETDIR = ../build/linux/lib/docker
+TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/docker/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
@@ -66,8 +70,10 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s
 
 else ifeq ($(config),fail)
+TARGETDIR = ../build/linux/lib/fail
+TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/fail/buildfail
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DSTATIC_FAIL
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS)
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s
