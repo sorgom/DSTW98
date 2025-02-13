@@ -47,8 +47,8 @@ OBJDIR = ../build/linux/obj/ci/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libcpputest.a
+LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libtestenv.a -lgcov
+LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread --coverage
 
 else ifeq ($(config),debug)
@@ -58,8 +58,8 @@ OBJDIR = ../build/linux/obj/debug/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libcpputest.a
+LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libtestenv.a -lgcov
+LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread --coverage
 
 else ifeq ($(config),docker)
@@ -69,8 +69,8 @@ OBJDIR = ../build/linux/obj/docker/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libcpputest.a
+LIBS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libtestenv.a -lgcov
+LDDEPS += ../build/linux/lib/docker/libgcovapp.a ../build/linux/lib/docker/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/docker -s -pthread --coverage
 
 else ifeq ($(config),bullseye)
@@ -80,8 +80,8 @@ OBJDIR = ../build/linux/obj/bullseye/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libcpputest.a
+LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libtestenv.a -lgcov
+LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread --coverage
 
 else ifeq ($(config),fail)
@@ -91,8 +91,8 @@ OBJDIR = ../build/linux/obj/fail/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libcpputest.a -lgcov
-LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libcpputest.a
+LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libtestenv.a -lgcov
+LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread --coverage
 
 endif
@@ -126,12 +126,12 @@ GENERATED += $(OBJDIR)/TCP_Client.o
 GENERATED += $(OBJDIR)/TSW_01.o
 GENERATED += $(OBJDIR)/TestGroupBase.o
 GENERATED += $(OBJDIR)/TestLib.o
-GENERATED += $(OBJDIR)/TestMain.o
 GENERATED += $(OBJDIR)/TestSteps.o
 GENERATED += $(OBJDIR)/TestStepsPlugin.o
 GENERATED += $(OBJDIR)/installComparators.o
 GENERATED += $(OBJDIR)/ostreamHelpers.o
 GENERATED += $(OBJDIR)/ostreams.o
+GENERATED += $(OBJDIR)/testMain.o
 GENERATED += $(OBJDIR)/wait.o
 OBJECTS += $(OBJDIR)/BAS_01.o
 OBJECTS += $(OBJDIR)/BAS_02.o
@@ -152,12 +152,12 @@ OBJECTS += $(OBJDIR)/TCP_Client.o
 OBJECTS += $(OBJDIR)/TSW_01.o
 OBJECTS += $(OBJDIR)/TestGroupBase.o
 OBJECTS += $(OBJDIR)/TestLib.o
-OBJECTS += $(OBJDIR)/TestMain.o
 OBJECTS += $(OBJDIR)/TestSteps.o
 OBJECTS += $(OBJDIR)/TestStepsPlugin.o
 OBJECTS += $(OBJDIR)/installComparators.o
 OBJECTS += $(OBJDIR)/ostreamHelpers.o
 OBJECTS += $(OBJDIR)/ostreams.o
+OBJECTS += $(OBJDIR)/testMain.o
 OBJECTS += $(OBJDIR)/wait.o
 
 # Rules
@@ -255,10 +255,10 @@ $(OBJDIR)/TestGroupBase.o: ../testing/testenv/testlib/src/TestGroupBase.cpp
 $(OBJDIR)/TestLib.o: ../testing/testenv/testlib/src/TestLib.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TestMain.o: ../testing/testenv/testlib/src/TestMain.cpp
+$(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
+$(OBJDIR)/testMain.o: ../testing/testmain/testMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/BAS_01.o: ../testing/tests/moduletests/BAS/BAS_01.cpp

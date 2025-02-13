@@ -20,26 +20,29 @@ includedirs_app = {
 }
 files_app = { '../application/components/**.cpp'}
 
-includedirs_testenv = { '../testing/testenv' }
+includedirs_testenv = {
+    '../testing/testenv',
+    includedirs_cpputest,
+    includedirs_teststeps
+}
+
 files_testenv = {
     '../testing/testenv/**.cpp',
     base_teststeps .. '/src/*.cpp'
 }
 
+files_testmain = { '../testing/testmain/testMain.cpp' }
+
 -- leads to test env IL interface
 includedirs_test = {
     includedirs_testenv,
-    includedirs_cpputest,
-    includedirs_teststeps,
     includedirs_app
 }
 
 -- leads to application IL interface
 includedirs_test_IL = {
     includedirs_app,
-    includedirs_testenv,
-    includedirs_cpputest,
-    includedirs_teststeps
+    includedirs_testenv
 }
 
 files_moduletest = { '../testing/tests/moduletests/**.cpp' }
@@ -99,14 +102,14 @@ workspace 'DSTW'
         defines { 'STATIC_FAIL' }
 
     --  ============================================================
-    --  cpputest
+    --  testenv
     --  ============================================================
-    project 'cpputest'
+    project 'testenv'
         kind 'StaticLib'
-        defines { 'NDEBUG' }
 
-        includedirs { includedirs_cpputest }
+        includedirs { includedirs_test }
         files {
+            files_testenv,
             base_cpputest .. '/src/CppUTest/*.cpp',
             base_cpputest .. '/src/CppUTestExt/*.cpp'
         }
@@ -122,24 +125,25 @@ workspace 'DSTW'
     --  module tests / dev tests
     --  ============================================================
     project 'moduletests'
-        files { files_app, files_testenv, files_moduletest }
+        files { files_app, files_moduletest, files_testmain }
         includedirs { includedirs_test }
-        links { 'cpputest' }
+        links { 'testenv' }
 
     project 'moduletestsIL'
-        files { files_app, files_testenv, '../testing/tests/moduletestsIL/*.cpp' }
+        files { files_app, '../testing/tests/moduletestsIL/*.cpp', files_testmain }
         includedirs { includedirs_test_IL }
-        links { 'cpputest' }
+        links { 'testenv' }
 
     project 'devtests'
-        files { files_app, files_testenv, '../testing/tests/devtests/*.cpp' }
+        files { files_app, '../testing/tests/devtests/*.cpp', files_testmain }
         includedirs { includedirs_test, '../devel' }
-        links { 'cpputest' }
+        links { 'testenv' }
 
     project 'buildfail'
         kind 'StaticLib'
         files { '../testing/tests/buildfail/*.cpp' }
         includedirs { includedirs_app }
+
     --  ============================================================
     --  system tests
     --  ============================================================
@@ -160,10 +164,10 @@ workspace 'DSTW'
 
     --  run third
     project 'systemtests'
-        files { files_testenv, '../testing/tests/systemtests/SYST_*.cpp' }
+        files { '../testing/tests/systemtests/SYST_*.cpp', files_testmain }
         includedirs { includedirs_test }
         defines { 'REQUIRE_PARAM' }
-        links { 'cpputest' }
+        links { 'testenv' }
 
     --  run last to stop application in background
     project 'dstw_stop'
@@ -186,7 +190,7 @@ workspace 'DSTW'
         filter { 'action:vs*' }
 
         filter { 'action:gmake*' }
-            files { files_testenv, files_moduletest }
+            files { files_testenv, files_moduletest, files_testmain }
             includedirs { includedirs_test }
-            links { 'gcovapp', 'gcov', 'cpputest' }
+            links { 'gcovapp', 'gcov', 'testenv' }
             linkoptions { '--coverage' }

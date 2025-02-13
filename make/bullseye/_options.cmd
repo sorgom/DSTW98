@@ -39,7 +39,7 @@ md %reportsDir% >NUL 2>&1
 
 echo - build
 
-call %myDir%\_build.cmd --off cpputest
+call %myDir%\_build.cmd --off testenv
 if %errorlevel% NEQ 0 exit /b 1
 
 cd %myDir%

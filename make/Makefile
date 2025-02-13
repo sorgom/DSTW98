@@ -9,7 +9,7 @@ ifndef verbose
 endif
 
 ifeq ($(config),ci)
-  cpputest_config = ci
+  testenv_config = ci
   moduletests_config = ci
   moduletestsIL_config = ci
   devtests_config = ci
@@ -22,7 +22,7 @@ ifeq ($(config),ci)
   gcovtests_config = ci
 
 else ifeq ($(config),debug)
-  cpputest_config = debug
+  testenv_config = debug
   moduletests_config = debug
   moduletestsIL_config = debug
   devtests_config = debug
@@ -35,7 +35,7 @@ else ifeq ($(config),debug)
   gcovtests_config = debug
 
 else ifeq ($(config),docker)
-  cpputest_config = docker
+  testenv_config = docker
   moduletests_config = docker
   moduletestsIL_config = docker
   devtests_config = docker
@@ -48,7 +48,7 @@ else ifeq ($(config),docker)
   gcovtests_config = docker
 
 else ifeq ($(config),bullseye)
-  cpputest_config = bullseye
+  testenv_config = bullseye
   moduletests_config = bullseye
   moduletestsIL_config = bullseye
   devtests_config = bullseye
@@ -61,7 +61,7 @@ else ifeq ($(config),bullseye)
   gcovtests_config = bullseye
 
 else ifeq ($(config),fail)
-  cpputest_config = fail
+  testenv_config = fail
   moduletests_config = fail
   moduletestsIL_config = fail
   devtests_config = fail
@@ -77,31 +77,31 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := cpputest moduletests moduletestsIL devtests buildfail dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := testenv moduletests moduletestsIL devtests buildfail dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-cpputest:
-ifneq (,$(cpputest_config))
-	@echo "==== Building cpputest ($(cpputest_config)) ===="
-	@${MAKE} --no-print-directory -C . -f cpputest.make config=$(cpputest_config)
+testenv:
+ifneq (,$(testenv_config))
+	@echo "==== Building testenv ($(testenv_config)) ===="
+	@${MAKE} --no-print-directory -C . -f testenv.make config=$(testenv_config)
 endif
 
-moduletests: cpputest
+moduletests: testenv
 ifneq (,$(moduletests_config))
 	@echo "==== Building moduletests ($(moduletests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
 endif
 
-moduletestsIL: cpputest
+moduletestsIL: testenv
 ifneq (,$(moduletestsIL_config))
 	@echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
 endif
 
-devtests: cpputest
+devtests: testenv
 ifneq (,$(devtests_config))
 	@echo "==== Building devtests ($(devtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f devtests.make config=$(devtests_config)
@@ -125,7 +125,7 @@ ifneq (,$(dstw_runtime_config))
 	@${MAKE} --no-print-directory -C . -f dstw_runtime.make config=$(dstw_runtime_config)
 endif
 
-systemtests: cpputest
+systemtests: testenv
 ifneq (,$(systemtests_config))
 	@echo "==== Building systemtests ($(systemtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f systemtests.make config=$(systemtests_config)
@@ -143,14 +143,14 @@ ifneq (,$(gcovapp_config))
 	@${MAKE} --no-print-directory -C . -f gcovapp.make config=$(gcovapp_config)
 endif
 
-gcovtests: gcovapp cpputest
+gcovtests: gcovapp testenv
 ifneq (,$(gcovtests_config))
 	@echo "==== Building gcovtests ($(gcovtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f gcovtests.make config=$(gcovtests_config)
 endif
 
 clean:
-	@${MAKE} --no-print-directory -C . -f cpputest.make clean
+	@${MAKE} --no-print-directory -C . -f testenv.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
 	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
 	@${MAKE} --no-print-directory -C . -f devtests.make clean
@@ -175,7 +175,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   cpputest"
+	@echo "   testenv"
 	@echo "   moduletests"
 	@echo "   moduletestsIL"
 	@echo "   devtests"
