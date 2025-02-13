@@ -1,0 +1,67 @@
+//  ============================================================
+//  mock for interface I_Com
+//  ============================================================
+//  created by Manfred Sorgo
+
+#ifndef M_COM_H
+#define M_COM_H
+
+#include <ifs/I_Com.h>
+#include "M_Base.h"
+
+namespace test
+{
+    class M_Com : public I_Com, private M_Base
+    {
+    public:
+        INSTANCE_DEC(M_Com)
+
+        inline void start()
+        {
+            call("start");
+        }
+        inline void expectStart() const
+        {
+            expect("start");
+        }
+        inline void check()
+        {
+            call("check");
+        }
+        inline void expectCheck() const
+        {
+            expect("check");
+        }
+
+        inline void stop()
+        {
+            call("stop");
+        }
+        inline void expectStop() const
+        {
+            expect("stop");
+        }
+
+        inline void toFld(const ComTele& tele) const
+        {
+            call("toFld").TPARAM(ComTele, tele);
+        }
+        inline void expectToFld(const ComTele& tele) const
+        {
+            expect("toFld").TPARAM(ComTele, tele);
+        }
+
+        inline void toGui(const ComTele& tele) const
+        {
+            call("toGui").TPARAM(ComTele, tele);
+        }
+        inline void expectToGui(const ComTele& tele) const
+        {
+            expect("toGui").TPARAM(ComTele, tele);
+        }
+        NOCOPY(M_Com)
+    private:
+        inline M_Com() : M_Base("Com") {}
+    };
+} // namespace
+#endif // _H
