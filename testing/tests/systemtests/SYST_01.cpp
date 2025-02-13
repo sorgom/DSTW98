@@ -35,22 +35,14 @@ namespace test
             clientGui.connect(tcpPortGui);
             clientCtrl.connect(tcpPortCtrl);
             ENDSTEPS()
+            TS_SHOW_ALL()
         }
 
-        //  check all clients for received telegrams
-        void recvAll()
+        inline static void think()
         {
-            SUBSTEPS()
             #ifdef _WIN32
             wait(100);
             #endif
-            STEP(1)
-            clientFld.recv();
-            STEP(2)
-            clientGui.recv();
-            STEP(3)
-            clientCtrl.recv();
-            ENDSTEPS()
         }
 
         void teardown()
@@ -65,64 +57,62 @@ namespace test
 
     TEST_GROUP_BASE(SYST_01, TestGroupSys) {};
 
-    //  ping pong test
     TEST(SYST_01, T01)
     {
-        //  send ping telegram
-        STEP(1)
-        const ComTele ts = { genComAddr(22, "PING"), ComData(COM_CTRL_PING, COM_CTRL_PING) };
-        clientCtrl.expectRecv(ts);
-        clientCtrl.send(ts);
-        recvAll();
-        CHECK_N_CLEAR()
-    }
-
-    //  receive states from field
-    TEST(SYST_01, T02)
-    {
         SETUP()
-        GenProjData<> gp;
-        STEP(1)
+        MinProjData data;
+
+        CSTEP(1, "send ping telegram")
+        {
+            const ComTele ts = { genComAddr(22, "PING"), ComData(COM_CTRL_PING, COM_CTRL_PING) };
+            clientCtrl.expectRecv(ts);
+            clientCtrl.send(ts);
+            think();
+            clientCtrl.recv();
+            CHECK_N_CLEAR()
+        }
+
+        CSTEP(2, "process GUI commands")
         SUBSTEPS()
-        for (size_t n = 0; n < CAPACITY; ++n)
+        for (size_t n = 0; n < data.size(); ++n)
         {
             LSTEP(n)
             //  GUI cmd
-            ComData dataCmd;
+            ComData cdCmd;
             //  state request forwarded to field
-            ComData dataFld;
+            ComData cdFld;
             //  state returned to GUI
-            ComData dataRet;
+            ComData cdRet;
 
             bool ok = true;
             bool same = true;
-            switch (gp.type(n))
+            switch (data.type(n))
             {
                 case TYPE_TSW:
-                    dataCmd = ComData(TSW_CMD_LEFT);
-                    dataFld = ComData(TSW_STATE_LEFT);
-                    dataRet = ComData(TSW_STATE_WAIT_LEFT);
+                    cdCmd = ComData(TSW_CMD_LEFT);
+                    cdFld = ComData(TSW_STATE_LEFT);
+                    cdRet = ComData(TSW_STATE_WAIT_LEFT);
                     same = false;
                     break;
                 case TYPE_LCR:
-                    dataCmd = ComData(LCR_STATE_OPEN);
-                    dataRet = ComData(LCR_STATE_WAIT_OPEN);
+                    cdCmd = ComData(LCR_STATE_OPEN);
+                    cdRet = ComData(LCR_STATE_WAIT_OPEN);
                     break;
                 case TYPE_LCR_UBK:
-                    dataCmd = ComData(LCR_STATE_OPEN);
-                    dataRet = ComData(LCR_STATE_WAIT_OPEN, LCR_UBK_STATE_UNDEF);
+                    cdCmd = ComData(LCR_STATE_OPEN);
+                    cdRet = ComData(LCR_STATE_WAIT_OPEN, LCR_UBK_STATE_UNDEF);
                     break;
                 case TYPE_SIG_H:
-                    dataCmd = ComData(SIG_STATE_H0);
-                    dataRet = ComData(SIG_STATE_WAIT_H0);
+                    cdCmd = ComData(SIG_STATE_H0);
+                    cdRet = ComData(SIG_STATE_WAIT_H0);
                     break;
                 case TYPE_SIG_H_N:
-                    dataCmd = ComData(SIG_STATE_H0_N0);
-                    dataRet = ComData(SIG_STATE_WAIT_H0_N0, 0);
+                    cdCmd = ComData(SIG_STATE_H0_N0);
+                    cdRet = ComData(SIG_STATE_WAIT_H0_N0, 0);
                     break;
                 case TYPE_SIG_N:
-                    dataCmd = ComData(SIG_STATE_N0);
-                    dataRet = ComData(SIG_STATE_WAIT_N0, 0);
+                    cdCmd = ComData(SIG_STATE_N0);
+                    cdRet = ComData(SIG_STATE_WAIT_N0, 0);
                     break;
                 default:
                     ok = false;
@@ -130,46 +120,46 @@ namespace test
             }
             if (ok)
             {
-                const ComTele teleCmd = { gp.addr(n), dataCmd };
-                const ComTele teleFld = { gp.addr(n), same ? dataCmd : dataFld };
-                const ComTele teleRet = { gp.addr(n), dataRet };
+                const ComTele teleCmd = { data.addr(n), cdCmd };
+                const ComTele teleFld = { data.addr(n), same ? cdCmd : cdFld };
+                const ComTele teleRet = { data.addr(n), cdRet };
                 clientFld.expectRecv(teleFld);
                 clientGui.expectRecv(teleRet);
                 clientGui.send(teleCmd);
-                wait(50);
-                recvAll();
-                recvAll();
+                think();
+                clientFld.recv();
+                clientGui.recv();
                 CHECK_N_CLEAR()
             }
         }
         ENDSTEPS()
 
-        STEP(2)
+        CSTEP(3, "process field telegrams")
         SUBSTEPS()
-        for (size_t n = 0; n < CAPACITY; ++n)
+        for (size_t n = 0; n < data.size(); ++n)
         {
-            STEP(n)
-            ComData data;
+            LSTEP(n)
+            ComData cdFld;
             bool ok = true;
-            switch (gp.type(n))
+            switch (data.type(n))
             {
                 case TYPE_TSW:
-                    data = ComData(TSW_STATE_LEFT);
+                    cdFld = ComData(TSW_STATE_LEFT);
                     break;
                 case TYPE_LCR:
-                    data = ComData(LCR_STATE_OPEN);
+                    cdFld = ComData(LCR_STATE_OPEN);
                     break;
                 case TYPE_LCR_UBK:
-                    data = ComData(LCR_STATE_OPEN, LCR_UBK_STATE_FREE);
+                    cdFld = ComData(LCR_STATE_OPEN, LCR_UBK_STATE_FREE);
                     break;
                 case TYPE_SIG_H:
-                    data = ComData(SIG_STATE_H0);
+                    cdFld = ComData(SIG_STATE_H0);
                     break;
                 case TYPE_SIG_H_N:
-                    data = ComData(SIG_STATE_H0_N0);
+                    cdFld = ComData(SIG_STATE_H0_N0);
                     break;
                 case TYPE_SIG_N:
-                    data = ComData(SIG_STATE_N0);
+                    cdFld = ComData(SIG_STATE_N0);
                     break;
                 default:
                     ok = false;
@@ -177,26 +167,25 @@ namespace test
             }
             if (ok)
             {
-                const ComTele teleState = { gp.addr(n), data };
+                const ComTele teleState = { data.addr(n), cdFld };
                 clientGui.expectRecv(teleState);
                 clientFld.send(teleState);
-                wait(10);
-                recvAll();
+                think();
+                clientGui.recv();
                 CHECK_N_CLEAR()
             }
         }
         ENDSTEPS()
-    }
 
-    //  call for reGui
-    TEST(SYST_01, T03)
-    {
-        STEP(1)
-        const ComTele ts = { genComAddr(22, "REGUI"), ComData(COM_CTRL_RE_GUI, COM_CTRL_RE_GUI) };
-        clientGui.expectRecv(CAPACITY);
-        clientCtrl.send(ts);
-        wait(50);
-        recvAll();
-        CHECK_N_CLEAR()
+        CSTEP(4, "process reGui command via Ctrl")
+        {
+            const ComTele ts = { genComAddr(22, "REGUI"), ComData(COM_CTRL_RE_GUI, COM_CTRL_RE_GUI) };
+            clientGui.expectRecv(MinProjData::size());
+            clientCtrl.send(ts);
+            wait(500);
+            think();
+            clientGui.recv();
+            CHECK_N_CLEAR()
+        }
     }
 }

@@ -6,15 +6,33 @@
 #ifndef TCP_CLIENT_H
 #define TCP_CLIENT_H
 
+#include <ifs/DataTypes.h>
 #include <BAS/coding.h>
+
+#ifndef RECV_BUFF_SIZE
+#define RECV_BUFF_SIZE 10
+#endif
 
 namespace test
 {
+    class I_ProcComTele
+    {
+    public:
+        virtual void process(const ComTele& tele) const = 0;
+    };
+
+    class N_ProcComTele : public I_ProcComTele
+    {
+    public:
+        inline void process(const ComTele& tele) const {}
+    };
+
     class TCP_Client
     {
     public:
 
-        inline TCP_Client() : mSocket(-1) {}
+        inline TCP_Client(const I_ProcComTele& proc) : mSocket(-1), mProc(proc) {}
+        inline TCP_Client() : mSocket(-1), mProc(mNProc) {}
 
         static bool init();
         static void cleanup();
@@ -23,21 +41,12 @@ namespace test
         //  works if test and app run in different processes
         bool connect(UINT16 port);
 
-        //  send structured data
-        //  mainly ComTele
-        template<typename T>
-        inline bool send(const T& data) const
-        {
-            return send(&data, sizeof(data));
-        }
+        //  send structured ComTele
+        bool send(const ComTele& tele) const;
 
-        //  receive structured data
-        //  mainly ComTele
-        template<typename T>
-        inline bool recv(T& data) const
-        {
-            return recv(&data, sizeof(data));
-        }
+        void recv() const;
+
+        bool recv(size_t expectedNum) const;
 
         //  close connection
         void close();
@@ -45,8 +54,11 @@ namespace test
         NOCOPY(TCP_Client)
     private:
         INT32 mSocket;
-        bool send(CPTR data, INT32 size) const;
-        bool recv(PTR data, INT32 size) const;
+        const I_ProcComTele& mProc;
+        typedef CHAR Buffer[RECV_BUFF_SIZE * sizeof(ComTele)];
+        mutable Buffer mBuff;
+        const N_ProcComTele mNProc;
+        mutable size_t mNum;
     };
 }
 #endif // _H

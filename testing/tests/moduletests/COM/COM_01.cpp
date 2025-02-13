@@ -123,7 +123,7 @@ namespace test
         L_CHECK_EQUAL(sizeof(ComTele), res);
 
         STEP(17)
-        ok = client.recv(tele);
+        ok = client.recv(1);
         L_CHECK_TRUE(ok);
 
         //  close client

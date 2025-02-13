@@ -7,7 +7,7 @@
 
 INT32 main(INT32 argc, const CONST_C_STRING* argv)
 {
-    test::GenProjData<> data;
+    test::MinProjData data;
     data.dump();
     return 0;
 }

@@ -13,10 +13,15 @@
 
 namespace test
 {
-    class M_TCP_Client : private M_Base
+    class M_TCP_Client :
+        public I_ProcComTele,
+        private M_Base
     {
     public:
-        M_TCP_Client(const CONST_C_STRING name) : M_Base(name) {}
+        M_TCP_Client(const CONST_C_STRING name) :
+            M_Base(name),
+            mClient(*this)
+        {}
 
         inline void expectRecv(const ComTele& tele) const
         {
@@ -27,14 +32,16 @@ namespace test
             expect(num, "recv").IGNORE();
         }
 
+        inline void process(const ComTele& tele) const
+        {
+            call("recv").TPARAM(ComTele, tele);
+        }
+
         inline void recv() const
         {
-            ComTele tele;
-            while (mClient.recv(tele))
-            {
-                call("recv").TPARAM(ComTele, tele);
-            }
+            mClient.recv();
         }
+
         inline void send(const ComTele tele)
         {
             const bool ok = mClient.send( tele );

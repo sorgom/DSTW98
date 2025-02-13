@@ -42,7 +42,8 @@ if not exist %tmpFile% (
 )
 
 echo - run tests
-%exeDir%\systemtests.exe -b -v
+%exeDir%\systemtests.exe -b -v > %testLog%
+if %errorlevel% == 0 DEL /Q %testLog%
 
 echo - stop application ...
 %exeDir%\dstw_stop.exe

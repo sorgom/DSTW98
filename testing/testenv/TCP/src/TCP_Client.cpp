@@ -9,6 +9,10 @@
 #define closesocket close
 #endif
 
+#ifdef TCP_CLIENT_VERBOSE
+#include <iostream>
+#endif
+
 namespace test
 {
     bool TCP_Client::init()
@@ -52,32 +56,55 @@ namespace test
         return ok;
     }
 
-    bool TCP_Client::send(CPTR data, INT32 size) const
+    bool TCP_Client::send(const ComTele& tele) const
     {
-        return ::send(mSocket, static_cast<const char*>(data), size, 0) == size;
+        return ::send(mSocket, reinterpret_cast<const CHAR*>(&tele), sizeof(ComTele), 0) == sizeof(ComTele);
     }
 
-    bool TCP_Client::recv(PTR data, INT32 size) const
+    void TCP_Client::recv() const
     {
         fd_set readfds;
-#ifdef _WIN32
-#pragma warning(disable:4389)
-#endif
-        FD_ZERO(&readfds);
-        FD_SET(mSocket, &readfds);
-#ifdef _WIN32
-#pragma warning(default:4389)
-#endif
-        timeval timeout = {0, 50000};
-        bool ok = false;
-        if (
-            (::select(mSocket + 1, &readfds, nullptr, nullptr, &timeout) >= 0) and
-            (FD_ISSET(mSocket, &readfds))
-        )
+        timeval timeout = {0, 500000};
+        size_t rsize = 0;
+        mNum = 0;
+        do
         {
-            ok = ::recv(mSocket, static_cast<char*>(data), size, 0) == size;
-        }
-        return ok;
+            rsize = 0;
+    #ifdef _WIN32
+    #pragma warning(disable:4389)
+    #endif
+            FD_ZERO(&readfds);
+            FD_SET(mSocket, &readfds);
+    #ifdef _WIN32
+    #pragma warning(default:4389)
+    #endif
+            if (
+                (::select(mSocket + 1, &readfds, nullptr, nullptr, &timeout) >= 0) and
+                (FD_ISSET(mSocket, &readfds))
+            )
+            {
+                rsize = ::recv(mSocket, mBuff, sizeof(Buffer), 0);
+                if (rsize > 0)
+                {
+                    const size_t num = rsize / sizeof(ComTele);
+                    mNum += num;
+#ifdef TCP_CLIENT_VERBOSE
+                    std::cout << "<< " << num << " / " << (rsize % sizeof(ComTele)) << '\n';
+#endif
+                    for (size_t n = 0; n < num; ++n)
+                    {
+                        mProc.process(*reinterpret_cast<const ComTele*>(mBuff + n * sizeof(ComTele)));
+                    }
+                }
+
+            }
+        } while (rsize > 0);
+    }
+
+    bool TCP_Client::recv(size_t expectedNum) const
+    {
+        recv();
+        return mNum == expectedNum;
     }
 
     void TCP_Client::close()

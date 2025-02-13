@@ -26,9 +26,12 @@
 
 #include <fstream>
 
+//  current number of element types
+#define NUM_ALL_TYPES 6
+
 namespace test
 {
-    template <size_t CAP = CAPACITY>
+    template <size_t SIZE = CAPACITY>
     class GenProjData
     {
     public:
@@ -45,45 +48,36 @@ namespace test
             preset();
         }
 
+        inline static size_t size()
+        {
+            return SIZE;
+        }
+
         void preset()
         {
             items.clear();
-            for (size_t n = 0; n < CAP; ++n)
+            for (size_t n = 0; n < SIZE; ++n)
             {
                 const ProjItem item = {};
                 items.add(item);
             }
             //  alternating types
-            //  COM addresses in reversed order from CAP down to 1
-            for (size_t n = 0; n < CAP; ++n)
+            //  COM addresses in reversed order from SIZE down to 1
+            for (size_t n = 0; n < SIZE; ++n)
             {
                 ProjItem& item = items.at(n);
-                genComAddr(item.addr, CAP - n);
+                genComAddr(item.addr, SIZE - n);
                 item.type = getType(n);
             }
         }
 
-        static UINT8 getType(const size_t n)
-        {
-            static const UINT8 types[] = {
-                TYPE_LCR,
-                TYPE_LCR_UBK,
-                // TYPE_SEG,
-                TYPE_SIG_H,
-                TYPE_SIG_H_N,
-                TYPE_SIG_N,
-                TYPE_TSW
-            };
-            return types[n % sizeof(types)];
-        }
-
-        void dump(UINT32 num = CAPACITY, size_t size = CAPACITY)
+        void dump(UINT32 num = SIZE, size_t size = SIZE)
         {
             if (openOs())
             {
                 writeNum(num);
                 writeSetup();
-                for (size_t n = 0; (n < size) and  n < CAPACITY; ++n)
+                for (size_t n = 0; (n < size) and  n < SIZE; ++n)
                 {
                     writeItem(n);
                 }
@@ -116,7 +110,20 @@ namespace test
         }
 
     private:
-        void writeNum(UINT32 num = CAPACITY)
+        static UINT8 getType(const size_t n)
+        {
+            static const UINT8 types[NUM_ALL_TYPES] = {
+                TYPE_LCR,
+                TYPE_LCR_UBK,
+                TYPE_SIG_H,
+                TYPE_SIG_H_N,
+                TYPE_SIG_N,
+                TYPE_TSW
+            };
+            return types[n % sizeof(types)];
+        }
+
+        void writeNum(UINT32 num = SIZE)
         {
             const UINT32 numN = NetTest::toN(num);
             os.write(reinterpret_cast<const char*>(&numN), sizeof(UINT32));
@@ -138,9 +145,12 @@ namespace test
             return ok;
         }
 
-        StackArray<ProjItem, CAP> items;
+        StackArray<ProjItem, SIZE> items;
         std::ofstream os;
         NOCOPY(GenProjData)
     };
+
+    //  minimal proj data to get all element types tested
+    typedef GenProjData<NUM_ALL_TYPES> MinProjData;
 } // namespace
 #endif // _H
