@@ -28,7 +28,6 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -44,45 +43,50 @@ endef
 
 ifeq ($(config),ci)
 TARGETDIR = ../build/linux/ci
-TARGET = $(TARGETDIR)/dstw_stop
-OBJDIR = ../build/linux/obj/ci/dstw_stop
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/ci/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread
 
 else ifeq ($(config),debug)
 TARGETDIR = ../build/linux/debug
-TARGET = $(TARGETDIR)/dstw_stop
-OBJDIR = ../build/linux/obj/debug/dstw_stop
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/debug/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread
 
 else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
-TARGET = $(TARGETDIR)/dstw_stop
-OBJDIR = ../build/linux/obj/memleak/dstw_stop
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/memleak/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES += -I../specification -I../application/components
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread
 
 else ifeq ($(config),bullseye)
 TARGETDIR = ../build/linux/bullseye
-TARGET = $(TARGETDIR)/dstw_stop
-OBJDIR = ../build/linux/obj/bullseye/dstw_stop
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/bullseye/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread
 
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
-TARGET = $(TARGETDIR)/dstw_stop
-OBJDIR = ../build/linux/obj/fail/dstw_stop
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/fail/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread
@@ -99,22 +103,17 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/TCP_Client.o
-GENERATED += $(OBJDIR)/stopAppMain.o
-OBJECTS += $(OBJDIR)/TCP_Client.o
-OBJECTS += $(OBJDIR)/stopAppMain.o
+ifeq ($(config),memleak)
+GENERATED += $(OBJDIR)/memLeakMain.o
+OBJECTS += $(OBJDIR)/memLeakMain.o
+
+endif
 
 # Rules
 # #############################################
 
 all: $(TARGET)
 	@:
-
-$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
-	$(PRELINKCMDS)
-	@echo Linking dstw_stop
-	$(SILENT) $(LINKCMD)
-	$(POSTBUILDCMDS)
 
 $(TARGETDIR):
 	@echo Creating $(TARGETDIR)
@@ -133,7 +132,7 @@ else
 endif
 
 clean:
-	@echo Cleaning dstw_stop
+	@echo Cleaning memleak
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -163,15 +162,57 @@ $(OBJECTS): | prebuild
 endif
 
 
+ifeq ($(config),ci)
+$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+	$(PRELINKCMDS)
+	@echo Linking memleak
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
+
+
+else ifeq ($(config),debug)
+$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+	$(PRELINKCMDS)
+	@echo Linking memleak
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
+
+
+else ifeq ($(config),memleak)
+$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+	$(PRELINKCMDS)
+	@echo Linking memleak
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
+
+
+else ifeq ($(config),bullseye)
+$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+	$(PRELINKCMDS)
+	@echo Linking memleak
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
+
+
+else ifeq ($(config),fail)
+$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+	$(PRELINKCMDS)
+	@echo Linking memleak
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
+
+
+endif
+
 # File Rules
 # #############################################
 
-$(OBJDIR)/TCP_Client.o: ../testing/testenv/TCP/src/TCP_Client.cpp
+ifeq ($(config),memleak)
+$(OBJDIR)/memLeakMain.o: ../testing/tests/memleak/memLeakMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/stopAppMain.o: ../testing/tests/systemtests/stopAppMain.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+
+endif
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

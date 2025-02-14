@@ -52,7 +52,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW'
-    configurations { 'ci', 'debug', 'docker', 'bullseye', 'fail' }
+    configurations { 'ci', 'debug', 'memleak', 'bullseye', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'
@@ -88,7 +88,7 @@ workspace 'DSTW'
         filter { 'configurations:ci' }
         defines { 'NDEBUG' }
 
-    filter { 'configurations:docker' }
+    filter { 'configurations:memleak' }
         defines { 'NDEBUG' }
 
     filter { 'configurations:bullseye' }
@@ -140,9 +140,18 @@ workspace 'DSTW'
         links { 'testenv' }
 
     project 'buildfail'
-        kind 'StaticLib'
-        files { '../testing/tests/buildfail/*.cpp' }
-        includedirs { includedirs_app }
+        filter { 'configurations:*'}
+        filter { 'configurations:fail' }
+            kind 'StaticLib'
+            files { '../testing/tests/buildfail/*.cpp' }
+            includedirs { includedirs_app }
+
+    project 'memleak'
+        filter { 'configurations:*'}
+        filter { 'configurations:memleak' }
+            files { '../testing/tests/memleak/memLeakMain.cpp' }
+            includedirs { includedirs_app }
+
 
     --  ============================================================
     --  system tests
