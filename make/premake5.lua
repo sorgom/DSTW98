@@ -140,14 +140,16 @@ workspace 'DSTW'
         links { 'testenv' }
 
     project 'buildfail'
-        filter { 'configurations:*'}
+        kind 'StaticLib'
+        filter { 'configurations:not fail*'}
+            files { '../testing/dummies/dummyObj.cpp' }
         filter { 'configurations:fail' }
-            kind 'StaticLib'
             files { '../testing/tests/buildfail/*.cpp' }
             includedirs { includedirs_app }
 
     project 'memleak'
-        filter { 'configurations:*'}
+        filter { 'configurations:not memleak'}
+            files { '../testing/dummies/dummyMain.cpp' }
         filter { 'configurations:memleak' }
             files { '../testing/tests/memleak/memLeakMain.cpp' }
             includedirs { includedirs_app }
