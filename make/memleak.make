@@ -28,10 +28,11 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -I../specification -I../application/components -I../testing/testenv -I../submodules/cpputest/include -I../submodules/CppUTestSteps/TestSteps/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
+LIBS +=
+LDDEPS +=
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -42,57 +43,52 @@ endef
 
 ifeq ($(config),ci)
 TARGETDIR = ../build/linux/ci
-TARGET = $(TARGETDIR)/moduletestsIL
-OBJDIR = ../build/linux/obj/ci/moduletestsIL
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/ci/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/ci/libtestenv.a
-LDDEPS += ../build/linux/lib/ci/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread
 
 else ifeq ($(config),debug)
 TARGETDIR = ../build/linux/debug
-TARGET = $(TARGETDIR)/moduletestsIL
-OBJDIR = ../build/linux/obj/debug/moduletestsIL
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/debug/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/debug/libtestenv.a
-LDDEPS += ../build/linux/lib/debug/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread
 
 else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
-TARGET = $(TARGETDIR)/moduletestsIL
-OBJDIR = ../build/linux/obj/memleak/moduletestsIL
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/memleak/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES += -I../specification -I../application/components
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/memleak/libtestenv.a
-LDDEPS += ../build/linux/lib/memleak/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread
 
 else ifeq ($(config),bullseye)
 TARGETDIR = ../build/linux/bullseye
-TARGET = $(TARGETDIR)/moduletestsIL
-OBJDIR = ../build/linux/obj/bullseye/moduletestsIL
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/bullseye/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/bullseye/libtestenv.a
-LDDEPS += ../build/linux/lib/bullseye/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread
 
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
-TARGET = $(TARGETDIR)/moduletestsIL
-OBJDIR = ../build/linux/obj/fail/moduletestsIL
+TARGET = $(TARGETDIR)/memleak
+OBJDIR = ../build/linux/obj/fail/memleak
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
+INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/fail/libtestenv.a
-LDDEPS += ../build/linux/lib/fail/libtestenv.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread
 
 endif
@@ -107,36 +103,27 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/BAS_Elem.o
-GENERATED += $(OBJDIR)/Com.o
-GENERATED += $(OBJDIR)/Ctrl.o
-GENERATED += $(OBJDIR)/IL_01.o
-GENERATED += $(OBJDIR)/LCR_X.o
-GENERATED += $(OBJDIR)/Main.o
-GENERATED += $(OBJDIR)/Mapper.o
-GENERATED += $(OBJDIR)/Net.o
-GENERATED += $(OBJDIR)/Provider.o
-GENERATED += $(OBJDIR)/Reader.o
-GENERATED += $(OBJDIR)/SIG_X.o
-GENERATED += $(OBJDIR)/TCP.o
-GENERATED += $(OBJDIR)/TCP_Com.o
-GENERATED += $(OBJDIR)/TSW.o
-GENERATED += $(OBJDIR)/testMain.o
-OBJECTS += $(OBJDIR)/BAS_Elem.o
-OBJECTS += $(OBJDIR)/Com.o
-OBJECTS += $(OBJDIR)/Ctrl.o
-OBJECTS += $(OBJDIR)/IL_01.o
-OBJECTS += $(OBJDIR)/LCR_X.o
-OBJECTS += $(OBJDIR)/Main.o
-OBJECTS += $(OBJDIR)/Mapper.o
-OBJECTS += $(OBJDIR)/Net.o
-OBJECTS += $(OBJDIR)/Provider.o
-OBJECTS += $(OBJDIR)/Reader.o
-OBJECTS += $(OBJDIR)/SIG_X.o
-OBJECTS += $(OBJDIR)/TCP.o
-OBJECTS += $(OBJDIR)/TCP_Com.o
-OBJECTS += $(OBJDIR)/TSW.o
-OBJECTS += $(OBJDIR)/testMain.o
+ifeq ($(config),ci)
+GENERATED += $(OBJDIR)/dummyMain.o
+OBJECTS += $(OBJDIR)/dummyMain.o
+
+else ifeq ($(config),debug)
+GENERATED += $(OBJDIR)/dummyMain.o
+OBJECTS += $(OBJDIR)/dummyMain.o
+
+else ifeq ($(config),memleak)
+GENERATED += $(OBJDIR)/memLeakMain.o
+OBJECTS += $(OBJDIR)/memLeakMain.o
+
+else ifeq ($(config),bullseye)
+GENERATED += $(OBJDIR)/dummyMain.o
+OBJECTS += $(OBJDIR)/dummyMain.o
+
+else ifeq ($(config),fail)
+GENERATED += $(OBJDIR)/dummyMain.o
+OBJECTS += $(OBJDIR)/dummyMain.o
+
+endif
 
 # Rules
 # #############################################
@@ -146,7 +133,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking moduletestsIL
+	@echo Linking memleak
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -167,7 +154,7 @@ else
 endif
 
 clean:
-	@echo Cleaning moduletestsIL
+	@echo Cleaning memleak
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -200,51 +187,32 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/BAS_Elem.o: ../application/components/BAS/src/BAS_Elem.cpp
+ifeq ($(config),ci)
+$(OBJDIR)/dummyMain.o: ../testing/dummies/dummyMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Net.o: ../application/components/BAS/src/Net.cpp
+
+else ifeq ($(config),debug)
+$(OBJDIR)/dummyMain.o: ../testing/dummies/dummyMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Com.o: ../application/components/COM/src/Com.cpp
+
+else ifeq ($(config),memleak)
+$(OBJDIR)/memLeakMain.o: ../testing/tests/memleak/memLeakMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TCP.o: ../application/components/COM/src/TCP.cpp
+
+else ifeq ($(config),bullseye)
+$(OBJDIR)/dummyMain.o: ../testing/dummies/dummyMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TCP_Com.o: ../application/components/COM/src/TCP_Com.cpp
+
+else ifeq ($(config),fail)
+$(OBJDIR)/dummyMain.o: ../testing/dummies/dummyMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/LCR_X.o: ../application/components/LCR/src/LCR_X.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/SIG_X.o: ../application/components/SIG/src/SIG_X.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Ctrl.o: ../application/components/SYS/src/Ctrl.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Main.o: ../application/components/SYS/src/Main.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Provider.o: ../application/components/SYS/src/Provider.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/Reader.o: ../application/components/SYS/src/Reader.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TSW.o: ../application/components/TSW/src/TSW.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/testMain.o: ../testing/testmain/testMain.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/IL_01.o: ../testing/tests/moduletestsIL/IL_01.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+
+endif
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

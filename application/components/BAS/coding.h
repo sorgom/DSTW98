@@ -22,4 +22,9 @@
         static NAME instance; \
         return instance; \
     }
+
+//  prevent from unused variable warning
+template <class T>
+void use(const T&) {}
+
 #endif // _H

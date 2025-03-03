@@ -17,10 +17,10 @@
 #ifndef GEN_PROJDATA_H
 #define GEN_PROJDATA_H
 
-#include <BAS/StackArray.h>
-#include <ifs/DataTypes.h>
 #include <CFG/Setup.h>
+#include <ifs/DataTypes.h>
 #include <testlib/NetTest.h>
+#include <testlib/TestArray.h>
 #include <testlib/TestLib.h>
 #include <testlib/testValues.h>
 
@@ -145,7 +145,7 @@ namespace test
             return ok;
         }
 
-        StackArray<ProjItem, SIZE> items;
+        TestArray<ProjItem, SIZE> items;
         std::ofstream os;
         NOCOPY(GenProjData)
     };

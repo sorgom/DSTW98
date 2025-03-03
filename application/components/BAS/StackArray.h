@@ -69,7 +69,7 @@ public:
     }
 
     NOCOPY(StackArray)
-protected:
+private:
     typedef BYTE Segment[SIZE];
     Segment mData[CAP];
     size_t mSize;

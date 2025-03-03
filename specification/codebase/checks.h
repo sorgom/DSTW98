@@ -11,8 +11,5 @@
 #define SIZE_CHECK(TYPE, SIZE) \
     typedef CHAR sizeCheck ## TYPE[(sizeof(TYPE) == (SIZE)) ? 1 : -1];
 
-//  prevent from unused variable warning
-template <class T>
-void use(const T&) {}
 
 #endif // _H

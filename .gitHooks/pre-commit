@@ -2,7 +2,7 @@
 # use: git config core.hooksPath .gitHooks
 
 # availabilty of python
-py=$(which py || which python || which python3)
+py=$(which python || which python3 || which py)
 if [[ -z $py ]]
 then 
   echo "No python found"

@@ -2,9 +2,15 @@
 #include <SYS/IL.h>
 #include <BAS/coverage.h>
 
-void TCP_Com_Base::comerr()
+#include <cstdio>
+
+void TCP_Com_Base::comerr(const CONST_C_STRING msg)
 {
     IL::getCtrl().log(COMP_COM, RET_ERR_COM);
+    if (msg != nullptr)
+    {
+        printf("%s\n", msg);
+    }
 }
 
 //  ============================================================
@@ -12,23 +18,24 @@ void TCP_Com_Base::comerr()
 //  ============================================================
 bool Tcp_Listener_Base::listen(const UINT16 port)
 {
+    printf("listen: %u\n", port);
     const I_TCP& tcp = IL::getTCP();
     bool ok = true;
     mSocket = tcp.socket();
     if (mSocket < 0)
     {
         ok = false;
-        comerr();
+        comerr("socket");
     }
     else if (not tcp.bind(mSocket, port))
     {
         ok = false;
-        comerr();
+        comerr("bind");
     }
     else if (not tcp.listen(mSocket))
     {
         ok = false;
-        comerr();
+        comerr("listen");
     }
 
     if (not ok)
@@ -48,7 +55,7 @@ bool Tcp_Listener_Base::select()
 
     if (not ok)
     {
-        comerr();
+        comerr("select");
         tcp.close(mSocket);
     }
     return ok;
@@ -91,7 +98,7 @@ bool TCP_Con_Base::accept(const INT32 socket)
     }
     else
     {
-        comerr();
+        comerr("accept");
     }
     return ok;
 }
@@ -134,7 +141,7 @@ bool TCP_Con_Base::select()
     }
     if (not ok)
     {
-        comerr();
+        comerr("select");
     }
     return ok;
 }
