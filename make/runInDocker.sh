@@ -10,7 +10,7 @@ cd ..
 buildDir=$(pwd)/build
 reportsDir=$(pwd)/reports
 report=$reportsDir/valgrind_report.txt
-bindir=linux/memleak
+bindir=$buildDir/linux/memleak
 
 mkdir -p $reportsDir
 rm -f $report

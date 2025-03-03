@@ -16,33 +16,37 @@ namespace test
     {
         SETUP()
         const I_Main& main = Main::instance();
-        CONST_C_STRING argv[2] = { "call", "X" };
         INT32 ret = 0;
 
         STEP(1)
-        // OK but no run
+        // no action
+        m_Ctrl().expectClear();
+        m_Ctrl().expectMaxerr(RET_NO_ERR);
+        ret = main.main(0);
+        CHECK_N_CLEAR()
+        L_CHECK_EQUAL(RET_NO_ERR, ret)
+
+        STEP(2)
+        // OK but no tcp loop
         m_Ctrl().expectClear();
         m_Reader().expectRead();
-        m_Ctrl().expectOk(true);
-        m_Com().expectStart();
-        m_Com().expectStop();
         m_Ctrl().expectMaxerr(RET_ERR_PROJ);
-        ret = main.main(1, argv);
+        ret = main.main(1);
         CHECK_N_CLEAR()
         L_CHECK_EQUAL(RET_ERR_PROJ, ret)
 
-        STEP(2)
+        STEP(3)
         // NOK after Reader::read
         m_Ctrl().expectClear();
         m_Reader().expectRead();
         m_Ctrl().expectOk(false);
 
         m_Ctrl().expectMaxerr(RET_ERR_STARTUP);
-        ret = main.main(2, argv);
+        ret = main.main(2);
         CHECK_N_CLEAR()
         L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
 
-        STEP(3)
+        STEP(4)
         // NOK after Com::start
         m_Ctrl().expectClear();
         m_Reader().expectRead();
@@ -52,10 +56,10 @@ namespace test
 
         m_Com().expectStop();
         m_Ctrl().expectMaxerr();
-        main.main(2, argv);
+        main.main(2);
         CHECK_N_CLEAR()
 
-        STEP(4)
+        STEP(5)
         // NOK after 1st Com::check
         m_Ctrl().expectClear();
         m_Reader().expectRead();
@@ -67,10 +71,10 @@ namespace test
 
         m_Com().expectStop();
         m_Ctrl().expectMaxerr();
-        main.main(2, argv);
+        main.main(2);
         CHECK_N_CLEAR()
 
-        STEP(5)
+        STEP(6)
         // NOK after 2nd Com::check
         m_Ctrl().expectClear();
         m_Reader().expectRead();
@@ -84,7 +88,7 @@ namespace test
 
         m_Com().expectStop();
         m_Ctrl().expectMaxerr();
-        main.main(2, argv);
+        main.main(2);
         CHECK_N_CLEAR()
     }
 

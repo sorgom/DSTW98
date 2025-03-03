@@ -47,14 +47,14 @@ namespace test
     };
 
     template <INT32 CAP>
-    class TestArray : public StackArray<I_Data, CAP, sizeof(ExtendedData)>
+    class DataArray : public StackArray<I_Data, CAP, sizeof(ExtendedData)>
     {};
 
     template <INT32 CAP>
-    class TestIndex : public StackIndex<I_Data, CAP, INT32>
+    class DataIndex : public StackIndex<I_Data, CAP, INT32>
     {
     public:
-        inline TestIndex(const TestArray<CAP>& array) : StackIndex<I_Data, CAP, INT32>(array) {}
+        inline DataIndex(const DataArray<CAP>& array) : StackIndex<I_Data, CAP, INT32>(array) {}
     protected:
         INT32 getKey(const I_Data& td) const
         {
@@ -69,8 +69,8 @@ namespace test
         STEP(1)
         bool ok = false;
         #define CAP 5
-        TestArray<CAP> ta;
-        TestIndex<CAP> ti(ta);
+        DataArray<CAP> ta;
+        DataIndex<CAP> ti(ta);
 
         L_CHECK_EQUAL(0, ta.size())
 

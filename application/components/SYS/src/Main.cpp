@@ -1,28 +1,31 @@
 #include <SYS/Main.h>
 #include <SYS/IL.h>
 
+#include <cstdio>
+
 INSTANCE_DEF(Main)
 
-INT32 Main::main(const INT32 argc, const CONST_C_STRING* const) const
+INT32 Main::main(const INT32 level) const
 {
     I_Ctrl& ctrl = IL::getCtrl();
     ctrl.clear();
 
-    IL::getReader().read();
+    printf("level: %d\n", level);
 
-    if (ctrl.ok())
+    if (level > 0)
     {
-        I_Com& com = IL::getCom();
-        com.start();
+        IL::getReader().read();
 
-        if (argc > 1)
+        if ((level > 1) and ctrl.ok())
         {
+            I_Com& com = IL::getCom();
+            com.start();
             while (ctrl.ok())
             {
                 com.check();
             }
+            com.stop();
         }
-        com.stop();
     }
     return ctrl.maxerr();
 }

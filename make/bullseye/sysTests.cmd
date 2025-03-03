@@ -20,20 +20,23 @@ DEL /Q %projFile% >NUL 2>&1
 
 set app=%exeDir%\dstw_runtime.exe
 
-echo - launch application without data
+echo - launch with no action
+%app% X
+
+echo - launch application with read but no data
 %app% X
 
 echo - gen data
 %exeDir%\dstw_gen.exe >NUL
 
-echo - launch application without parameter
+echo - launch application with read and data
 %app%%
 
 set /a "myID=%random%"
 set tmpFile=%buildDir%\run.%myID%.tmp
 
-echo - launch application
-start /B %myDir%\_runapp.cmd %app% X
+echo - launch application with read and loop
+start /B %myDir%\_runapp.cmd %app% X X
 
 timeout /t 2 /nobreak >NUL 2>&1
 if not exist %tmpFile% (

@@ -7,13 +7,13 @@
 #define M_ELEMS_H
 
 #include "M_Elem.h"
-#include <BAS/StackArray.h>
+#include <testlib/TestArray.h>
 #include <CFG/Setup.h>
 #include <sstream>
 
 namespace test
 {
-    typedef StackArray<M_Elem, CAPACITY> A_Elems;
+    typedef TestArray<M_Elem, CAPACITY> A_Elems;
 
     class M_Elems : public A_Elems
     {

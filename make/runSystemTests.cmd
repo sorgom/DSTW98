@@ -8,7 +8,7 @@ cd /d %~dp0
 set myDir=%cd%
 cd ..
 set buildDir=%cd%\build
-set bindir=windows
+set bindir=windows\ci
 
 cd %myDir%
 echo - build

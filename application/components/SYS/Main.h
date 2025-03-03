@@ -13,7 +13,7 @@
 class Main : public I_Main
 {
 public:
-    INT32 main(INT32 argc, const CONST_C_STRING* argv) const;
+    INT32 main(INT32 level) const;
 
     INSTANCE_DEC(Main)
     NOCOPY(Main)

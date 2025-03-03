@@ -12,9 +12,9 @@
 namespace test
 {
     //  was: enum enum E_TcpVals
-    static const UINT16 tcpPortFld = 8080;
-    static const UINT16 tcpPortGui = 8081;
-    static const UINT16 tcpPortCtrl = 8082;
+    static const UINT16 tcpPortFld  = 8081;
+    static const UINT16 tcpPortGui  = 8082;
+    static const UINT16 tcpPortCtrl = 8083;
     static const UINT16 tcpTimeout = 20;
 
     //  was: enum enum E_TestVals
