@@ -1,16 +1,12 @@
 #include <SYS/Main.h>
 #include <SYS/IL.h>
 
-#include <cstdio>
-
 INSTANCE_DEF(Main)
 
 INT32 Main::main(const INT32 level) const
 {
     I_Ctrl& ctrl = IL::getCtrl();
     ctrl.clear();
-
-    printf("level: %d\n", level);
 
     if (level > 0)
     {

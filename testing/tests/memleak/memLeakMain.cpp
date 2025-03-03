@@ -4,12 +4,11 @@
 //  created by Manfred Sorgo
 #include <BAS/coding.h>
 
-int main(int argc, char**)
+int main()
 {
-    if (argc > 1)
-    {
-        CHAR* p = new CHAR[100];
-        use(p);
-    }
+#ifdef MEM_LEAK
+    CHAR* p = new CHAR[100];
+    use(p);
+#endif
     return 0;
 }

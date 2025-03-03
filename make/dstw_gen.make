@@ -64,7 +64,7 @@ else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
 TARGET = $(TARGETDIR)/dstw_gen
 OBJDIR = ../build/linux/obj/memleak/dstw_gen
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread

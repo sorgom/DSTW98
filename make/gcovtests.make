@@ -66,7 +66,7 @@ else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/memleak/gcovtests
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libtestenv.a -lgcov

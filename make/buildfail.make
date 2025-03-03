@@ -28,6 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
+INCLUDES += -I../specification -I../application/components
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -46,7 +47,6 @@ TARGETDIR = ../build/linux/lib/ci
 TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/ci/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
@@ -56,7 +56,6 @@ TARGETDIR = ../build/linux/lib/debug
 TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/debug/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
-INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
@@ -65,8 +64,7 @@ else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/lib/memleak
 TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/memleak/buildfail
-DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-INCLUDES +=
+DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s
@@ -76,7 +74,6 @@ TARGETDIR = ../build/linux/lib/bullseye
 TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/bullseye/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-INCLUDES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s
@@ -86,7 +83,6 @@ TARGETDIR = ../build/linux/lib/fail
 TARGET = $(TARGETDIR)/libbuildfail.a
 OBJDIR = ../build/linux/obj/fail/buildfail
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
-INCLUDES += -I../specification -I../application/components
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s
@@ -103,27 +99,8 @@ endif
 GENERATED :=
 OBJECTS :=
 
-ifeq ($(config),ci)
-GENERATED += $(OBJDIR)/dummyObj.o
-OBJECTS += $(OBJDIR)/dummyObj.o
-
-else ifeq ($(config),debug)
-GENERATED += $(OBJDIR)/dummyObj.o
-OBJECTS += $(OBJDIR)/dummyObj.o
-
-else ifeq ($(config),memleak)
-GENERATED += $(OBJDIR)/dummyObj.o
-OBJECTS += $(OBJDIR)/dummyObj.o
-
-else ifeq ($(config),bullseye)
-GENERATED += $(OBJDIR)/dummyObj.o
-OBJECTS += $(OBJDIR)/dummyObj.o
-
-else ifeq ($(config),fail)
 GENERATED += $(OBJDIR)/buildfail_01.o
 OBJECTS += $(OBJDIR)/buildfail_01.o
-
-endif
 
 # Rules
 # #############################################
@@ -187,32 +164,9 @@ endif
 # File Rules
 # #############################################
 
-ifeq ($(config),ci)
-$(OBJDIR)/dummyObj.o: ../testing/dummies/dummyObj.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-
-else ifeq ($(config),debug)
-$(OBJDIR)/dummyObj.o: ../testing/dummies/dummyObj.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-
-else ifeq ($(config),memleak)
-$(OBJDIR)/dummyObj.o: ../testing/dummies/dummyObj.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-
-else ifeq ($(config),bullseye)
-$(OBJDIR)/dummyObj.o: ../testing/dummies/dummyObj.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-
-else ifeq ($(config),fail)
 $(OBJDIR)/buildfail_01.o: ../testing/tests/buildfail/buildfail_01.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-
-endif
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

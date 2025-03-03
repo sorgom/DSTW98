@@ -89,7 +89,7 @@ workspace 'DSTW'
         defines { 'NDEBUG' }
 
     filter { 'configurations:memleak' }
-        defines { 'NDEBUG' }
+        defines { 'NDEBUG', 'MEM_LEAK' }
 
     filter { 'configurations:bullseye' }
         defines { 'NDEBUG' }
@@ -97,7 +97,6 @@ workspace 'DSTW'
     filter { 'configurations:debug' }
         defines { 'DEBUG' }
         symbols 'On'
-
     filter { 'configurations:fail' }
         defines { 'STATIC_FAIL' }
 
@@ -141,18 +140,12 @@ workspace 'DSTW'
 
     project 'buildfail'
         kind 'StaticLib'
-        filter { 'configurations:not fail*'}
-            files { '../testing/dummies/dummyObj.cpp' }
-        filter { 'configurations:fail' }
-            files { '../testing/tests/buildfail/*.cpp' }
-            includedirs { includedirs_app }
+        files { '../testing/tests/buildfail/*.cpp' }
+        includedirs { includedirs_app }
 
     project 'memleak'
-        filter { 'configurations:not memleak'}
-            files { '../testing/dummies/dummyMain.cpp' }
-        filter { 'configurations:memleak' }
-            files { '../testing/tests/memleak/memLeakMain.cpp' }
-            includedirs { includedirs_app }
+        files { '../testing/tests/memleak/memLeakMain.cpp' }
+        includedirs { includedirs_app }
 
 
     --  ============================================================
