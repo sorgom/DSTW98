@@ -1,97 +1,97 @@
 # valgrind report
-2025-03-03
+2025-03-04
 
 ## TEST: memory leaked app
 ```
-==5946== Memcheck, a memory error detector
-==5946== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5946== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5946== Command: /git/DSTW98/build/linux/memleak/memleak
-==5946==
-==5946==
-==5946== HEAP SUMMARY:
-==5946==     in use at exit: 100 bytes in 1 blocks
-==5946==   total heap usage: 2 allocs, 1 frees, 72,804 bytes allocated
-==5946==
-==5946== 100 bytes in 1 blocks are definitely lost in loss record 1 of 1
-==5946==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==5946==    by 0x10918D: ??? (in /mnt/c/git/DSTW98/build/linux/memleak/memleak)
-==5946==    by 0x4AB6D8F: (below main) (libc_start_call_main.h:58)
-==5946==
-==5946== LEAK SUMMARY:
-==5946==    definitely lost: 100 bytes in 1 blocks
-==5946==    indirectly lost: 0 bytes in 0 blocks
-==5946==      possibly lost: 0 bytes in 0 blocks
-==5946==    still reachable: 0 bytes in 0 blocks
-==5946==         suppressed: 0 bytes in 0 blocks
-==5946==
-==5946== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==35== Memcheck, a memory error detector
+==35== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==35== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==35== Command: /dstw/build/linux/memleak/memleak
+==35==
+==35==
+==35== HEAP SUMMARY:
+==35==     in use at exit: 100 bytes in 1 blocks
+==35==   total heap usage: 2 allocs, 1 frees, 73,828 bytes allocated
+==35==
+==35== 100 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==35==    at 0x48485C3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==35==    by 0x10918D: ??? (in /dstw/build/linux/memleak/memleak)
+==35==    by 0x4B051C9: (below main) (libc_start_call_main.h:58)
+==35==
+==35== LEAK SUMMARY:
+==35==    definitely lost: 100 bytes in 1 blocks
+==35==    indirectly lost: 0 bytes in 0 blocks
+==35==      possibly lost: 0 bytes in 0 blocks
+==35==    still reachable: 0 bytes in 0 blocks
+==35==         suppressed: 0 bytes in 0 blocks
+==35==
+==35== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
 
 ## TEST: runtime no action
 ```
-==5948== Memcheck, a memory error detector
-==5948== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5948== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5948== Command: /git/DSTW98/build/linux/ci/dstw_runtime
-==5948==
+==37== Memcheck, a memory error detector
+==37== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==37== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==37== Command: /dstw/build/linux/ci/dstw_runtime
+==37==
 ERR: 0
-==5948==
-==5948== HEAP SUMMARY:
-==5948==     in use at exit: 0 bytes in 0 blocks
-==5948==   total heap usage: 2 allocs, 2 frees, 76,800 bytes allocated
-==5948==
-==5948== All heap blocks were freed -- no leaks are possible
-==5948==
-==5948== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==37==
+==37== HEAP SUMMARY:
+==37==     in use at exit: 0 bytes in 0 blocks
+==37==   total heap usage: 2 allocs, 2 frees, 77,824 bytes allocated
+==37==
+==37== All heap blocks were freed -- no leaks are possible
+==37==
+==37== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## TEST: runtime read
 ```
-==5949== Memcheck, a memory error detector
-==5949== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5949== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5949== Command: /git/DSTW98/build/linux/ci/dstw_runtime X
-==5949==
+==38== Memcheck, a memory error detector
+==38== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==38== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==38== Command: /dstw/build/linux/ci/dstw_runtime X
+==38==
 ERR: 0
-==5949==
-==5949== HEAP SUMMARY:
-==5949==     in use at exit: 0 bytes in 0 blocks
-==5949==   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
-==5949==
-==5949== All heap blocks were freed -- no leaks are possible
-==5949==
-==5949== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==38==
+==38== HEAP SUMMARY:
+==38==     in use at exit: 0 bytes in 0 blocks
+==38==   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+==38==
+==38== All heap blocks were freed -- no leaks are possible
+==38==
+==38== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## TEST: runtime read, run, stop
 ```
-==5950== Memcheck, a memory error detector
-==5950== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5950== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5950== Command: /git/DSTW98/build/linux/ci/dstw_runtime X X
-==5950==
-listen: 8081
-listen: 8082
-listen: 8083
+==39== Memcheck, a memory error detector
+==39== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==39== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==39== Command: /dstw/build/linux/ci/dstw_runtime X X
+==39==
+listen: 8091
+listen: 8092
+listen: 8093
 ERR: 0
-==5950==
-==5950== HEAP SUMMARY:
-==5950==     in use at exit: 0 bytes in 0 blocks
-==5950==   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
-==5950==
-==5950== All heap blocks were freed -- no leaks are possible
-==5950==
-==5950== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==39==
+==39== HEAP SUMMARY:
+==39==     in use at exit: 0 bytes in 0 blocks
+==39==   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+==39==
+==39== All heap blocks were freed -- no leaks are possible
+==39==
+==39== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 ## TEST: runtime read, run, system tests, stop
 ```
-==5954== Memcheck, a memory error detector
-==5954== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5954== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5954== Command: /git/DSTW98/build/linux/ci/dstw_runtime X X
-==5954==
+==43== Memcheck, a memory error detector
+==43== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==43== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==43== Command: /dstw/build/linux/ci/dstw_runtime X X
+==43==
 TEST(SYST_01, T01)
 STEP(PRE)
 STEP(1) send ping telegram
@@ -114,16 +114,16 @@ STEP(4) process reGui command via Ctrl
 
 OK (1 tests, 1 ran, 38 checks, 0 ignored, 0 filtered out, 0 ms)
 
-listen: 8081
-listen: 8082
-listen: 8083
+listen: 8091
+listen: 8092
+listen: 8093
 ERR: 0
-==5954==
-==5954== HEAP SUMMARY:
-==5954==     in use at exit: 0 bytes in 0 blocks
-==5954==   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
-==5954==
-==5954== All heap blocks were freed -- no leaks are possible
-==5954==
-==5954== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==43==
+==43== HEAP SUMMARY:
+==43==     in use at exit: 0 bytes in 0 blocks
+==43==   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+==43==
+==43== All heap blocks were freed -- no leaks are possible
+==43==
+==43== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```

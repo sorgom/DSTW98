@@ -24,8 +24,8 @@ out () {
 }
 
 files=$(ls *.cpp.gcov 2> /dev/null)
-if test -z $files; then
-    echo "No coverage data found"
+if test -z "$files"; then
+    echo "no coverage data found"
     exit 0
 fi 
 

@@ -35,7 +35,7 @@ namespace test
             clientGui.connect(tcpPortGui);
             clientCtrl.connect(tcpPortCtrl);
             ENDSTEPS()
-            TS_SHOW_ALL()
+            TS_SHOW(2)
         }
 
         inline static void think()
@@ -55,15 +55,12 @@ namespace test
 
     };
 
-
     TEST_GROUP_BASE(SYST_01, TestGroupSys) {};
 
     TEST(SYST_01, T01)
     {
         SETUP()
-        TS_SHOW_ALL()
         MinProjData data;
-
 
         CSTEP(1, "send ping telegram")
         {
