@@ -1,0 +1,70 @@
+//  ============================================================
+//  network (big endian) byte order conversion
+//  see: https://en.wikipedia.org/wiki/Endianness
+//  ============================================================
+//  created by Manfred Sorgo
+#ifndef NET_TEST_H
+#define NET_TEST_H
+
+#include <codebase/BaseTypes.h>
+#include <testlib/testValues.h>
+
+namespace test
+{
+class NetTest
+{
+public:
+    inline static UINT16 toN(const UINT16 h)
+    {
+        return adapt16(h);
+    }
+    inline static UINT16 toH(const UINT16 n)
+    {
+        return adapt16(n);
+    }
+
+    inline static UINT32 toN(const UINT32 h)
+    {
+        return adapt32(h);
+    }
+    inline static UINT32 toH(const UINT32 n)
+    {
+        return adapt32(n);
+    }
+
+    inline static INT16 toN(const INT16 h)
+    {
+        return static_cast<INT16>(toN(static_cast<const UINT16>(h)));
+    }
+    inline static INT16 toH(const INT16 n)
+    {
+        return static_cast<INT16>(toH(static_cast<const UINT16>(n)));
+    }
+
+    inline static INT32 toN(const INT32 h)
+    {
+        return static_cast<INT32>(toN(static_cast<const UINT32>(h)));
+    }
+    inline static INT32 toH(const INT32 n)
+    {
+        return static_cast<INT32>(toH(static_cast<const UINT32>(n)));
+    }
+
+private:
+    NetTest();
+
+    typedef UINT16 (*af16) (UINT16);
+    typedef UINT32 (*af32) (UINT32);
+
+    // using af16 = UINT16 (*) (const UINT16);
+    // using af32 = UINT32 (*) (const UINT32);
+    static UINT16 keep16(UINT16 n);
+    static UINT16 swap16(UINT16 n);
+    static UINT32 keep32(UINT32 n);
+    static UINT32 swap32(UINT32 n);
+    static const af16 adapt16;
+    static const af32 adapt32;
+
+};
+} // namespace
+#endif // _H
