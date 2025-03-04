@@ -22,7 +22,8 @@ sleep 1
 #   gen required proj data file
 $bindir/dstw_gen
 #   start app in background
-$bindir/dstw_runtime X & pid=$!
+$bindir/dstw_runtime X X & pid=$!
+sleep 1
 #   run tests
 $bindir/systemtests -b -v
 ret=$((ret+$?))
