@@ -1,5 +1,5 @@
 #include <COM/Com.h>
-#include <SYS/IL.h>
+#include <IL/IL.h>
 
 INSTANCE_DEF(Com)
 
@@ -19,7 +19,7 @@ void Com::start()
     }
     else
     {
-        IL::getCtrl().log(COMP_COM, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_COM, ERR_STARTUP);
     }
 }
 
@@ -34,7 +34,7 @@ void Com::check()
         and IL::getTCP_Con_Ctrl().select()
     ))
     {
-        IL::getCtrl().log(COMP_COM, RET_ERR_COM);
+        IL::getCtrl().log(COMP_COM, ERR_COM);
     }
 }
 void Com::stop()

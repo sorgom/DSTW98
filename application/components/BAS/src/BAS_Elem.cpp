@@ -1,5 +1,5 @@
 #include <BAS/BAS_Elem.h>
-#include <SYS/IL.h>
+#include <IL/IL.h>
 
 void X_Elem::toFld(
     UINT8 p1,
@@ -29,5 +29,5 @@ void X_Elem::toGui(
 
 void X_Elem::logMismatch(E_Comp comp)
 {
-    IL::getCtrl().log(comp, RET_ERR_MATCH);
+    IL::getCtrl().log(comp, ERR_MATCH);
 }

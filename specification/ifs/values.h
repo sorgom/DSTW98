@@ -19,24 +19,30 @@ enum E_Comp
     COMP_SYS
 };
 
-//  return types (size does not matter)
-enum E_Ret
+//  error types (size does not matter)
+enum E_Err
 {
     // no error
-    RET_NO_ERR,
+    NO_ERR,
     //  element name not found
     //  or received state not valid
-    RET_ERR_MATCH,
+    ERR_MATCH,
     //  element position out of range
-    RET_ERR_RANGE,
+    ERR_RANGE = 101,
     //  comonents sync error
-    RET_ERR_SYNC,
+    ERR_SYNC,
     //  startup error in component
-    RET_ERR_STARTUP,
-    //  communication error
-    RET_ERR_COM,
+    ERR_STARTUP,
     //  project data error
-    RET_ERR_PROJ
+    ERR_PROJ,
+    //  general COM error
+    ERR_COM = 200,
+    //  specific COM errors
+    ERR_COM_SOCKET,
+    ERR_COM_BIND,
+    ERR_COM_LISTEN,
+    ERR_COM_SELECT,
+    ERR_COM_ACCEPT
 };
 
 //  reserved parameter values

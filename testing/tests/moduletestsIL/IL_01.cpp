@@ -4,7 +4,7 @@
 //  created by Manfred Sorgo
 
 #include <testlib/TestGroupBase.h>
-#include <SYS/IL.h>
+#include <IL/IL.h>
 
 namespace test
 {

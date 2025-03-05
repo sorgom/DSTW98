@@ -6,7 +6,7 @@
 
 INSTANCE_DEF(Ctrl)
 
-void Ctrl::log(E_Comp comp, E_Ret ret)
+void Ctrl::log(E_Comp comp, E_Err ret)
 {
     mErr = maxv(mErr, ret);
 }

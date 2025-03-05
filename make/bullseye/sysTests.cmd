@@ -21,7 +21,7 @@ DEL /Q %projFile% >NUL 2>&1
 set app=%exeDir%\dstw_runtime.exe
 
 echo - launch with no action
-%app% X
+%app%
 
 echo - launch application with read but no data
 %app% X

@@ -13,7 +13,7 @@
 class TCP_Com_Base
 {
 protected:
-    static void comerr(CONST_C_STRING msg = nullptr);
+    static void comerr(E_Err err=ERR_COM);
 };
 
 //  ============================================================

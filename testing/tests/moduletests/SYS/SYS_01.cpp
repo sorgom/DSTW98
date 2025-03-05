@@ -23,7 +23,7 @@ namespace test
         void expectFail()
         {
             expectClear();
-            m_Ctrl().expectLog(COMP_SYS, RET_ERR_STARTUP);
+            m_Ctrl().expectLog(COMP_SYS, ERR_STARTUP);
         }
     };
 
@@ -129,11 +129,11 @@ namespace test
         L_CHECK_TRUE(ctrlc.ok())
 
         STEP(2)
-        ctrl.log(COMP_SYS, RET_ERR_STARTUP);
-        ctrl.log(COMP_SYS, RET_ERR_MATCH);
+        ctrl.log(COMP_SYS, ERR_STARTUP);
+        ctrl.log(COMP_SYS, ERR_MATCH);
         CHECK_N_CLEAR()
         L_CHECK_FALSE(ctrlc.ok())
-        L_CHECK_EQUAL(RET_ERR_STARTUP, ctrlc.maxerr())
+        L_CHECK_EQUAL(ERR_STARTUP, ctrlc.maxerr())
 
         STEP(1)
         ctrl.clear();

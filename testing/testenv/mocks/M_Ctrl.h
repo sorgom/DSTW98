@@ -17,20 +17,20 @@ namespace test
     public:
         INSTANCE_DEC(M_Ctrl)
 
-        inline void log(E_Comp comp, E_Ret ret)
+        inline void log(E_Comp comp, E_Err ret)
         {
             call("log").PARAM(comp).PARAM(ret);
         }
-        inline void expectLog(E_Comp comp, E_Ret ret) const
+        inline void expectLog(E_Comp comp, E_Err ret) const
         {
             expect("log").PARAM(comp).PARAM(ret);
         }
 
-        inline E_Ret maxerr() const
+        inline E_Err maxerr() const
         {
-            return static_cast<E_Ret>(call("maxerr").RETURN_DEF_UNSIGNED(RET_NO_ERR));
+            return static_cast<E_Err>(call("maxerr").RETURN_DEF_UNSIGNED(NO_ERR));
         }
-        inline void expectMaxerr(E_Ret ret = RET_NO_ERR) const
+        inline void expectMaxerr(E_Err ret = NO_ERR) const
         {
             expect("maxerr").AND_RETURN(ret);
         }

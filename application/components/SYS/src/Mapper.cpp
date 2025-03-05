@@ -1,7 +1,7 @@
 #include <SYS/Mapper.h>
 #include <codebase/Mem.h>
 #include <BAS/coding.h>
-#include <SYS/IL.h>
+#include <IL/IL.h>
 
 INSTANCE_DEF(Mapper)
 
@@ -13,7 +13,7 @@ void Mapper::add(const size_t pos, const ComAddr& addr)
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_SYS, ERR_STARTUP);
     }
 }
 
@@ -21,7 +21,7 @@ void Mapper::index()
 {
     if (not mMap.index())
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_SYS, ERR_STARTUP);
     }
 }
 
@@ -35,7 +35,7 @@ void Mapper::fromFld(const ComTele& tele) const
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, ERR_MATCH);
     }
 }
 
@@ -49,7 +49,7 @@ void Mapper::fromGui(const ComTele& tele) const
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_MATCH);
+        IL::getCtrl().log(COMP_SYS, ERR_MATCH);
     }
 }
 
@@ -62,7 +62,7 @@ void Mapper::toFld(const size_t id, const ComData& data) const
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_SYNC);
+        IL::getCtrl().log(COMP_SYS, ERR_SYNC);
     }
 }
 
@@ -75,7 +75,7 @@ void Mapper::toGui(const size_t id, const ComData& data) const
     }
     else
     {
-        IL::getCtrl().log(COMP_SYS, RET_ERR_SYNC);
+        IL::getCtrl().log(COMP_SYS, ERR_SYNC);
     }
 }
 

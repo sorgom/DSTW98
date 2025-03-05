@@ -14,11 +14,11 @@ class Ctrl : public I_Ctrl
 {
 public:
 
-    void log(E_Comp comp, E_Ret ret);
+    void log(E_Comp comp, E_Err ret);
 
     inline void clear()
     {
-        mErr = RET_NO_ERR;
+        mErr = NO_ERR;
         mRunning = true;
     }
 
@@ -29,10 +29,10 @@ public:
 
     inline bool ok() const
     {
-        return mRunning and mErr == RET_NO_ERR;
+        return mRunning and mErr == NO_ERR;
     }
 
-    inline E_Ret maxerr() const
+    inline E_Err maxerr() const
     {
         return mErr;
     }
@@ -41,7 +41,7 @@ public:
 
     NOCOPY(Ctrl)
 private:
-    E_Ret mErr;
+    E_Err mErr;
     bool mRunning;
     inline Ctrl() { clear(); }
 };

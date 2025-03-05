@@ -21,19 +21,19 @@ namespace test
         STEP(1)
         // no action
         m_Ctrl().expectClear();
-        m_Ctrl().expectMaxerr(RET_NO_ERR);
+        m_Ctrl().expectMaxerr(NO_ERR);
         ret = main.main(0);
         CHECK_N_CLEAR()
-        L_CHECK_EQUAL(RET_NO_ERR, ret)
+        L_CHECK_EQUAL(NO_ERR, ret)
 
         STEP(2)
         // OK but no tcp loop
         m_Ctrl().expectClear();
         m_Reader().expectRead();
-        m_Ctrl().expectMaxerr(RET_ERR_PROJ);
+        m_Ctrl().expectMaxerr(ERR_PROJ);
         ret = main.main(1);
         CHECK_N_CLEAR()
-        L_CHECK_EQUAL(RET_ERR_PROJ, ret)
+        L_CHECK_EQUAL(ERR_PROJ, ret)
 
         STEP(3)
         // NOK after Reader::read
@@ -41,10 +41,10 @@ namespace test
         m_Reader().expectRead();
         m_Ctrl().expectOk(false);
 
-        m_Ctrl().expectMaxerr(RET_ERR_STARTUP);
+        m_Ctrl().expectMaxerr(ERR_STARTUP);
         ret = main.main(2);
         CHECK_N_CLEAR()
-        L_CHECK_EQUAL(RET_ERR_STARTUP, ret)
+        L_CHECK_EQUAL(ERR_STARTUP, ret)
 
         STEP(4)
         // NOK after Com::start

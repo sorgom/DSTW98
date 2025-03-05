@@ -1,7 +1,7 @@
 #include <BAS/Net.h>
 #include <ifs/DataTypes.h>
 #include <CFG/Setup.h>
-#include <SYS/IL.h>
+#include <IL/IL.h>
 #include <SYS/Reader.h>
 
 #include <fstream>
@@ -77,6 +77,6 @@ void Reader::read()
     {
         mapper.clear();
         provider.clear();
-        IL::getCtrl().log(COMP_SYS, RET_ERR_STARTUP);
+        IL::getCtrl().log(COMP_SYS, ERR_STARTUP);
     }
 }
