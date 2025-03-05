@@ -11,7 +11,6 @@ endif
 ifeq ($(config),ci)
   testenv_config = ci
   moduletests_config = ci
-  moduletestsIL_config = ci
   devtests_config = ci
   buildfail_config = ci
   memleak_config = ci
@@ -25,7 +24,6 @@ ifeq ($(config),ci)
 else ifeq ($(config),debug)
   testenv_config = debug
   moduletests_config = debug
-  moduletestsIL_config = debug
   devtests_config = debug
   buildfail_config = debug
   memleak_config = debug
@@ -39,7 +37,6 @@ else ifeq ($(config),debug)
 else ifeq ($(config),memleak)
   testenv_config = memleak
   moduletests_config = memleak
-  moduletestsIL_config = memleak
   devtests_config = memleak
   buildfail_config = memleak
   memleak_config = memleak
@@ -53,7 +50,6 @@ else ifeq ($(config),memleak)
 else ifeq ($(config),bullseye)
   testenv_config = bullseye
   moduletests_config = bullseye
-  moduletestsIL_config = bullseye
   devtests_config = bullseye
   buildfail_config = bullseye
   memleak_config = bullseye
@@ -67,7 +63,6 @@ else ifeq ($(config),bullseye)
 else ifeq ($(config),fail)
   testenv_config = fail
   moduletests_config = fail
-  moduletestsIL_config = fail
   devtests_config = fail
   buildfail_config = fail
   memleak_config = fail
@@ -82,7 +77,7 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := testenv moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := testenv moduletests devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -98,12 +93,6 @@ moduletests: testenv
 ifneq (,$(moduletests_config))
 	@echo "==== Building moduletests ($(moduletests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
-endif
-
-moduletestsIL: testenv
-ifneq (,$(moduletestsIL_config))
-	@echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
-	@${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
 endif
 
 devtests: testenv
@@ -163,7 +152,6 @@ endif
 clean:
 	@${MAKE} --no-print-directory -C . -f testenv.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
-	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
 	@${MAKE} --no-print-directory -C . -f devtests.make clean
 	@${MAKE} --no-print-directory -C . -f buildfail.make clean
 	@${MAKE} --no-print-directory -C . -f memleak.make clean
@@ -189,7 +177,6 @@ help:
 	@echo "   clean"
 	@echo "   testenv"
 	@echo "   moduletests"
-	@echo "   moduletestsIL"
 	@echo "   devtests"
 	@echo "   buildfail"
 	@echo "   memleak"
