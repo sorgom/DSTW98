@@ -128,11 +128,6 @@ workspace 'DSTW'
         includedirs { includedirs_test }
         links { 'testenv' }
 
-    project 'moduletestsIL'
-        files { files_app, '../testing/tests/moduletestsIL/*.cpp', files_testmain }
-        includedirs { includedirs_test_IL }
-        links { 'testenv' }
-
     project 'devtests'
         files { files_app, '../testing/tests/devtests/*.cpp', files_testmain }
         includedirs { includedirs_test, '../devel' }
