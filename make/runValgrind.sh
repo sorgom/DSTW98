@@ -16,7 +16,7 @@ report=$(pwd)/testing/valgrind_report.md
 
 out() { echo $* | tee -a $report; }
 #   start / end markdown code block
-quote() { out "\`\`\`"; }
+quote() { echo "\`\`\`" >> $report; }
 
 heading() { out; out "## TEST: $1"; }
 
@@ -65,14 +65,13 @@ sleep 1
 
 $ciDir/dstw_stop
 wait $pid;
-sleep 5
 quote
+sleep 2
 
 heading "runtime read, run, system tests, stop"
 quote
 run $ciDir/dstw_runtime X X & pid=$!
-sleep 1
-
+sleep 2
 $ciDir/systemtests -b -v 2>&1 | tee -a $report
 $ciDir/dstw_stop
 wait $pid;
