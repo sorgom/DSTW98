@@ -14,10 +14,13 @@ ciDir=$buildDir/linux/ci
 mlDir=$buildDir/linux/memleak
 report=$(pwd)/testing/valgrind_report.md
 
+out() { echo $* | tee -a $report; }
 #   start / end markdown code block
-quote() { echo "\`\`\`"; }
+quote() { out "\`\`\`"; }
 
-heading() { echo; echo "## TEST: $1"; }
+heading() { out; out "## TEST: $1"; }
+
+run() { valgrind -s --leak-check=full --log-fd=1 --default-suppressions=no --leak-check=full $* | sed s/^==[0-9]*==/======/ | tee -a $report; }
 
 #   build (with no report)
 cd $myDir
@@ -34,18 +37,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-#   redirect output to report file
-exec 6>&1 7>&2 1<&- 2<&- 1>$report 2>&1
-
-#   start output of file to stdout
-tail -f $report >&6 & tid=$!
-
-echo "# valgrind report"
-echo $(date +%F)
+echo "# valgrind report" | tee $report
+out $(date +%F)
 
 heading "memory leaked app"
 quote
-valgrind -s --leak-check=full $mlDir/memleak
+run $mlDir/memleak
 quote
 
 #   gen required proj data file
@@ -53,17 +50,17 @@ $ciDir/dstw_gen
 
 heading "runtime no action"
 quote
-valgrind -s --leak-check=full $ciDir/dstw_runtime
+run $ciDir/dstw_runtime
 quote
 
 heading "runtime read"
 quote
-valgrind -s --leak-check=full $ciDir/dstw_runtime X
+run $ciDir/dstw_runtime X
 quote
 
 heading "runtime read, run, stop"
 quote
-valgrind -s --leak-check=full $ciDir/dstw_runtime X X & pid=$!
+run $ciDir/dstw_runtime X X & pid=$!
 sleep 1
 
 $ciDir/dstw_stop
@@ -73,13 +70,10 @@ quote
 
 heading "runtime read, run, system tests, stop"
 quote
-valgrind -s --leak-check=full $ciDir/dstw_runtime X X & pid=$!
+run $ciDir/dstw_runtime X X & pid=$!
 sleep 1
 
-$ciDir/systemtests -b -v
+$ciDir/systemtests -b -v 2>&1 | tee -a $report
 $ciDir/dstw_stop
 wait $pid;
 quote
-
-#   stop output of file to stdout
-kill -9 $tid
