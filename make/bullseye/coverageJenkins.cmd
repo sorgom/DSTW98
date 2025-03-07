@@ -97,6 +97,7 @@ rem bullseye reporting is a bit crappy
 rem as far as relative paths are concerned
 rem so we have to change the directory
 rem to where the coverage file is
+rem to get a decent looking report
 cd %buildDir%
 covdir -q --by-name > %report%
 

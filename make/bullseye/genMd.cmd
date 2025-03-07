@@ -34,7 +34,7 @@ for %%s in (%srcs% %trg%) do (
 )
 
 set _result=failed
-call covdir -q --checkmin %covMin% -f %trg%
+covdir -q --checkmin %covMin% -f %trg%
 if %errorlevel% == 0 set _result=passed
 echo. >> %md%
 echo covmin %covMin% %_result% >> %md%
