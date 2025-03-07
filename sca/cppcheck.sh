@@ -22,8 +22,8 @@ APP_INCS="-I../specification
 TEST_INCS="-I../testing/testenv
     $APP_INCS 
     -I../devel
-    -I../BuildCppUTest/CppUTest/include
-    -I../CppUTestSteps/TestSteps/include"
+    -I../submodules/cpputest/include
+    -I../submodules/CppUTestSteps/TestSteps/include"
 
 APP_CALL="cppcheck -q -j 200 --language=c++ --check-level=exhaustive"
 TST_CALL="cppcheck -q -j 200 --language=c++ --check-level=exhaustive --force --inline-suppr"

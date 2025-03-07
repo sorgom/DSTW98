@@ -16,7 +16,7 @@ if not exist %covfile% (
 )
 
 rem rewind coverage file if it was not removed before
-call covclear -q
+covclear -q
 
 echo - run
 set elevel=0

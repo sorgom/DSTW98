@@ -28,11 +28,11 @@ void buildfail_01()
 {
     StackArray<A, 1> s;
 
-    B b;
+    B b = {};
     // failure: size check
     s.add(b);
 
-    C c;
+    C c = {};
     // failure: not derived
     s.add(c);
 }
