@@ -1,12 +1,12 @@
 #include <COM/TCP_Com.h>
-#include <IL/IL.h>
+#include <SYS/IL.h>
 #include <BAS/coverage.h>
 
 #include <cstdio>
 
 void TCP_Com_Base::comerr(const E_Err err)
 {
-    IL::getCtrl().log(COMP_COM, ERR_COM);
+    IL::getCtrl().log(COMP_COM, err);
 }
 
 //  ============================================================
@@ -43,14 +43,24 @@ bool Tcp_Listener_Base::listen(const UINT16 port)
 bool Tcp_Listener_Base::select()
 {
     const I_TCP& tcp = IL::getTCP();
-    const INT32 res = tcp.select(mSocket);
-    bool ok =
-        (res == 0)
-        or (res > 0 and getCon().accept(mSocket));
+    E_Err err = NO_ERR;
+    const E_Select res = tcp.select(mSocket);
+    if (res == SELECT_ERR)
+    {
+        err = ERR_COM_SELECT;
+    }
+    else if (res == SELECT_READY)
+    {
+        if (not getCon().accept(mSocket))
+        {
+            err = ERR_COM_ACCEPT;
+        }
+    }
 
+    bool ok = (err == NO_ERR);
     if (not ok)
     {
-        comerr(ERR_COM_SELECT);
+        comerr(err);
         tcp.close(mSocket);
     }
     return ok;
@@ -101,13 +111,13 @@ bool TCP_Con_Base::accept(const INT32 socket)
 bool TCP_Con_Base::select()
 {
     const I_TCP& tcp = IL::getTCP();
-    bool ok = true;
+    E_Err err = NO_ERR;
     // not operating
     if (mSocket >= 0)
     {
-        const INT32 res = tcp.select(mSocket);
+        const E_Select res = tcp.select(mSocket);
         //  activity on socket
-        if (res > 0)
+        if (res == SELECT_READY)
         {
             const INT32 len = tcp.recv(mSocket, &mTele, sizeof(ComTele));
             //  valid telegram received
@@ -123,20 +133,22 @@ bool TCP_Con_Base::select()
             //  invalid data size
             else
             {
-                ok = false;
+                err = ERR_COM_RECV;
                 close();
             }
         }
         //  select error
-        else if (res < 0)
+        else if (res == SELECT_ERR)
         {
-            ok = false;
+            err = ERR_COM_SELECT;
             close();
         }
     }
+    const bool ok = (err == NO_ERR);
+
     if (not ok)
     {
-        comerr(ERR_COM_SELECT);
+        comerr(err);
     }
     return ok;
 }

@@ -1,5 +1,5 @@
 #include <SIG/SIG_X.h>
-#include <IL/IL.h>
+#include <SYS/IL.h>
 
 void SIG_X::procFromFld(const UINT8 state)
 {

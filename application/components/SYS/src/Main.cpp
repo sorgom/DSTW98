@@ -1,5 +1,5 @@
 #include <SYS/Main.h>
-#include <IL/IL.h>
+#include <SYS/IL.h>
 
 INSTANCE_DEF(Main)
 

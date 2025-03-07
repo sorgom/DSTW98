@@ -42,7 +42,8 @@ enum E_Err
     ERR_COM_BIND,
     ERR_COM_LISTEN,
     ERR_COM_SELECT,
-    ERR_COM_ACCEPT
+    ERR_COM_ACCEPT,
+    ERR_COM_RECV
 };
 
 //  reserved parameter values

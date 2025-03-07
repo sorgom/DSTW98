@@ -15,10 +15,12 @@ namespace test
         static const INT32 invalidSocket = -1;
         ComTele tele;
         bool ok;
-        static void expectComerr()
+
+        inline static void expectComerr(const E_Err err=ERR_COM)
         {
-            m_Ctrl().expectLog(COMP_COM, ERR_COM);
+            m_Ctrl().expectLog(COMP_COM, err);
         }
+
         void setTele(const UINT8 p1, const UINT8 p2 = PARAM_UNDEF)
         {
             tele.data.param1 = p1;
@@ -35,7 +37,7 @@ namespace test
 
         //  accept returns invalid socket
         STEP(1)
-        expectComerr();
+        expectComerr(ERR_COM_ACCEPT);
         m_TCP().expectClose();
         m_TCP().expectAccept(validSocket, invalidSocket);
         ok = client.accept(validSocket);
@@ -88,7 +90,7 @@ namespace test
 
         //  select returns -1 error
         STEP(7)
-        expectComerr();
+        expectComerr(ERR_COM_SELECT);
         m_TCP().expectSelect(validSocket, SELECT_ERR);
         m_TCP().expectClose();
         ok = client.select();
@@ -225,7 +227,7 @@ namespace test
 
         //  recv returns invalid size
         STEP(7)
-        expectComerr();
+        expectComerr(ERR_COM_RECV);
         m_TCP().expectSelect(validSocket, SELECT_READY);
         m_TCP().expectRecv(validSocket, sizeof(ComTele), sizeof(ComTele) - 1);
         m_TCP().expectClose();

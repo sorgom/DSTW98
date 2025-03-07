@@ -14,9 +14,9 @@ namespace test
         static const INT32 validSocket = 0;
         static const INT32 invalidSocket = -1;
         bool ok;
-        static void expectComerr()
+        static void expectComerr(const E_Err err=ERR_COM)
         {
-            m_Ctrl().expectLog(COMP_COM, ERR_COM);
+            m_Ctrl().expectLog(COMP_COM, err);
         }
     };
 
@@ -29,7 +29,7 @@ namespace test
 
         //  TCP socket returns invalid socket
         STEP(1)
-        expectComerr();
+        expectComerr(ERR_COM_SOCKET);
         m_TCP().expectSocket(invalidSocket);
         m_TCP().expectClose(invalidSocket);
         ok = listener.listen(tcpPortFld);
@@ -39,7 +39,7 @@ namespace test
         //  TCP socket returns valid socket
         //  TCP bind returns false
         STEP(2)
-        expectComerr();
+        expectComerr(ERR_COM_BIND);
         m_TCP().expectSocket(validSocket);
         m_TCP().expectBind(validSocket, tcpPortFld, false);
         m_TCP().expectClose(validSocket);
@@ -51,7 +51,7 @@ namespace test
         //  TCP bind returns true
         //  TCP listen returns false
         STEP(3)
-        expectComerr();
+        expectComerr(ERR_COM_LISTEN);
         m_TCP().expectSocket(validSocket);
         m_TCP().expectBind(validSocket, tcpPortFld, true);
         m_TCP().expectListen(validSocket, false);
@@ -89,7 +89,7 @@ namespace test
 
         //  select returns -1
         STEP(7)
-        expectComerr();
+        expectComerr(ERR_COM_SELECT);
         m_TCP().expectSelect(validSocket, SELECT_ERR);
         m_TCP().expectClose(validSocket);
         ok = listener.select();
@@ -99,7 +99,7 @@ namespace test
         //  select returns 1
         //  accept returns false
         STEP(8)
-        expectComerr();
+        expectComerr(ERR_COM_ACCEPT);
         m_TCP().expectSelect(validSocket, SELECT_READY);
         m_TCP_Con_Fld().expectAccept(validSocket, false);
         m_TCP().expectClose(validSocket);
