@@ -1,10 +1,10 @@
 //  ============================================================
 //  interface Reader
 //  the Reader is called at system start and shall:
-//  -   clear I_Dispatcher
+//  -   clear I_Mapper
 //  -   read proj data from binary file
 //  -   distribute load to subsystems
-//  -   call indexing of I_Dispatcher
+//  -   call indexing of I_Mapper
 //  ============================================================
 //  created by Manfred Sorgo
 #ifndef I_READER_H

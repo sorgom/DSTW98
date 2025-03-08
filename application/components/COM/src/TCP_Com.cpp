@@ -170,7 +170,7 @@ INSTANCE_DEF(TCP_Con_Fld)
 
 void TCP_Con_Fld::onAccept() const
 {
-    //  TODO: Dispatcher must recall all states
+    //  TODO: Mapper must recall all states
 }
 
 void TCP_Con_Fld::forward(const ComTele& tele) const
@@ -183,7 +183,7 @@ INSTANCE_DEF(TCP_Con_Gui)
 
 void TCP_Con_Gui::onAccept() const
 {
-    //  TODO: Dispatcher resend all states
+    //  TODO: Mapper resend all states
     //  call I_Elem::resend() or similar
 }
 

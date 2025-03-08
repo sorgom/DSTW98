@@ -52,7 +52,7 @@ LCR/src/LCR_Provider.cpp     20         --       --
 LCR/src/LCR_X.cpp           126         --       --
 SIG/src/SIG_Provider.cpp     23         --       --
 SIG/src/SIG_X.cpp           310         --       --
-SYS/src/Dispatcher.cpp      138         --       --
+SYS/src/Mapper.cpp      138         --       --
 SYS/src/Ctrl.cpp               9         --       --
 SYS/src/Reader.cpp           70         --       --
 TSW/src/TSW.cpp              99         --       --

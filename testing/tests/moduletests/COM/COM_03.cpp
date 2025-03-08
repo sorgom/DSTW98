@@ -77,7 +77,7 @@ namespace test
 
         //  select returns 1 activity
         //  recv returns valid data
-        //  Dispatcher gets data from field
+        //  Mapper gets data from field
         STEP(6)
         {
             setTele(101, 202);

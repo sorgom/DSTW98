@@ -105,7 +105,7 @@
 "_type":"LabelView","_id":"AAAAAAGLTIj7N0ZcN4k=","_parent":{
 "$ref":"AAAAAAGLTIj7N0Za+C8="
 }
-,"lineColor":"#00B799","fillColor":"#6DCEFF","font":"Arial;13;1","left":853,"top":663,"width":279,"height":13,"underline":true,"text":"Dispatcher"
+,"lineColor":"#00B799","fillColor":"#6DCEFF","font":"Arial;13;1","left":853,"top":663,"width":279,"height":13,"underline":true,"text":"Mapper"
 }
 ,{
 "_type":"LabelView","_id":"AAAAAAGLTIj7N0ZdLys=","_parent":{
@@ -2416,7 +2416,7 @@
 "_type":"UMLObject","_id":"AAAAAAGLTIj7N0ZX1zo=","_parent":{
 "$ref":"AAAAAAFF+qBWK6M3Z8Y="
 }
-,"name":"Dispatcher","ownedElements":[
+,"name":"Mapper","ownedElements":[
 {
 "_type":"UMLLink","_id":"AAAAAAGLTIoFNUaUfRE=","_parent":{
 "$ref":"AAAAAAGLTIj7N0ZX1zo="

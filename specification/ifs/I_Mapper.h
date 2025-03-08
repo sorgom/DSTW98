@@ -30,7 +30,7 @@ public:
     //  element states shall be dispatched to GUI
     virtual void toGui(size_t id, const ComData& data) const = 0;
 
-    //  dispatcher shall re-send all GUI states when triggered
+    //  Mapper shall re-send all GUI states when triggered
     virtual void reGui() const = 0;
 };
 #endif // _H
