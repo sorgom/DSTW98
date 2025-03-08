@@ -94,8 +94,8 @@ namespace test
             const INT32 res = call("recv").PARAM(socket).PARAM(size).RETURN_DEF_INT(size);
             if (
                 mTele != nullptr and
-                size == sizeof(ComTele) and
-                static_cast<size_t>(res) == size
+                size >= sizeof(ComTele) and
+                static_cast<size_t>(res) == sizeof(ComTele)
             )
             {
                 std::memcpy(buffer, mTele, size);
@@ -107,11 +107,13 @@ namespace test
         {
             expect("recv").PARAM(socket).PARAM(size).AND_RETURN(ret);
         }
+
         inline void expectRecv(INT32 socket, const ComTele& tele) const
         {
-            const INT32 size = sizeof(ComTele);
+            const INT32 size = sizeof(ComTele) * I_TCP_Con::NumTelRcv;
             mTele = &tele;
-            expect("recv").PARAM(socket).PARAM(size).AND_RETURN(size);
+            const INT32 res = sizeof(ComTele);
+            expect("recv").PARAM(socket).PARAM(size).AND_RETURN(res);
         }
 
         inline INT32 send(INT32 socket, CPTR buffer, size_t size) const

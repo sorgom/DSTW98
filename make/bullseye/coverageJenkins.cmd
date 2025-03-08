@@ -50,6 +50,12 @@ md %buildDir% %reportsDir% >NUL 2>&1
 rem save current instrumentation state
 cov01 -q --push
 
+if "%1" == "-c" (
+    echo - clean
+    %vsCall% -t:Clean
+    DEL /Q %covfile% >NUL 2>&1
+)
+
 echo - build
 rem turn off coverage instrumentation
 rem it is not necessary to exclude parts from coverage instrumentation

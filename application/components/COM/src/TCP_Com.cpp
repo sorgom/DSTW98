@@ -6,7 +6,7 @@
 
 void TCP_Com_Base::comerr(const E_Err err)
 {
-    IL::getCtrl().log(COMP_COM, err);
+    if (err != NO_ERR) IL::getCtrl().log(COMP_COM, err);
 }
 
 //  ============================================================
@@ -119,22 +119,26 @@ bool TCP_Con_Base::select()
         //  activity on socket
         if (res == SELECT_READY)
         {
-            const INT32 len = tcp.recv(mSocket, &mTele, sizeof(ComTele));
-            //  valid telegram received
-            if (len == sizeof(ComTele))
-            {
-                forward(mTele);
-            }
+            const INT32 len = tcp.recv(mSocket, mBuffer, RecBuffSize);
             //  close event
-            else if (len <= 0)
+            if (len <= 0)
             {
                 close();
             }
-            //  invalid data size
-            else
+            //  odd data size
+            else if ((len % sizeof(ComTele)) != 0)
             {
                 err = ERR_COM_RECV;
                 close();
+            }
+            //  valid telegram(s) received
+            else
+            {
+                const size_t num = len / sizeof(ComTele);
+                for (size_t n = 0; n < num; ++n)
+                {
+                    forward(reinterpret_cast<const ComTele*>(mBuffer)[n]);
+                }
             }
         }
         //  select error
@@ -144,13 +148,8 @@ bool TCP_Con_Base::select()
             close();
         }
     }
-    const bool ok = (err == NO_ERR);
-
-    if (not ok)
-    {
-        comerr(err);
-    }
-    return ok;
+    comerr(err);
+    return err == NO_ERR;
 }
 
 void TCP_Con_Base::close()

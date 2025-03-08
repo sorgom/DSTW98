@@ -13,6 +13,7 @@ namespace test
     {
         static const INT32 validSocket = 0;
         static const INT32 invalidSocket = -1;
+        static const size_t RcvBuffSize = I_TCP_Con::NumTelRcv * sizeof(ComTele);
         ComTele tele;
         bool ok;
 
@@ -140,7 +141,7 @@ namespace test
         //  recv returns close event
         STEP(4)
         m_TCP().expectSelect(validSocket, SELECT_READY);
-        m_TCP().expectRecv(validSocket, sizeof(ComTele), 0);
+        m_TCP().expectRecv(validSocket, RcvBuffSize, 0);
         m_TCP().expectClose();
         ok = client.select();
         CHECK_N_CLEAR()
@@ -229,7 +230,7 @@ namespace test
         STEP(7)
         expectComerr(ERR_COM_RECV);
         m_TCP().expectSelect(validSocket, SELECT_READY);
-        m_TCP().expectRecv(validSocket, sizeof(ComTele), sizeof(ComTele) - 1);
+        m_TCP().expectRecv(validSocket, RcvBuffSize, RcvBuffSize - 1);
         m_TCP().expectClose();
         ok = client.select();
         CHECK_N_CLEAR()

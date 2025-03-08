@@ -76,5 +76,8 @@ public:
     virtual void send(const ComTele& tele) const = 0;
     //  close client
     virtual void close() = 0;
+
+    //  receive at once number of telegrams
+    static const size_t NumTelRcv = 10;
 };
 #endif // _H

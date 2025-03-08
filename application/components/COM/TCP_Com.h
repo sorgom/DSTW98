@@ -8,7 +8,9 @@
 
 #include <ifs/I_TCP.h>
 #include <BAS/coding.h>
+#include <CFG/Setup.h>
 #include <ostream>
+
 
 class TCP_Com_Base
 {
@@ -92,7 +94,8 @@ protected:
     virtual void forward(const ComTele& tele) const = 0;
 private:
     INT32 mSocket;
-    ComTele mTele;
+    static const size_t RecBuffSize = NumTelRcv * sizeof(ComTele);
+    CHAR mBuffer[RecBuffSize];
 };
 
 //  field tcp communication client
