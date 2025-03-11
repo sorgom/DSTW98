@@ -1,9 +1,10 @@
 #!/bin/bash
 #   =========================================
-#   count lines of code
+#   count C++ lines of code
 #   - with cloc tool
 #   - mark down format
 #   - without cloc tool headings
+#   - without cloc tool separator lines (---)
 #   =========================================
 clc()
 {
@@ -19,6 +20,9 @@ cd $(dirname $0)
 cd ..
 md=CLOC.md
 echo "# CLOC" > $md
+date +'%Y-%m-%d' >> $md
 clc specification >> $md
 clc application >> $md
 clc testing >> $md
+
+cat $md
