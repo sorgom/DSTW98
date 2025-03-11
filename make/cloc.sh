@@ -1,7 +1,11 @@
 #!/bin/bash
-md=CLOC.md
-
-sub()
+#   =========================================
+#   count lines of code
+#   - with cloc tool
+#   - mark down format
+#   - without cloc tool headings
+#   =========================================
+clc()
 {
     echo
     echo "## $(basename $1)"
@@ -15,6 +19,6 @@ cd $(dirname $0)
 cd ..
 md=CLOC.md
 echo "# CLOC" > $md
-sub specification >> $md
-sub application >> $md
-sub testing >> $md
+clc specification >> $md
+clc application >> $md
+clc testing >> $md
