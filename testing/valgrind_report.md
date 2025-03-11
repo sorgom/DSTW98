@@ -1,22 +1,22 @@
 # valgrind report
-2025-03-07
+2025-03-11
 
 ## TEST: memory leaked app
 ```
 ====== Memcheck, a memory error detector
 ====== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-====== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+====== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
 ====== Command: /git/DSTW98/build/linux/memleak/memleak
 ======
 ======
 ====== HEAP SUMMARY:
 ======     in use at exit: 100 bytes in 1 blocks
-======   total heap usage: 2 allocs, 1 frees, 73,828 bytes allocated
+======   total heap usage: 2 allocs, 1 frees, 72,804 bytes allocated
 ======
 ====== 100 bytes in 1 blocks are definitely lost in loss record 1 of 1
-======    at 0x48485C3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-======    by 0x10918D: ??? (in /git/DSTW98/build/linux/memleak/memleak)
-======    by 0x4B051C9: (below main) (libc_start_call_main.h:58)
+======    at 0x484220F: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+======    by 0x10914A: ??? (in /git/DSTW98/build/linux/memleak/memleak)
+======    by 0x4A95249: (below main) (libc_start_call_main.h:58)
 ======
 ====== LEAK SUMMARY:
 ======    definitely lost: 100 bytes in 1 blocks
@@ -32,14 +32,14 @@
 ```
 ====== Memcheck, a memory error detector
 ====== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-====== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+====== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
 ====== Command: /git/DSTW98/build/linux/ci/dstw_runtime
 ======
 ERR: 0
 ======
 ====== HEAP SUMMARY:
 ======     in use at exit: 0 bytes in 0 blocks
-======   total heap usage: 2 allocs, 2 frees, 77,824 bytes allocated
+======   total heap usage: 2 allocs, 2 frees, 76,800 bytes allocated
 ======
 ====== All heap blocks were freed -- no leaks are possible
 ======
@@ -50,14 +50,14 @@ ERR: 0
 ```
 ====== Memcheck, a memory error detector
 ====== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-====== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+====== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
 ====== Command: /git/DSTW98/build/linux/ci/dstw_runtime X
 ======
 ERR: 0
 ======
 ====== HEAP SUMMARY:
 ======     in use at exit: 0 bytes in 0 blocks
-======   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+======   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
 ======
 ====== All heap blocks were freed -- no leaks are possible
 ======
@@ -68,14 +68,14 @@ ERR: 0
 ```
 ====== Memcheck, a memory error detector
 ====== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-====== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+====== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
 ====== Command: /git/DSTW98/build/linux/ci/dstw_runtime X X
 ======
 ERR: 0
 ======
 ====== HEAP SUMMARY:
 ======     in use at exit: 0 bytes in 0 blocks
-======   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+======   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
 ======
 ====== All heap blocks were freed -- no leaks are possible
 ======
@@ -108,14 +108,14 @@ OK (1 tests, 1 ran, 38 checks, 0 ignored, 0 filtered out, 0 ms)
 
 ====== Memcheck, a memory error detector
 ====== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-====== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+====== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
 ====== Command: /git/DSTW98/build/linux/ci/dstw_runtime X X
 ======
 ERR: 0
 ======
 ====== HEAP SUMMARY:
 ======     in use at exit: 0 bytes in 0 blocks
-======   total heap usage: 4 allocs, 4 frees, 86,488 bytes allocated
+======   total heap usage: 4 allocs, 4 frees, 85,464 bytes allocated
 ======
 ====== All heap blocks were freed -- no leaks are possible
 ======

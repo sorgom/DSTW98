@@ -5,26 +5,29 @@ rem ========================================================================
 SETLOCAL
 set _me=%~n0
 call %~dp0_options.cmd %*
-if %errorlevel% neq 0 exit /b 0
+if %errorlevel% neq 0 goto err
 
-call %myDir%\_build.cmd --on "moduletests,moduletestsIL"
-if %errorlevel% NEQ 0 exit /b 1
+cov01 -q --on
+%vsCall% -t:"moduletests,moduletestsIL" >> %buildLog% 2>&1
+if %errorlevel% NEQ 0 goto err
 
 if not exist %covfile% (
     echo %covfile% not found
-    exit /b 1
+    goto err
 )
 
-rem rewind coverage file if it was not removed before
+del /Q %buildLog% >NUL 2>&1
+
 covclear -q
 
 echo - run
-set elevel=0
 for %%t in (moduletests moduletestsIL) do (
-    echo -- %%t
-    %exeDir%\%%t.exe -b -v >> %testLog% 2>&1
-    if %errorlevel% NEQ 0 set /A elevel=elevel+1
+    %exeDir%\%%t.exe
+    if %errorlevel% NEQ 0 goto err
 )
-if %elevel% == 0 del /Q %testLog%
 
-call %myDir%\_report.cmd
+covselect -qd --import %excludeFile%
+covdir -q --by-name --srcdir .
+
+:err
+cov01 -q --pop

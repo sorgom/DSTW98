@@ -6,13 +6,19 @@ rem ========================================================================
 SETLOCAL
 set _me=%~n0
 call %~dp0_options.cmd %*
-if %errorlevel% neq 0 exit /b 0
+if %errorlevel% neq 0 goto err
 
-call %myDir%\_build.cmd --off "dstw_gen,dstw_stop,systemtests"
-if %errorlevel% NEQ 0 exit /b 1
+cov01 -q --off
+%vsCall% -t:"dstw_gen,dstw_stop,systemtests" >> %buildLog% 2>&1
+if %errorlevel% NEQ 0 goto err
 
-call %myDir%\_build.cmd --on dstw_runtime
-if %errorlevel% NEQ 0 exit /b 1
+cov01 -q --on
+%vsCall% -t:dstw_runtime >> %buildLog% 2>&1
+if %errorlevel% NEQ 0 goto err
+
+del /Q %buildLog% >NUL 2>&1
+
+covclear -q
 
 cd /d %buildDir%
 
@@ -41,12 +47,12 @@ start /B %myDir%\_runapp.cmd %app% X X
 timeout /t 2 /nobreak >NUL 2>&1
 if not exist %tmpFile% (
     echo - application not started
-    exit /b 1
+    goto err
 )
 
 echo - run tests
-%exeDir%\systemtests.exe -b -v > %testLog%
-if %errorlevel% == 0 DEL /Q %testLog%
+%exeDir%\systemtests.exe
+if %errorlevel% neq 0 goto err
 
 echo - stop application ...
 %exeDir%\dstw_stop.exe
@@ -55,4 +61,8 @@ echo - stop application ...
 timeout /t 1 /nobreak >NUL 2>&1
 if exist %tmpFile% goto wait
 
-call %myDir%\_report.cmd
+covselect -qd --import %excludeFile%
+covdir -q --by-name --srcdir .
+
+:err
+cov01 -q --pop

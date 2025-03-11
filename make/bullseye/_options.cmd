@@ -1,24 +1,11 @@
 @echo off
-if "%_me%" == "" exit /b 1
 rem ========================================================================
 rem Bullseye coverage: CLI options
 rem ========================================================================
 call %~dp0_setup.cmd %*
 
-%pyDir%\somutil\docopts.py %optsTxt% %* > %tmpCmd%
-if %errorlevel% NEQ 0 exit /b 1
-call %tmpCmd%
-
-if not exist %covfile% set _c=1==1
-
-if %_h% (
-    echo.
-    echo usage: %_me%.cmd [options]
-    type %optsTxt%
-    exit /b 1
-)
-
 echo - setup
+cov01 -q --push
 
 if not exist %vsSolution% (
     echo %vsSolution% not found
@@ -26,20 +13,21 @@ if not exist %vsSolution% (
     exit /b 1
 )
 
-del /Q %buildLog% %covLog% %testLog% >NUL 2>&1
+del /Q %buildLog%>NUL 2>&1
+md %reportsDir% >NUL 2>&1
 
-if %_c% (
+set clean=0
+if not exist %covfile% set clean=1
+if "%1" == "-c" set clean=1
+
+if %clean% == 1 (
     echo - clean
     del /Q %covfile% >NUL 2>&1
     %vsCall% -t:Clean >NUL
 )
-set _gentodo=%_t%
-
-md %reportsDir% >NUL 2>&1
 
 echo - build
 
-call %myDir%\_build.cmd --off testenv
-if %errorlevel% NEQ 0 exit /b 1
-
-cd %myDir%
+cov01 -q --off
+%vsCall% -t:testenv >> %buildLog% 2>&1
+exit /b %errorlevel%

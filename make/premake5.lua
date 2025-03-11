@@ -74,6 +74,7 @@ workspace 'DSTW'
         buildoptions { buildoptions_vs_test }
         warnings 'high'
         defines { '_WINSOCK_DEPRECATED_NO_WARNINGS' }
+        location '../vs'
 
     filter { 'action:gmake*' }
         buildoptions { buildoptions_gcc }
