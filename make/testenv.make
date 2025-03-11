@@ -141,6 +141,7 @@ GENERATED += $(OBJDIR)/TestSteps.o
 GENERATED += $(OBJDIR)/TestStepsPlugin.o
 GENERATED += $(OBJDIR)/TestTestingFixture.o
 GENERATED += $(OBJDIR)/Utest.o
+GENERATED += $(OBJDIR)/UtestPlatform.o
 GENERATED += $(OBJDIR)/installComparators.o
 GENERATED += $(OBJDIR)/ostreamHelpers.o
 GENERATED += $(OBJDIR)/ostreams.o
@@ -187,6 +188,7 @@ OBJECTS += $(OBJDIR)/TestSteps.o
 OBJECTS += $(OBJDIR)/TestStepsPlugin.o
 OBJECTS += $(OBJDIR)/TestTestingFixture.o
 OBJECTS += $(OBJDIR)/Utest.o
+OBJECTS += $(OBJDIR)/UtestPlatform.o
 OBJECTS += $(OBJDIR)/installComparators.o
 OBJECTS += $(OBJDIR)/ostreamHelpers.o
 OBJECTS += $(OBJDIR)/ostreams.o
@@ -360,6 +362,9 @@ $(OBJDIR)/MockSupport_c.o: ../submodules/cpputest/src/CppUTestExt/MockSupport_c.
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/OrderedTest.o: ../submodules/cpputest/src/CppUTestExt/OrderedTest.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/UtestPlatform.o: ../submodules/cpputest/src/Platforms/Gcc/UtestPlatform.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TCP_Client.o: ../testing/testenv/TCP/src/TCP_Client.cpp
