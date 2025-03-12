@@ -86,7 +86,6 @@ workspace 'DSTW'
         linkoptions { '-pthread' }
 
     filter { 'configurations:ci' }
-        filter { 'configurations:ci' }
         defines { 'NDEBUG' }
 
     filter { 'configurations:memleak' }
@@ -98,6 +97,7 @@ workspace 'DSTW'
     filter { 'configurations:debug' }
         defines { 'DEBUG' }
         symbols 'On'
+
     filter { 'configurations:fail' }
         defines { 'STATIC_FAIL' }
 
@@ -182,6 +182,9 @@ workspace 'DSTW'
         }
         includedirs { includedirs_test }
 
+    --  ============================================================
+    --  gcov
+    --  ============================================================
     project 'gcovapp'
         filter { 'action:vs*' }
 
