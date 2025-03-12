@@ -15,7 +15,6 @@ It's available for Windows and Linux.
 Bullseye is not for free - but they provide a free trial period.
 
 - [current text report](coverage_bullseye.md)
-- [sample html report](http://dstw.sorgo.de/bullseye/)
 
 ## gcov
 Gcov comes with gnu compiler collection (gcc) and therefore is available
@@ -52,8 +51,8 @@ LCR/src/LCR_Provider.cpp     20         --       --
 LCR/src/LCR_X.cpp           126         --       --
 SIG/src/SIG_Provider.cpp     23         --       --
 SIG/src/SIG_X.cpp           310         --       --
-SYS/src/Mapper.cpp      138         --       --
-SYS/src/Ctrl.cpp               9         --       --
+SYS/src/Mapper.cpp          138         --       --
+SYS/src/Ctrl.cpp              9         --       --
 SYS/src/Reader.cpp           70         --       --
 TSW/src/TSW.cpp              99         --       --
 TSW/src/TSW_Provider.cpp      2         --       --

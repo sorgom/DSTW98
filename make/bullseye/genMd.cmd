@@ -8,15 +8,17 @@ call %~dp0_setup.cmd
 
 set md=%dstwDir%\testing\coverage_bullseye.md
 set srcs=modTests.cov sysTests.cov
+
 set trg=merged.cov
 set covMin=100,100
 
 cd /d %reportsDir%
 
-for %%s in (%srcs%) do (
-    echo - %%s
-    if not exist %%s exit /b 1
-
+for %%t in (modTests sysTests) do (
+    if not exist %%t.cov (
+        echo # %%t
+        call %myDir%\%%t
+    )
 )
 DEL /Q %trg% >NUL 2>&1
 
@@ -33,10 +35,10 @@ for %%s in (%srcs% %trg%) do (
     echo ``` >> %md%
 )
 
-set _result=failed
+set result=failed
 covdir -q --checkmin %covMin% -f %trg%
-if %errorlevel% == 0 set _result=passed
+if %errorlevel% == 0 set result=passed
 echo. >> %md%
-echo covmin %covMin% %_result% >> %md%
+echo covmin %covMin% %result% >> %md%
 
 type %md%

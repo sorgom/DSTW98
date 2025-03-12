@@ -10,11 +10,10 @@ clc()
 {
     echo
     echo "## $(basename $1)"
-    out=0
-    cloc $1 --md --include-ext=cpp,h | grep -v '^---' | while read i; do
-        [[ "$i" =~ ^Language ]] && out=1
-        [[ $out -eq 1 ]] && echo "$i"
-    done
+    exts=$2
+    if [ -z $exts ]; then exts=cpp,h; fi
+    str=$(cloc $1 --md --include-ext=$exts | grep -v '^---')
+    echo "Language${str#*Language}"
 }
 cd $(dirname $0)
 cd ..
