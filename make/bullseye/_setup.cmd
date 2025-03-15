@@ -10,15 +10,15 @@ set makeDir=%cd%
 cd ..
 set dstwDir=%cd%
 set buildDir=%dstwDir%\build
-set reportsDir=%dstwDir%\reports
 set vsDir=%dstwDir%\vs
 set vsSolution=%vsDir%\DSTW.sln
 set exeDir=%buildDir%\windows\bullseye
 
-set buildLog=%reportsDir%\build_%_me%.txt
+set buildLog=%buildDir%\build_%_me%.txt
 set covcopt=--srcdir %dstwDir% --macro
-set covfile=%reportsDir%\%_me%.cov
+set covfile=%buildDir%\%_me%.cov
 set excludeFile=%myDir%\_exclude.txt
 
+set tmpFile=%buildDir%\%_me%.tmp
 set vsCall=msbuild -m %vsSolution% -p:configuration=bullseye
 set projFile=dstw.proj

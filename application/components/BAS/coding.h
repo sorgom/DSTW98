@@ -5,7 +5,6 @@
 #ifndef CODING_H
 #define CODING_H
 
-#include <codebase/BaseTypes.h>
 #include <codebase/nocopy.h>
 
 //  enable usage of "and", "or", "not" in place of "&&", "||", "!"

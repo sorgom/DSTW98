@@ -1,6 +1,6 @@
 @echo off
 rem ========================================================================
-rem Bullseye coverage: CLI options
+rem Bullseye coverage: common start
 rem ========================================================================
 call %~dp0_setup.cmd %*
 
@@ -13,8 +13,10 @@ if not exist %vsSolution% (
     exit /b 1
 )
 
-del /Q %buildLog%>NUL 2>&1
-md %reportsDir% >NUL 2>&1
+del /Q %buildLog% %tmpFile%>NUL 2>&1
+md %buildDir% >NUL 2>&1
+
+cd /d %buildDir%
 
 set clean=0
 if not exist %covfile% set clean=1

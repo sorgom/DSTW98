@@ -31,7 +31,7 @@ if not exist %tmpFile% (
     exit /b 1
 )
 rem run tests
-%binDir%\systemtests.exe -b -v
+%binDir%\systemtests.exe
 set ret=%errorlevel%
 rem stop app anyway
 %binDir%\dstw_stop.exe

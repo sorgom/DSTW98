@@ -25,7 +25,7 @@ $bindir/dstw_gen
 $bindir/dstw_runtime X X & pid=$!
 sleep 1
 #   run tests
-$bindir/systemtests -b -v
+$bindir/systemtests
 ret=$((ret+$?))
 
 #   stop app

@@ -146,7 +146,7 @@ workspace 'DSTW'
 
     project 'memleak'
         files { '../testing/tests/memleak/memLeakMain.cpp' }
-        includedirs { includedirs_app }
+        includedirs { includedirs_test }
 
 
     --  ============================================================

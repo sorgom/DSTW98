@@ -12,12 +12,12 @@ set srcs=modTests.cov sysTests.cov
 set trg=merged.cov
 set covMin=100,100
 
-cd /d %reportsDir%
+cd /d %buildDir%
 
-for %%t in (modTests sysTests) do (
-    if not exist %%t.cov (
-        echo # %%t
-        call %myDir%\%%t
+for %%s in (%srcs%) do (
+    if not exist %%s (
+        echo not found: %%s
+        exit /b 1
     )
 )
 DEL /Q %trg% >NUL 2>&1

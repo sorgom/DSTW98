@@ -92,18 +92,8 @@ struct ComSetup
     UINT16 portCtrl;
     //  TCP select timeout ms
     UINT16 timeout;
-
-    inline ComSetup(const UINT16 portFld,
-                    const UINT16 portGui,
-                    const UINT16 portCtrl,
-                    const UINT16 timeout) :
-        portFld(portFld),
-        portGui(portGui),
-        portCtrl(portCtrl),
-        timeout(timeout)
-    {}
-    inline ComSetup() {}
 };
+
 SIZE_CHECK(ComSetup, 8)
 
 //  result of a find operation

@@ -35,15 +35,7 @@ namespace test
     class GenProjData
     {
     public:
-        const ComSetup setup;
-
-        GenProjData() :
-            setup(
-                NetTest::toN(tcpPortFld),
-                NetTest::toN(tcpPortGui),
-                NetTest::toN(tcpPortCtrl),
-                NetTest::toN(tcpTimeout)
-            )
+        GenProjData()
         {
             preset();
         }
@@ -120,7 +112,7 @@ namespace test
                 TYPE_SIG_N,
                 TYPE_TSW
             };
-            return types[n % sizeof(types)];
+            return types[n % NUM_ALL_TYPES];
         }
 
         void writeNum(UINT32 num = SIZE)
@@ -128,9 +120,17 @@ namespace test
             const UINT32 numN = NetTest::toN(num);
             os.write(reinterpret_cast<const char*>(&numN), sizeof(UINT32));
         }
-        void writeSetup(INT32 err = 0)
+        void writeNum(UINT16 num)
         {
-            os.write(reinterpret_cast<const char*>(&setup), sizeof(setup) + err);
+            const UINT16 numN = NetTest::toN(num);
+            os.write(reinterpret_cast<const char*>(&numN), sizeof(UINT16));
+        }
+        void writeSetup()
+        {
+            writeNum(tcpPortFld);
+            writeNum(tcpPortGui);
+            writeNum(tcpPortCtrl);
+            writeNum(tcpTimeout);
         }
         void writeItem(size_t pos)
         {

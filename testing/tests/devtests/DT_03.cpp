@@ -21,13 +21,6 @@ namespace test
         GenProjData<10> data;
 
         STEP(1)
-        const ComSetup& s = data.setup;
-        L_CHECK_EQUAL(tcpPortFld,  NetTest::toH(s.portFld))
-        L_CHECK_EQUAL(tcpPortGui,  NetTest::toH(s.portGui))
-        L_CHECK_EQUAL(tcpPortCtrl, NetTest::toH(s.portCtrl))
-        L_CHECK_EQUAL(tcpTimeout,  NetTest::toH(s.timeout))
-
-        STEP(2)
         std::ostringstream os;
         os << fixT(data.at(9).addr.chars);
         STRCMP_EQUAL("ELEM 0001   ", os.str().c_str());
@@ -36,7 +29,7 @@ namespace test
         os << fixT(data.at(0).addr.chars);
         STRCMP_EQUAL("ELEM 0010   ", os.str().c_str());
 
-        STEP(3)
+        STEP(2)
         L_CHECK_EQUAL(TYPE_LCR,     data.type(0))
         L_CHECK_EQUAL(TYPE_LCR_UBK, data.type(1))
         L_CHECK_EQUAL(TYPE_SIG_H,   data.type(2))

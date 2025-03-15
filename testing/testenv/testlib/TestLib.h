@@ -16,17 +16,11 @@ namespace test
     //  preset ComAddr for testing
     void genComAddr(ComAddr& cName, UINT32 num, CONST_C_STRING addr = "ELEM");
 
-    template <class T>
-    void adrrElement(T& elem, UINT32 num, CONST_C_STRING addr = "ELEM")
-    {
-        genComAddr(elem.addr, num, addr);
-    }
-
     const ComAddr& genComAddr(UINT32 num, CONST_C_STRING addr = "ELEM");
 
     inline bool operator==(const ComAddr& n1, const ComAddr& n2)
     {
-        return Mem::cmp(n1.chars, n2.chars) == 0;
+        return std::memcmp(n1.chars, n2.chars, ComAddrSize) == 0;
     }
 
     //  avoid "not used" warning
