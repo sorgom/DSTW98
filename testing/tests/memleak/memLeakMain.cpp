@@ -8,7 +8,7 @@ int main()
 {
 #ifdef MEM_LEAK
     CHAR* p = new CHAR[100];
-    play(p);
+    test::play(p);
 #endif
     return 0;
 }
