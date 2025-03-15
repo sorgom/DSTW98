@@ -10,7 +10,7 @@
 #define COMPARATOR_H
 
 #include <codebase/BaseTypes.h>
-#include <BAS/coding.h>
+#include <codebase/nocopy.h>
 
 #include <CppUTest/SimpleString.h>
 #include <CppUTestExt/MockNamedValue.h>

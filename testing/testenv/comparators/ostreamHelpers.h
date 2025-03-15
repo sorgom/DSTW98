@@ -6,7 +6,7 @@
 #define OSTREAMHELPERS_H
 
 #include <codebase/BaseTypes.h>
-#include <BAS/coding.h>
+#include <codebase/nocopy.h>
 #include <ostream>
 #include <iomanip>
 

@@ -1,9 +1,9 @@
 # The model driven approach
 ## the plan
-I happened to work for a project of the Clinch* company that had (maybe still has) the following plan:
+I happened to work for a project of the _Clinch_[^1] company that had (maybe still has) the following plan:
 -   develop software for a digital interlocking (DSTW) from the scratch
 -   development should be model based
--   use the IMB* toolchain including the Raggedy* modeling tool
+-   use the _IMB_[^2] toolchain including the _Raggedy_[^3] modeling tool
 
 ## SIL4
 A DSTW software has to meet the standards of SIL4 / EN 50 129.
@@ -48,4 +48,6 @@ If a company’s philosophy is never to report any problems, it ends up exactly 
 -   increasing frustration of the ones that need to get the work done
 -   a complete illusory estimation of progress by the management
 
-*) names changed
+[^1]: name changed
+[^2]: name changed
+[^3]: name changed
