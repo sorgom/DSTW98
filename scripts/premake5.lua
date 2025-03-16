@@ -26,10 +26,7 @@ includedirs_testenv = {
     includedirs_teststeps
 }
 
-files_testenv = {
-    '../testing/testenv/**.cpp',
-    base_teststeps .. '/src/*.cpp'
-}
+files_testenv = { '../testing/testenv/**.cpp' }
 
 files_testmain = { '../testing/testmain/testMain.cpp' }
 
@@ -45,7 +42,11 @@ includedirs_test_IL = {
     includedirs_testenv
 }
 
-files_moduletest = { '../testing/tests/moduletests/**.cpp' }
+files_moduletest = {
+    files_testenv,
+    '../testing/tests/moduletests/**.cpp'
+}
+
 
 --  ============================================================
 --  premake5 build rules
@@ -103,14 +104,14 @@ workspace 'DSTW'
         defines { 'STATIC_FAIL' }
 
     --  ============================================================
-    --  testenv
+    --  submodules - no need to instrument for coverage
     --  ============================================================
-    project 'testenv'
+    project 'submodules'
         kind 'StaticLib'
 
         includedirs { includedirs_test }
         files {
-            files_testenv,
+            base_teststeps .. '/src/*.cpp',
             base_cpputest .. '/src/CppUTest/*.cpp',
             base_cpputest .. '/src/CppUTestExt/*.cpp'
         }
@@ -122,23 +123,27 @@ workspace 'DSTW'
         filter { 'action:gmake*' }
             files { base_cpputest .. '/src/Platforms/Gcc/*.cpp' }
 
+    project 'testenv'
+        kind 'StaticLib'
+        includedirs { includedirs_test }
+        files { files_testenv }
     --  ============================================================
     --  module tests / dev tests
     --  ============================================================
     project 'moduletests'
         files { files_app, files_moduletest, files_testmain }
         includedirs { includedirs_test }
-        links { 'testenv' }
+        links { 'submodules' }
 
     project 'moduletestsIL'
-        files { files_app, '../testing/tests/moduletestsIL/*.cpp', files_testmain }
+        files { files_app, files_testenv, '../testing/tests/moduletestsIL/*.cpp', files_testmain }
         includedirs { includedirs_test_IL }
-        links { 'testenv' }
+        links { 'submodules' }
 
     project 'devtests'
-        files { files_app, '../testing/tests/devtests/*.cpp', files_testmain }
+        files { files_app, files_testenv, '../testing/tests/devtests/*.cpp', files_testmain }
         includedirs { includedirs_test, '../devel' }
-        links { 'testenv' }
+        links { 'submodules' }
 
     project 'buildfail'
         kind 'StaticLib'
@@ -170,10 +175,10 @@ workspace 'DSTW'
 
     --  run third
     project 'systemtests'
-        files { '../testing/tests/systemtests/SYST_*.cpp', files_testmain }
+        files { files_testenv, '../testing/tests/systemtests/SYST_*.cpp', files_testmain }
         includedirs { includedirs_test }
         defines { 'REQUIRE_PARAM' }
-        links { 'testenv' }
+        links { 'submodules' }
 
     --  run last to stop application in background
     project 'dstw_stop'
@@ -199,7 +204,7 @@ workspace 'DSTW'
         filter { 'action:vs*' }
 
         filter { 'action:gmake*' }
-            files { files_testenv, files_moduletest, files_testmain }
+            files { files_moduletest, files_testmain }
             includedirs { includedirs_test }
-            links { 'gcovapp', 'gcov', 'testenv' }
+            links { 'gcovapp', 'gcov', 'submodules' }
             linkoptions { '--coverage' }

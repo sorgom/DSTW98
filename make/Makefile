@@ -9,6 +9,7 @@ ifndef verbose
 endif
 
 ifeq ($(config),ci)
+  submodules_config = ci
   testenv_config = ci
   moduletests_config = ci
   moduletestsIL_config = ci
@@ -23,6 +24,7 @@ ifeq ($(config),ci)
   gcovtests_config = ci
 
 else ifeq ($(config),debug)
+  submodules_config = debug
   testenv_config = debug
   moduletests_config = debug
   moduletestsIL_config = debug
@@ -37,6 +39,7 @@ else ifeq ($(config),debug)
   gcovtests_config = debug
 
 else ifeq ($(config),memleak)
+  submodules_config = memleak
   testenv_config = memleak
   moduletests_config = memleak
   moduletestsIL_config = memleak
@@ -51,6 +54,7 @@ else ifeq ($(config),memleak)
   gcovtests_config = memleak
 
 else ifeq ($(config),bullseye)
+  submodules_config = bullseye
   testenv_config = bullseye
   moduletests_config = bullseye
   moduletestsIL_config = bullseye
@@ -65,6 +69,7 @@ else ifeq ($(config),bullseye)
   gcovtests_config = bullseye
 
 else ifeq ($(config),fail)
+  submodules_config = fail
   testenv_config = fail
   moduletests_config = fail
   moduletestsIL_config = fail
@@ -82,11 +87,17 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := testenv moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := submodules testenv moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
+
+submodules:
+ifneq (,$(submodules_config))
+	@echo "==== Building submodules ($(submodules_config)) ===="
+	@${MAKE} --no-print-directory -C . -f submodules.make config=$(submodules_config)
+endif
 
 testenv:
 ifneq (,$(testenv_config))
@@ -94,19 +105,19 @@ ifneq (,$(testenv_config))
 	@${MAKE} --no-print-directory -C . -f testenv.make config=$(testenv_config)
 endif
 
-moduletests: testenv
+moduletests: submodules
 ifneq (,$(moduletests_config))
 	@echo "==== Building moduletests ($(moduletests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
 endif
 
-moduletestsIL: testenv
+moduletestsIL: submodules
 ifneq (,$(moduletestsIL_config))
 	@echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
 	@${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
 endif
 
-devtests: testenv
+devtests: submodules
 ifneq (,$(devtests_config))
 	@echo "==== Building devtests ($(devtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f devtests.make config=$(devtests_config)
@@ -136,7 +147,7 @@ ifneq (,$(dstw_runtime_config))
 	@${MAKE} --no-print-directory -C . -f dstw_runtime.make config=$(dstw_runtime_config)
 endif
 
-systemtests: testenv
+systemtests: submodules
 ifneq (,$(systemtests_config))
 	@echo "==== Building systemtests ($(systemtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f systemtests.make config=$(systemtests_config)
@@ -154,13 +165,14 @@ ifneq (,$(gcovapp_config))
 	@${MAKE} --no-print-directory -C . -f gcovapp.make config=$(gcovapp_config)
 endif
 
-gcovtests: gcovapp testenv
+gcovtests: gcovapp submodules
 ifneq (,$(gcovtests_config))
 	@echo "==== Building gcovtests ($(gcovtests_config)) ===="
 	@${MAKE} --no-print-directory -C . -f gcovtests.make config=$(gcovtests_config)
 endif
 
 clean:
+	@${MAKE} --no-print-directory -C . -f submodules.make clean
 	@${MAKE} --no-print-directory -C . -f testenv.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
 	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
@@ -187,6 +199,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
+	@echo "   submodules"
 	@echo "   testenv"
 	@echo "   moduletests"
 	@echo "   moduletestsIL"

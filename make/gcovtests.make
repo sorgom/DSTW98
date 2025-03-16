@@ -47,8 +47,8 @@ OBJDIR = ../build/linux/obj/ci/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libtestenv.a -lgcov
-LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libtestenv.a
+LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libsubmodules.a -lgcov
+LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread --coverage
 
 else ifeq ($(config),debug)
@@ -58,8 +58,8 @@ OBJDIR = ../build/linux/obj/debug/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libtestenv.a -lgcov
-LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libtestenv.a
+LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a -lgcov
+LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread --coverage
 
 else ifeq ($(config),memleak)
@@ -69,8 +69,8 @@ OBJDIR = ../build/linux/obj/memleak/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libtestenv.a -lgcov
-LDDEPS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libtestenv.a
+LIBS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a -lgcov
+LDDEPS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread --coverage
 
 else ifeq ($(config),bullseye)
@@ -80,8 +80,8 @@ OBJDIR = ../build/linux/obj/bullseye/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libtestenv.a -lgcov
-LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libtestenv.a
+LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a -lgcov
+LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread --coverage
 
 else ifeq ($(config),fail)
@@ -91,8 +91,8 @@ OBJDIR = ../build/linux/obj/fail/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libtestenv.a -lgcov
-LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libtestenv.a
+LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a -lgcov
+LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread --coverage
 
 endif
@@ -126,8 +126,6 @@ GENERATED += $(OBJDIR)/TCP_Client.o
 GENERATED += $(OBJDIR)/TSW_01.o
 GENERATED += $(OBJDIR)/TestGroupBase.o
 GENERATED += $(OBJDIR)/TestLib.o
-GENERATED += $(OBJDIR)/TestSteps.o
-GENERATED += $(OBJDIR)/TestStepsPlugin.o
 GENERATED += $(OBJDIR)/installComparators.o
 GENERATED += $(OBJDIR)/ostreamHelpers.o
 GENERATED += $(OBJDIR)/ostreams.o
@@ -152,8 +150,6 @@ OBJECTS += $(OBJDIR)/TCP_Client.o
 OBJECTS += $(OBJDIR)/TSW_01.o
 OBJECTS += $(OBJDIR)/TestGroupBase.o
 OBJECTS += $(OBJDIR)/TestLib.o
-OBJECTS += $(OBJDIR)/TestSteps.o
-OBJECTS += $(OBJDIR)/TestStepsPlugin.o
 OBJECTS += $(OBJDIR)/installComparators.o
 OBJECTS += $(OBJDIR)/ostreamHelpers.o
 OBJECTS += $(OBJDIR)/ostreams.o
@@ -222,12 +218,6 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/TestSteps.o: ../submodules/CppUTestSteps/TestSteps/src/TestSteps.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/TestStepsPlugin.o: ../submodules/CppUTestSteps/TestSteps/src/TestStepsPlugin.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TCP_Client.o: ../testing/testenv/TCP/src/TCP_Client.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

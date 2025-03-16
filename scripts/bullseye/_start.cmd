@@ -31,5 +31,5 @@ if %clean% == 1 (
 echo - build
 
 cov01 -q --off
-%vsCall% -t:testenv >> %buildLog% 2>&1
+%vsCall% -t:submodules >> %buildLog% 2>&1
 exit /b %errorlevel%

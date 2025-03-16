@@ -24,10 +24,10 @@ jobs:
     - name: build and run all
       run: chmod 755 scripts/*.sh; scripts/buildAndRun.sh
 
-    - name: run system tests
+    - name: system tests
       run: scripts/systemtests.sh
 
-    - name: check coverage
+    - name: gcov
       run: scripts/gcov.sh
 
     # - name: check env
