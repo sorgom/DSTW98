@@ -26,9 +26,12 @@ includedirs_testenv = {
     includedirs_teststeps
 }
 
-files_testenv = { '../testing/testenv/**.cpp' }
+files_testenv = {
+    '../testing/testenv/**.cpp',
+    -- '../testing/testmain/testMain.cpp'
+}
 
-files_testmain = { '../testing/testmain/testMain.cpp' }
+-- files_ testmain = { '../testing/testmain/testMain.cpp' }
 
 -- leads to test env IL interface
 includedirs_test = {
@@ -42,11 +45,7 @@ includedirs_test_IL = {
     includedirs_testenv
 }
 
-files_moduletest = {
-    files_testenv,
-    '../testing/tests/moduletests/**.cpp'
-}
-
+files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 
 --  ============================================================
 --  premake5 build rules
@@ -123,25 +122,21 @@ workspace 'DSTW'
         filter { 'action:gmake*' }
             files { base_cpputest .. '/src/Platforms/Gcc/*.cpp' }
 
-    project 'testenv'
-        kind 'StaticLib'
-        includedirs { includedirs_test }
-        files { files_testenv }
     --  ============================================================
     --  module tests / dev tests
     --  ============================================================
     project 'moduletests'
-        files { files_app, files_moduletest, files_testmain }
+        files { files_app, files_moduletest, files_testenv }
         includedirs { includedirs_test }
         links { 'submodules' }
 
     project 'moduletestsIL'
-        files { files_app, files_testenv, '../testing/tests/moduletestsIL/*.cpp', files_testmain }
+        files { files_app, '../testing/tests/moduletestsIL/*.cpp', files_testenv }
         includedirs { includedirs_test_IL }
         links { 'submodules' }
 
     project 'devtests'
-        files { files_app, files_testenv, '../testing/tests/devtests/*.cpp', files_testmain }
+        files { files_app, '../testing/tests/devtests/*.cpp', files_testenv }
         includedirs { includedirs_test, '../devel' }
         links { 'submodules' }
 
@@ -175,9 +170,8 @@ workspace 'DSTW'
 
     --  run third
     project 'systemtests'
-        files { files_testenv, '../testing/tests/systemtests/SYST_*.cpp', files_testmain }
+        files { '../testing/tests/systemtests/SYST_*.cpp', files_testenv }
         includedirs { includedirs_test }
-        defines { 'REQUIRE_PARAM' }
         links { 'submodules' }
 
     --  run last to stop application in background
@@ -191,6 +185,7 @@ workspace 'DSTW'
     --  ============================================================
     --  gcov
     --  ============================================================
+    --  application with gcov instrumentation
     project 'gcovapp'
         filter { 'action:vs*' }
 
@@ -200,11 +195,12 @@ workspace 'DSTW'
             files { files_app }
             buildoptions {'-fprofile-arcs -ftest-coverage' }
 
+    --  tests without gcov instrumentation
     project 'gcovtests'
         filter { 'action:vs*' }
 
         filter { 'action:gmake*' }
-            files { files_moduletest, files_testmain }
+            files { files_moduletest, files_testenv }
             includedirs { includedirs_test }
             links { 'gcovapp', 'gcov', 'submodules' }
             linkoptions { '--coverage' }

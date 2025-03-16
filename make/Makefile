@@ -10,7 +10,6 @@ endif
 
 ifeq ($(config),ci)
   submodules_config = ci
-  testenv_config = ci
   moduletests_config = ci
   moduletestsIL_config = ci
   devtests_config = ci
@@ -25,7 +24,6 @@ ifeq ($(config),ci)
 
 else ifeq ($(config),debug)
   submodules_config = debug
-  testenv_config = debug
   moduletests_config = debug
   moduletestsIL_config = debug
   devtests_config = debug
@@ -40,7 +38,6 @@ else ifeq ($(config),debug)
 
 else ifeq ($(config),memleak)
   submodules_config = memleak
-  testenv_config = memleak
   moduletests_config = memleak
   moduletestsIL_config = memleak
   devtests_config = memleak
@@ -55,7 +52,6 @@ else ifeq ($(config),memleak)
 
 else ifeq ($(config),bullseye)
   submodules_config = bullseye
-  testenv_config = bullseye
   moduletests_config = bullseye
   moduletestsIL_config = bullseye
   devtests_config = bullseye
@@ -70,7 +66,6 @@ else ifeq ($(config),bullseye)
 
 else ifeq ($(config),fail)
   submodules_config = fail
-  testenv_config = fail
   moduletests_config = fail
   moduletestsIL_config = fail
   devtests_config = fail
@@ -87,7 +82,7 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := submodules testenv moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
+PROJECTS := submodules moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -97,12 +92,6 @@ submodules:
 ifneq (,$(submodules_config))
 	@echo "==== Building submodules ($(submodules_config)) ===="
 	@${MAKE} --no-print-directory -C . -f submodules.make config=$(submodules_config)
-endif
-
-testenv:
-ifneq (,$(testenv_config))
-	@echo "==== Building testenv ($(testenv_config)) ===="
-	@${MAKE} --no-print-directory -C . -f testenv.make config=$(testenv_config)
 endif
 
 moduletests: submodules
@@ -173,7 +162,6 @@ endif
 
 clean:
 	@${MAKE} --no-print-directory -C . -f submodules.make clean
-	@${MAKE} --no-print-directory -C . -f testenv.make clean
 	@${MAKE} --no-print-directory -C . -f moduletests.make clean
 	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
 	@${MAKE} --no-print-directory -C . -f devtests.make clean
@@ -200,7 +188,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   submodules"
-	@echo "   testenv"
 	@echo "   moduletests"
 	@echo "   moduletestsIL"
 	@echo "   devtests"

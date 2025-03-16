@@ -286,10 +286,10 @@ $(OBJDIR)/TestGroupBase.o: ../testing/testenv/testlib/src/TestGroupBase.cpp
 $(OBJDIR)/TestLib.o: ../testing/testenv/testlib/src/TestLib.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
+$(OBJDIR)/testMain.o: ../testing/testenv/testlib/src/testMain.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/testMain.o: ../testing/testmain/testMain.cpp
+$(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/IL_01.o: ../testing/tests/moduletestsIL/IL_01.cpp
