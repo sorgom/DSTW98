@@ -5,31 +5,32 @@
 #   created by Manfred Sorgo
 
 cd $(dirname $0)
-myDir=$(pwd)
 cd ..
-buildDir=$(pwd)/build
-bindir=linux/ci
+repo=$(pwd)
+buildDir=$repo/build
+makeDir=$repo/make
+binDir=linux/ci
 
-cd $myDir
+cd $makeDir
 make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
 
 cd $buildDir
 ret=0
 
-$bindir/dstw_stop
+$binDir/dstw_stop
 sleep 1
 
 #   gen required proj data file
-$bindir/dstw_gen
+$binDir/dstw_gen
 #   start app in background
-$bindir/dstw_runtime X X & pid=$!
+$binDir/dstw_runtime X X & pid=$!
 sleep 1
 #   run tests
-$bindir/systemtests
+$binDir/systemtests
 ret=$((ret+$?))
 
 #   stop app
-$bindir/dstw_stop
+$binDir/dstw_stop
 
 if ! wait $pid; then
     ret=$((ret+1))

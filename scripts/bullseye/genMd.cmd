@@ -6,7 +6,7 @@ SETLOCAL
 set _me=%~n0
 call %~dp0_setup.cmd
 
-set md=%dstwDir%\testing\coverage_bullseye.md
+set md=%repoDir%\testing\coverage_bullseye.md
 set srcs=modTests.cov sysTests.cov
 
 set trg=merged.cov

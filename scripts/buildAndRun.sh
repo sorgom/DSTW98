@@ -3,17 +3,17 @@
 #   build and run all tests and app
 #   ====================================
 cd $(dirname $0)
-myDir=$(pwd)
 cd ..
 buildDir=$(pwd)/build
-bindir=$buildDir/linux/ci
+makeDir=$(pwd)/make
+binDir=$buildDir/linux/ci
 
-cd $myDir
+cd $makeDir
 make -j config=ci
 
 cd $buildDir
 tot=0
-for bin in $(ls $bindir/* | grep -v systemtests); do
+for bin in $(ls $binDir/* | grep -v systemtests); do
 echo ==== $(basename $bin)
 $bin
 ret=$?

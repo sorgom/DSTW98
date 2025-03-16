@@ -2,9 +2,7 @@
 SETLOCAL
 cd /d %~dp0
 set myDir=%cd%
-cd ..
-set makeDir=%cd%
-cd ..
+cd ../..
 set repoDir=%cd%
 set buildDir=%repoDir%\build
 set reportsDir=%repoDir%\reports

@@ -5,14 +5,15 @@
 #   created by Manfred Sorgo
 
 cd $(dirname $0)
-myDir=$(pwd)
 cd ..
-buildDir=$(pwd)/build
+repo=$(pwd)
+makeDir=$repo/make
+buildDir=$repo/build
 #   straight build
 ciDir=$buildDir/linux/ci
 #   mem leak build
 mlDir=$buildDir/linux/memleak
-report=$(pwd)/testing/valgrind_report.md
+report=$repo/testing/valgrind_report.md
 
 out() { echo $* | tee -a $report; }
 #   start / end markdown code block
@@ -20,10 +21,11 @@ quote() { echo "\`\`\`" >> $report; }
 
 heading() { out; out "## TEST: $1"; }
 
+#   run valgrind with sed to avoid git diff due to PID output
 run() { valgrind -s --leak-check=full --log-fd=1 --default-suppressions=no --leak-check=full $* | sed s/^==[0-9]*==/======/ | tee -a $report; }
 
 #   build (with no report)
-cd $myDir
+cd $makeDir
 #   build app
 make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
 if [ $? -ne 0 ]; then

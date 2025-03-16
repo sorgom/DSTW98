@@ -9,17 +9,16 @@ set myDir=%cd%
 cd ..
 set buildDir=%cd%\build
 set vsSolution=%cd%\vs\DSTW.sln
-set bindir=windows\ci
+set binDir=windows\ci
 
-cd %myDir%
 echo - build
-msbuild %vsSolution% -p:configuration=ci -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
+msbuild -m %vsSolution% -p:configuration=ci -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-set tmpfile=tmp_%random%.txt
-del /Q %tmpfile% 2>nul
-
 cd %buildDir%
+set tmpfile=tmp_%random%.txt
+del /Q %tmpfile% 2>NUL
+
 echo - run
 rem gen required proj data file
 %binDir%\dstw_gen.exe

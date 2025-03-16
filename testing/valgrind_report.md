@@ -1,5 +1,5 @@
 # valgrind report
-2025-03-14
+2025-03-16
 
 ## TEST: memory leaked app
 ```
@@ -14,9 +14,9 @@
 ======   total heap usage: 2 allocs, 1 frees, 72,804 bytes allocated
 ======
 ====== 100 bytes in 1 blocks are definitely lost in loss record 1 of 1
-======    at 0x484220F: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+======    at 0x484320F: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
 ======    by 0x10914A: ??? (in /git/DSTW98/build/linux/memleak/memleak)
-======    by 0x4A95249: (below main) (libc_start_call_main.h:58)
+======    by 0x4A96249: (below main) (libc_start_call_main.h:58)
 ======
 ====== LEAK SUMMARY:
 ======    definitely lost: 100 bytes in 1 blocks

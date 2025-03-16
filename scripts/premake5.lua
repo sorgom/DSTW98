@@ -78,6 +78,7 @@ workspace 'DSTW'
 
     filter { 'action:gmake*' }
         buildoptions { buildoptions_gcc }
+        location '../make'
 
     filter { 'kind:ConsoleApp', 'action:vs*',  }
         links { 'winmm', 'ws2_32' }
