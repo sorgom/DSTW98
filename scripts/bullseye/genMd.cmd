@@ -7,7 +7,7 @@ set _me=%~n0
 call %~dp0_setup.cmd
 
 set md=%repoDir%\testing\coverage_bullseye.md
-set srcs=modTests.cov sysTests.cov
+set srcs=moduletests.cov systemtests.cov
 
 set trg=merged.cov
 set covMin=100,100
