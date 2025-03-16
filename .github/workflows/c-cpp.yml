@@ -1,20 +1,20 @@
 #   ============================================================
-#   continuous integration setup 
+#   continuous integration setup
 #   ============================================================
 #   created by Manfred Sorgo
 name: DSTW CI
 
 on:
   push:
-    branches: [ "dev", "dev_98" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "dev", "dev_98" ]
+    branches: [ "dev" ]
 
 jobs:
-  buildAndRunAll:
+  ci:
 
     runs-on: ubuntu-latest
-      
+
     steps:
     - name: "Checkout repository"
       uses: actions/checkout@v3
@@ -22,14 +22,13 @@ jobs:
          submodules: 'true'
 
     - name: build and run all
-      run: chmod 755 make/*.sh; make/buildAndRun.sh
+      run: chmod 755 scripts/*.sh; scripts/buildAndRun.sh
 
     - name: run system tests
-      run: make/runSystemTests.sh
+      run: scripts/runSystemTests.sh
 
     - name: check coverage
-      run: make/runGcov.sh
+      run: scripts/runGcov.sh
 
     # - name: check env
-    #   run: make/checkEnv.sh
-
+    #   run: scripts/checkEnv.sh
