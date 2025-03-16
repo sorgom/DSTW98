@@ -153,7 +153,7 @@ namespace test
         m_Provider().expectSize(CAPACITY);
         for (size_t n = 0; n < CAPACITY; ++n)
         {
-            m_Elems().at(n).expectReGui();
+            m_Elems().at(n).expectToGui();
         }
         cmapper.reGui();
         CHECK_N_CLEAR()

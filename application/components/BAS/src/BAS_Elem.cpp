@@ -1,7 +1,7 @@
 #include <BAS/BAS_Elem.h>
 #include <SYS/IL.h>
 
-void X_Elem::toFld(
+void X_Elem::sndFld(
     UINT8 p1,
     UINT8 p2,
     UINT8 p3,
@@ -14,7 +14,7 @@ void X_Elem::toFld(
     IL::getMapper().toFld(mId, ComData(p1, p2, p3, p4, p5, p6, p7, p8));
 }
 
-void X_Elem::toGui(
+void X_Elem::sndGui(
     UINT8 p1,
     UINT8 p2,
     UINT8 p3,

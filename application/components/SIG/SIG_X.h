@@ -11,9 +11,9 @@
 class SIG_X : public BAS_Elem<COMP_SIG>
 {
 public:
-    inline void reGui() const
+    inline void toGui() const
     {
-        toGui(mStateToGui);
+        sndGui(mStateToGui);
     }
 
     NOCOPY(SIG_X)
@@ -37,9 +37,9 @@ protected:
 class SIG_XS : public SIG_X
 {
 public:
-    inline void reGui() const
+    inline void toGui() const
     {
-        toGui(mStateToGui, mSpeedToGui);
+        sndGui(mStateToGui, mSpeedToGui);
     }
 
     NOCOPY(SIG_XS)

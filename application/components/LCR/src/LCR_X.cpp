@@ -9,8 +9,8 @@ void LCR_X::open()
         case LCR_STATE_CLOSED:
         case LCR_STATE_WAIT_CLOSED:
             mState = LCR_STATE_WAIT_OPEN;
-            reGui();
-            toFld(LCR_STATE_OPEN);
+            toGui();
+            sndFld(LCR_STATE_OPEN);
             break;
         default:
             break;
@@ -25,8 +25,8 @@ void LCR_X::close()
         case LCR_STATE_OPEN:
         case LCR_STATE_WAIT_OPEN:
             mState = LCR_STATE_WAIT_CLOSED;
-            reGui();
-            toFld(LCR_STATE_CLOSED);
+            toGui();
+            sndFld(LCR_STATE_CLOSED);
             break;
         default:
             break;
@@ -73,7 +73,7 @@ void LCR::fromFld(const ComData& data)
     if (validState(state) and state != mState)
     {
         mState = state;
-        reGui();
+        toGui();
     }
 }
 
@@ -110,6 +110,6 @@ void LCR_UBK::fromFld(const ComData& data)
     {
         mState = state;
         mStateUbk = ubk;
-        reGui();
+        toGui();
     }
 }

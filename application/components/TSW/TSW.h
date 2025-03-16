@@ -19,9 +19,9 @@ public:
         mState(TSW_STATE_UNDEF)
     {}
 
-    inline void reGui() const
+    inline void toGui() const
     {
-        toGui(mState);
+        sndGui(mState);
     }
 
     void fromFld(const ComData& data);

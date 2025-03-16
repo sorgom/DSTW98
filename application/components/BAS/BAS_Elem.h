@@ -16,7 +16,7 @@ protected:
     inline X_Elem(size_t id):
         mId(id)
     {}
-    void toFld(
+    void sndFld(
         UINT8 p1 = PARAM_UNDEF,
         UINT8 p2 = PARAM_UNDEF,
         UINT8 p3 = PARAM_UNDEF,
@@ -26,7 +26,7 @@ protected:
         UINT8 p7 = PARAM_UNDEF,
         UINT8 p8 = PARAM_UNDEF) const;
 
-    void toGui(
+    void sndGui(
         UINT8 p1 = PARAM_UNDEF,
         UINT8 p2 = PARAM_UNDEF,
         UINT8 p3 = PARAM_UNDEF,

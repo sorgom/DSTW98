@@ -40,9 +40,9 @@ public:
     inline LCR(size_t id): LCR_X(id) {}
 
     void fromFld(const ComData& data);
-    inline void reGui() const
+    inline void toGui() const
     {
-        toGui(mState);
+        sndGui(mState);
     }
 
     NOCOPY(LCR)
@@ -61,9 +61,9 @@ public:
     {}
 
     void fromFld(const ComData& data);
-    inline void reGui() const
+    inline void toGui() const
     {
-        toGui(mState, mStateUbk);
+        sndGui(mState, mStateUbk);
     }
 
     NOCOPY(LCR_UBK)
