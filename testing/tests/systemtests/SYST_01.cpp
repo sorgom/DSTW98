@@ -78,41 +78,45 @@ namespace test
         {
             LSTEP(n)
             //  GUI cmd
-            ComData cdCmd;
+            UINT8 pCmd = PARAM_UNDEF;
             //  state request forwarded to field
-            ComData cdFld;
+            UINT8 pFld = PARAM_UNDEF;
             //  state returned to GUI
-            ComData cdRet;
+            UINT8 pGui1 = PARAM_UNDEF;
+            UINT8 pGui2 = PARAM_UNDEF;
 
             bool ok = true;
             bool same = true;
             switch (data.type(n))
             {
                 case TYPE_TSW:
-                    cdCmd = ComData(TSW_CMD_LEFT);
-                    cdFld = ComData(TSW_STATE_LEFT);
-                    cdRet = ComData(TSW_STATE_WAIT_LEFT);
+                    pCmd = TSW_CMD_LEFT;
+                    pFld = TSW_STATE_LEFT;
+                    pGui1 = TSW_STATE_WAIT_LEFT;
                     same = false;
                     break;
                 case TYPE_LCR:
-                    cdCmd = ComData(LCR_STATE_OPEN);
-                    cdRet = ComData(LCR_STATE_WAIT_OPEN);
+                    pCmd = LCR_STATE_OPEN;
+                    pGui1 = LCR_STATE_WAIT_OPEN;
                     break;
                 case TYPE_LCR_UBK:
-                    cdCmd = ComData(LCR_STATE_OPEN);
-                    cdRet = ComData(LCR_STATE_WAIT_OPEN, LCR_UBK_STATE_UNDEF);
+                    pCmd = LCR_STATE_OPEN;
+                    pGui1 = LCR_STATE_WAIT_OPEN;
+                    pGui2 = LCR_UBK_STATE_UNDEF;
                     break;
                 case TYPE_SIG_H:
-                    cdCmd = ComData(SIG_STATE_H0);
-                    cdRet = ComData(SIG_STATE_WAIT_H0);
+                    pCmd = SIG_STATE_H0;
+                    pGui1 = SIG_STATE_WAIT_H0;
                     break;
                 case TYPE_SIG_H_N:
-                    cdCmd = ComData(SIG_STATE_H0_N0);
-                    cdRet = ComData(SIG_STATE_WAIT_H0_N0, 0);
+                    pCmd = SIG_STATE_H0_N0;
+                    pGui1 = SIG_STATE_WAIT_H0_N0;
+                    pGui2 = 0;
                     break;
                 case TYPE_SIG_N:
-                    cdCmd = ComData(SIG_STATE_N0);
-                    cdRet = ComData(SIG_STATE_WAIT_N0, 0);
+                    pCmd = SIG_STATE_N0;
+                    pGui1 = SIG_STATE_WAIT_N0;
+                    pGui2 = 0;
                     break;
                 default:
                     ok = false;
@@ -120,11 +124,12 @@ namespace test
             }
             if (ok)
             {
-                const ComTele teleCmd = { data.addr(n), cdCmd };
-                const ComTele teleFld = { data.addr(n), same ? cdCmd : cdFld };
-                const ComTele teleRet = { data.addr(n), cdRet };
+                if (same) pFld = pCmd;
+                const ComTele teleCmd = { data.addr(n), ComData(pCmd) };
+                const ComTele teleFld = { data.addr(n), ComData(pFld) };
+                const ComTele teleGui = { data.addr(n), ComData(pGui1, pGui2) };
                 clientFld.expectRecv(teleFld);
-                clientGui.expectRecv(teleRet);
+                clientGui.expectRecv(teleGui);
                 clientGui.send(teleCmd);
                 think();
                 clientFld.recv();
@@ -139,27 +144,29 @@ namespace test
         for (size_t n = 0; n < data.size(); ++n)
         {
             LSTEP(n)
-            ComData cdFld;
             bool ok = true;
+            UINT8 p1 = PARAM_UNDEF;
+            UINT8 p2 = PARAM_UNDEF;
             switch (data.type(n))
             {
                 case TYPE_TSW:
-                    cdFld = ComData(TSW_STATE_LEFT);
+                    p1 = TSW_STATE_LEFT;
                     break;
                 case TYPE_LCR:
-                    cdFld = ComData(LCR_STATE_OPEN);
+                    p1 = LCR_STATE_OPEN;
                     break;
                 case TYPE_LCR_UBK:
-                    cdFld = ComData(LCR_STATE_OPEN, LCR_UBK_STATE_FREE);
+                    p1 = LCR_STATE_OPEN;
+                    p2 = LCR_UBK_STATE_FREE;
                     break;
                 case TYPE_SIG_H:
-                    cdFld = ComData(SIG_STATE_H0);
+                    p1 = SIG_STATE_H0;
                     break;
                 case TYPE_SIG_H_N:
-                    cdFld = ComData(SIG_STATE_H0_N0);
+                    p1 = SIG_STATE_H0_N0;
                     break;
                 case TYPE_SIG_N:
-                    cdFld = ComData(SIG_STATE_N0);
+                    p1 = SIG_STATE_N0;
                     break;
                 default:
                     ok = false;
@@ -167,7 +174,7 @@ namespace test
             }
             if (ok)
             {
-                const ComTele teleState = { data.addr(n), cdFld };
+                const ComTele teleState = { data.addr(n), ComData(p1, p2) };
                 clientGui.expectRecv(teleState);
                 clientFld.send(teleState);
                 think();

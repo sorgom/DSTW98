@@ -95,7 +95,8 @@ protected:
 private:
     INT32 mSocket;
     static const size_t RecBuffSize = NumTelRcv * sizeof(ComTele);
-    CHAR mBuffer[RecBuffSize];
+    //  no parallel calls: one buffer is enough
+    static CHAR mBuffer[RecBuffSize];
 };
 
 //  field tcp communication client

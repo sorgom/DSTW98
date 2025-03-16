@@ -36,14 +36,14 @@ SIZE_CHECK(ComAddr, ComAddrSize)
 //  Com telegrams data
 struct ComData
 {
-    UINT8 param1;
-    UINT8 param2;
-    UINT8 param3;
-    UINT8 param4;
-    UINT8 param5;
-    UINT8 param6;
-    UINT8 param7;
-    UINT8 param8;
+    const UINT8 param1;
+    const UINT8 param2;
+    const UINT8 param3;
+    const UINT8 param4;
+    const UINT8 param5;
+    const UINT8 param6;
+    const UINT8 param7;
+    const UINT8 param8;
     inline ComData(const UINT8 p1 = PARAM_UNDEF,
                    const UINT8 p2 = PARAM_UNDEF,
                    const UINT8 p3 = PARAM_UNDEF,
@@ -67,17 +67,17 @@ SIZE_CHECK(ComData, 8)
 //  Com telegram
 struct ComTele
 {
-    ComAddr addr;
-    ComData data;
+    const ComAddr addr;
+    const ComData data;
 };
 SIZE_CHECK(ComTele, sizeof(ComAddr) + sizeof(ComData))
 
 //  project items
 struct ProjItem
 {
-    ComAddr addr;
-    UINT8 type;
-    UINT8 reserve[7];
+    const ComAddr addr;
+    const UINT8 type;
+    const UINT8 reserve[7];
 };
 SIZE_CHECK(ProjItem, sizeof(ComAddr) + 8)
 

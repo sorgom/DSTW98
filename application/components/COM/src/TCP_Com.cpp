@@ -92,6 +92,8 @@ INSTANCE_DEF(TCP_Listener_Ctrl)
 //  ============================================================
 //  TCP connections
 //  ============================================================
+CHAR TCP_Con_Base::mBuffer[RecBuffSize];
+
 bool TCP_Con_Base::accept(const INT32 socket)
 {
     close();

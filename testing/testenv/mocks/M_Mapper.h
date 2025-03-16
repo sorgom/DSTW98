@@ -41,7 +41,7 @@ namespace test
         {
             expect("add").PARAM(pos).TPARAM(ComAddr, addr);
         }
-        inline void expectAdd(const UINT16 numCalls) const
+        inline void expectAdd(const UINT32 numCalls) const
         {
             expect(numCalls, "add").IGNORE();
         }

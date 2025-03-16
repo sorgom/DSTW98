@@ -32,7 +32,7 @@ namespace test
             begin() << meth;
             return mkExpect();
         }
-        inline MockExpectedCall& expect(const UINT16 numCalls, const CONST_C_STRING meth) const
+        inline MockExpectedCall& expect(const UINT32 numCalls, const CONST_C_STRING meth) const
         {
             begin() << meth;
             return mkExpect(numCalls);
@@ -57,7 +57,7 @@ namespace test
         {
             return mock().expectOneCall(mStream.str().c_str());
         }
-        inline static MockExpectedCall& mkExpect(const UINT16 numCalls)
+        inline static MockExpectedCall& mkExpect(const UINT32 numCalls)
         {
             return mock().expectNCalls(numCalls, mStream.str().c_str());
         }

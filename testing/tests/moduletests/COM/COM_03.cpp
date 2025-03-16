@@ -6,6 +6,8 @@
 #include <testlib/TestGroupBase.h>
 #include <COM/TCP_Com.h>
 
+#include <cstring>
+
 namespace test
 {
 
@@ -24,8 +26,12 @@ namespace test
 
         void setTele(const UINT8 p1, const UINT8 p2 = PARAM_UNDEF)
         {
-            tele.data.param1 = p1;
-            tele.data.param2 = p2;
+            //  would be easier with placement new
+            //  new (&tele.data) ComData(p1, p2);
+            //  but vscode does not like it
+            //  therefore:
+            const ComData cd(p1, p2);
+            std::memcpy((void*) &tele.data, &cd, sizeof(ComData));
         }
     };
 

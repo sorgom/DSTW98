@@ -78,6 +78,6 @@ public:
     virtual void close() = 0;
 
     //  receive at once number of telegrams
-    static const size_t NumTelRcv = 10;
+    static const size_t NumTelRcv = 200;
 };
 #endif // _H

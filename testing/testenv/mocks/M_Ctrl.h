@@ -62,9 +62,9 @@ namespace test
             expect("ok").AND_RETURN_BOOL(ret);
         }
 
-        inline void expectOk(UINT16 num, bool ret = true) const
+        inline void expectOk(UINT32 numCalls, bool ret = true) const
         {
-            expect(num, "ok").AND_RETURN_BOOL(ret);
+            expect(numCalls, "ok").AND_RETURN_BOOL(ret);
         }
     private:
         M_Ctrl() : M_Base("Ctrl") {}

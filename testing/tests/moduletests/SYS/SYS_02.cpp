@@ -70,8 +70,7 @@ namespace test
         CHECK_N_CLEAR()
 
         STEP(3)
-        ProjItem item = {};
-        item.type = UINT8_MAX;
+        const ProjItem item = { ComAddr(), UINT8_MAX };
         m_Ctrl().expectLog(COMP_SYS, ERR_PROJ);
         prov.clear();
         prov.add(item);

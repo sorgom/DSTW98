@@ -27,9 +27,9 @@ namespace test
         {
             expect("recv").TPARAM(ComTele, tele);
         }
-        inline void expectRecv(UINT16 num) const
+        inline void expectRecv(UINT32 numCalls) const
         {
-            expect(num, "recv").IGNORE();
+            expect(numCalls, "recv").IGNORE();
         }
 
         inline void process(const ComTele& tele) const

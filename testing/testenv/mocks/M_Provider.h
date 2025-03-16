@@ -48,7 +48,7 @@ namespace test
         {
             expect("add").TPARAM(ProjItem, data);
         }
-        inline void expectAdd(const UINT16 numCalls) const
+        inline void expectAdd(const UINT32 numCalls) const
         {
             expect(numCalls, "add").IGNORE();
         }

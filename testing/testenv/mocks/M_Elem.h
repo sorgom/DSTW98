@@ -42,7 +42,7 @@ namespace test
         {
             expect("toGui");
         }
-        inline void expectToGui(UINT16 num) const
+        inline void expectToGui(UINT32 num) const
         {
             expect(num, "toGui");
         }

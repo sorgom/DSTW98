@@ -50,16 +50,8 @@ namespace test
             items.clear();
             for (size_t n = 0; n < SIZE; ++n)
             {
-                const ProjItem item = {};
+                const ProjItem item = { genComAddr(SIZE - n), getType(n) };
                 items.add(item);
-            }
-            //  alternating types
-            //  COM addresses in reversed order from SIZE down to 1
-            for (size_t n = 0; n < SIZE; ++n)
-            {
-                ProjItem& item = items.at(n);
-                genComAddr(item.addr, SIZE - n);
-                item.type = getType(n);
             }
         }
 
