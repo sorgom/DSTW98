@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef TESTLIB_H
-#define TESTLIB_H
+#ifndef TEST_LIB_H
+#define TEST_LIB_H
 
 #include <ifs/DataTypes.h>
 #include <ifs/I_Elem.h>

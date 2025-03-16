@@ -2,8 +2,8 @@
 //  utilities for complex ostream operators
 //  ============================================================
 //  created by Manfred Sorgo
-#ifndef OSTREAMHELPERS_H
-#define OSTREAMHELPERS_H
+#ifndef OSTREAM_HELPERS_H
+#define OSTREAM_HELPERS_H
 
 #include <codebase/BaseTypes.h>
 #include <codebase/nocopy.h>

@@ -14,8 +14,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef GEN_PROJDATA_H
-#define GEN_PROJDATA_H
+#ifndef GEN_PROJ_DATA_H
+#define GEN_PROJ_DATA_H
 
 #include <CFG/Setup.h>
 #include <ifs/DataTypes.h>

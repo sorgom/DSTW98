@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef CPPUTEST_H
-#define CPPUTEST_H
+#ifndef CPP_UTEST_H
+#define CPP_UTEST_H
 
 #include <CppUTestExt/MockSupport.h>
 

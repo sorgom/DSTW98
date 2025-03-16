@@ -4,8 +4,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef INSTALLCOMPARATORS_H
-#define INSTALLCOMPARATORS_H
+#ifndef INSTALL_COMPARATORS_H
+#define INSTALL_COMPARATORS_H
 
 #include <CppUTestExt/MockSupportPlugin.h>
 

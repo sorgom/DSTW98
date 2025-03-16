@@ -8,9 +8,7 @@ INT32 main()
     test::TCP_Client client;
     client.init();
     client.connect(test::tcpPortCtrl);
-    const ComAddr addr;
-    const ComData data(COM_CTRL_STOP, COM_CTRL_STOP);
-    const ComTele tele = {addr, data};
+    const ComTele tele = { ComAddr(), ComData(COM_CTRL_STOP, COM_CTRL_STOP) };
     client.send(tele);
     client.close();
     client.cleanup();

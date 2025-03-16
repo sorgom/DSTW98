@@ -4,8 +4,8 @@
 //  created by Manfred Sorgo
 
 //  prevent include guards to be inserted by script
-#ifndef PACKBEGIN_H
-#define PACKBEGIN_H
+#ifndef PACK_BEGIN_H
+#define PACK_BEGIN_H
 #endif // _H
 
 //! check if we have an nested Pack definition

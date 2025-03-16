@@ -4,8 +4,8 @@
 //  created by Manfred Sorgo
 
 //  prevent include guards to be inserted by script
-#ifndef PACKEND_H
-#define PACKEND_H
+#ifndef PACK_END_H
+#define PACK_END_H
 #endif // _H
 
 //! check if packBegin.h has been included before

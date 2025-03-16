@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef TESTVALUES_H
-#define TESTVALUES_H
+#ifndef TEST_VALUES_H
+#define TEST_VALUES_H
 
 #include <codebase/BaseTypes.h>
 #include <ifs/values.h>

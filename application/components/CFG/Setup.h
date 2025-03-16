@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef CAPACITY_H
-#define CAPACITY_H
+#ifndef SETUP_H
+#define SETUP_H
 
 #ifndef CAPACITY
 #define CAPACITY 100

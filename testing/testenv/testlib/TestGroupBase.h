@@ -3,8 +3,8 @@
 //  ============================================================
 //  created by Manfred Sorgo
 
-#ifndef TESTGROUPBASE_H
-#define TESTGROUPBASE_H
+#ifndef TEST_GROUP_BASE_H
+#define TEST_GROUP_BASE_H
 
 #include <ifs/values.h>
 #include <mocks/M_Instances.h>

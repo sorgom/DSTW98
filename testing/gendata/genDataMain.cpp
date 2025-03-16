@@ -5,7 +5,7 @@
 
 #include <testlib/GenProjData.h>
 
-INT32 main(INT32 argc, const CONST_C_STRING* argv)
+INT32 main()
 {
     test::MinProjData data;
     data.dump();
