@@ -49,7 +49,7 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wal
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/ci/libgcovapp.a ../build/linux/lib/ci/libsubmodules.a
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread --coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s --coverage
 
 else ifeq ($(config),debug)
 TARGETDIR = ../build/linux/debug
@@ -60,7 +60,7 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread --coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug --coverage
 
 else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
@@ -71,7 +71,7 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wal
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread --coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s --coverage
 
 else ifeq ($(config),bullseye)
 TARGETDIR = ../build/linux/bullseye
@@ -82,7 +82,7 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wal
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread --coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s --coverage
 
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
@@ -93,7 +93,7 @@ ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wal
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread --coverage
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s --coverage
 
 endif
 

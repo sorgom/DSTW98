@@ -49,7 +49,7 @@ OBJDIR = ../build/linux/obj/ci/dstw_runtime
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/ci -s
 
 else ifeq ($(config),debug)
 TARGETDIR = ../build/linux/debug
@@ -58,7 +58,7 @@ OBJDIR = ../build/linux/obj/debug/dstw_runtime
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug
 
 else ifeq ($(config),memleak)
 TARGETDIR = ../build/linux/memleak
@@ -67,7 +67,7 @@ OBJDIR = ../build/linux/obj/memleak/dstw_runtime
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s
 
 else ifeq ($(config),bullseye)
 TARGETDIR = ../build/linux/bullseye
@@ -76,7 +76,7 @@ OBJDIR = ../build/linux/obj/bullseye/dstw_runtime
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s
 
 else ifeq ($(config),fail)
 TARGETDIR = ../build/linux/fail
@@ -85,7 +85,7 @@ OBJDIR = ../build/linux/obj/fail/dstw_runtime
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s -pthread
+ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s
 
 endif
 

@@ -4,7 +4,7 @@
 #include <SYS/IL.h>
 #include <SYS/Reader.h>
 
-#include <fstream>
+#include <cstdio>
 
 INSTANCE_DEF(Reader)
 
@@ -17,30 +17,27 @@ void Reader::read()
     mapper.clear();
     provider.clear();
 
-    std::ifstream is(PROJ_FILE, std::ios::binary);
-    static const UINT32 hsize = sizeof(ComSetup) + sizeof(UINT32);
-    bool ok = is.good();
+    FILE* file = fopen(PROJ_FILE, "rb");
+    bool ok = file != nullptr;
     if (ok)
     {
-        is.seekg(0, is.end);
-        const std::streamoff end = is.tellg();
-        is.seekg(0, is.beg);
-
 #ifdef _WIN32
-//  warning C4244: conversion from 'std::streamoff' to 'UINT32', possible loss of data
+//  warning C4244: conversion from 'long int' to 'UINT32', possible loss of data
 //  UINT32_MAX cannot be exceeded in this context
 #pragma warning(disable:4244)
 #endif
-        const UINT32 fsize = end - is.tellg();
+        fseek(file, 0, SEEK_END);
+        const UINT32 fsize = ftell(file);
+        fseek(file, 0, SEEK_SET);
 #ifdef _WIN32
 #pragma warning(default:4244)
 #endif
+        static const UINT32 hsize = sizeof(ComSetup) + sizeof(UINT32);
         ok = fsize >= hsize;
-
         if (ok)
         {
             UINT32 numN = 0;
-            is.read(reinterpret_cast<CHAR*>(&numN), sizeof(UINT32));
+            fread(&numN, sizeof(UINT32), 1, file);
             const UINT32 numd = Net::toH(numN);
             ok =
                 numd <= CAPACITY and
@@ -50,7 +47,7 @@ void Reader::read()
             {
                 {
                     UINT16 netVals[4] = {};
-                    is.read(reinterpret_cast<CHAR*>(&netVals), sizeof(ComSetup));
+                    fread(&netVals, sizeof(ComSetup), 1, file);
                     mComSetup.portFld  = Net::toH(netVals[0]);
                     mComSetup.portGui  = Net::toH(netVals[1]);
                     mComSetup.portCtrl = Net::toH(netVals[2]);
@@ -60,14 +57,14 @@ void Reader::read()
                 for (UINT32 n = 0; ok and n < numd; ++n)
                 {
                     ProjItem item = {};
-                    is.read(reinterpret_cast<CHAR*>(&item), sizeof(ProjItem));
+                    fread(&item, sizeof(ProjItem), 1, file);
                     provider.add(item);
                     ok = ctrl.ok();
                 }
             }
         }
+        fclose(file);
     }
-    is.close();
 
     if (ok)
     {
@@ -77,6 +74,6 @@ void Reader::read()
     {
         mapper.clear();
         provider.clear();
-        IL::getCtrl().log(COMP_SYS, ERR_STARTUP);
+        ctrl.log(COMP_SYS, ERR_STARTUP);
     }
 }

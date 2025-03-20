@@ -29,7 +29,7 @@ run() { valgrind $valgrind_opts $* | sed s/^==[0-9]*==/======/ | tee -a $report;
 #   build (with no report)
 cd $makeDir
 #   build app
-make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
+make -j dstw_gen dstw_runtime dstw_stop systemtests config=debug
 if [ $? -ne 0 ]; then
     echo "build app failed"
     exit 1

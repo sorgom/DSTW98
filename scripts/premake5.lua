@@ -83,9 +83,6 @@ workspace 'DSTW'
     filter { 'kind:ConsoleApp', 'action:vs*',  }
         links { 'winmm', 'ws2_32' }
 
-    filter { 'kind:ConsoleApp', 'action:gmake*' }
-        linkoptions { '-pthread' }
-
     filter { 'configurations:ci' }
         defines { 'NDEBUG' }
 
