@@ -21,8 +21,10 @@ quote() { echo "\`\`\`" >> $report; }
 
 heading() { out; out "## TEST: $1"; }
 
+valgrind_opts="-s --leak-check=full --log-fd=1 --default-suppressions=no"
+
 #   run valgrind with sed to avoid git diff due to PID output
-run() { valgrind -s --leak-check=full --log-fd=1 --default-suppressions=no --leak-check=full $* | sed s/^==[0-9]*==/======/ | tee -a $report; }
+run() { valgrind $valgrind_opts $* | sed s/^==[0-9]*==/======/ | tee -a $report; }
 
 #   build (with no report)
 cd $makeDir
