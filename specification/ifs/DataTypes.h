@@ -7,10 +7,12 @@
 #define DATA_TYPES_H
 
 #include "values.h"
+
 #include <codebase/BaseTypes.h>
-#include <codebase/Mem.h>
-#include <codebase/nocopy.h>
 #include <codebase/checks.h>
+#include <codebase/nocopy.h>
+
+#include <cstring>
 
 #include <codebase/packBegin.h>
 
@@ -24,11 +26,11 @@ struct ComAddr
     inline ComAddr() {}
     inline ComAddr(const ComAddr& src)
     {
-        Mem::cpy(chars, src.chars);
+        std::memcpy(chars, src.chars, ComAddrSize);
     }
     inline bool operator>(const ComAddr& b) const
     {
-        return Mem::cmp(chars, b.chars) > 0;
+        return std::memcmp(chars, b.chars, ComAddrSize) > 0;
     }
 };
 SIZE_CHECK(ComAddr, ComAddrSize)

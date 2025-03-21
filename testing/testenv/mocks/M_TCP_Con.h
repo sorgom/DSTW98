@@ -61,7 +61,7 @@ namespace test
     class M_TCP_Con_Fld : public M_TCP_Con
     {
     public:
-        INSTANCE_DEC(M_TCP_Con_Fld)
+        TEST_INSTANCE_DEC(M_TCP_Con_Fld)
         NOCOPY(M_TCP_Con_Fld)
     private:
         M_TCP_Con_Fld() : M_TCP_Con("TCP_Con_Fld") {}
@@ -70,7 +70,7 @@ namespace test
     class M_TCP_Con_Gui : public M_TCP_Con
     {
     public:
-        INSTANCE_DEC(M_TCP_Con_Gui)
+        TEST_INSTANCE_DEC(M_TCP_Con_Gui)
         NOCOPY(M_TCP_Con_Gui)
     private:
         M_TCP_Con_Gui() : M_TCP_Con("TCP_Con_Gui") {}
@@ -79,7 +79,7 @@ namespace test
     class M_TCP_Con_Ctrl : public M_TCP_Con
     {
     public:
-        INSTANCE_DEC(M_TCP_Con_Ctrl)
+        TEST_INSTANCE_DEC(M_TCP_Con_Ctrl)
         NOCOPY(M_TCP_Con_Ctrl)
     private:
         M_TCP_Con_Ctrl() : M_TCP_Con("TCP_Con_Ctrl") {}

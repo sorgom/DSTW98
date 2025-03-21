@@ -8,8 +8,7 @@
 
 #include <ifs/DataTypes.h>
 #include <ifs/I_Elem.h>
-#include <codebase/Mem.h>
-#include <BAS/coding.h>
+#include <codebase/nocopy.h>
 
 namespace test
 {
@@ -58,4 +57,29 @@ namespace test
     }
     #define L_CHECK_ELEM_TYPE(TYPE, ELEM) L_CHECK_TRUE(istype<TYPE>(ELEM))
 }
+
+//  limits for test values
+#ifndef _MSC_VER
+
+    #ifndef UINT8_MAX
+    #define UINT8_MAX 0xFF
+    #endif
+
+    #ifndef INT16_MIN
+    #define INT16_MIN -0x7FFF
+    #endif
+
+    #ifndef INT16_MAX
+    #define INT16_MAX 0x7FFF
+    #endif
+
+    #ifndef INT32_MIN
+    #define INT32_MIN -0x7FFFFFFF
+    #endif
+
+    #ifndef INT32_MAX
+    #define INT32_MAX 0x7FFFFFFF
+    #endif
+#endif
+
 #endif // _H

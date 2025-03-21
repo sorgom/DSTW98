@@ -13,7 +13,7 @@ namespace test
     class M_Mapper : public I_Mapper, private M_Base
     {
     public:
-        INSTANCE_DEC(M_Mapper)
+        TEST_INSTANCE_DEC(M_Mapper)
 
         inline void clear()
         {

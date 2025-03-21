@@ -15,7 +15,7 @@ namespace test
     class M_Reader : public I_Reader, private M_Base
     {
     public:
-        INSTANCE_DEC(M_Reader)
+        TEST_INSTANCE_DEC(M_Reader)
 
         inline void read()
         {

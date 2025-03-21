@@ -4,9 +4,17 @@
 
 buildoptions_gcc = '-std=c++98 -pedantic-errors -Werror -Wall'
 
-buildoptions_vs = '/MP /W4 /wd4100 /wd4103'
-buildoptions_vs_test = buildoptions_vs .. ' /wd4127'
-buildoptions_vs_cpputest = buildoptions_vs .. ' /wd4611 /wd4996'
+--  4103 alignment changed after including header, may be due to pragma pack
+suppressions_vs = '/wd4103'
+
+buildoptions_vs = '/MP /W4 ' .. suppressions_vs
+
+--  4127 conditional expression is constant
+suppressions_vs_test = '/wd4127'
+
+--  4611 interaction between '_setjmp' and C++ object destruction is non-portable
+--  4996 deprecated function
+suppressions_vs_cpputest = '/wd4611 /wd4996'
 
 base_cpputest = '../submodules/cpputest'
 includedirs_cpputest = { base_cpputest .. '/include' }
@@ -26,12 +34,7 @@ includedirs_testenv = {
     includedirs_teststeps
 }
 
-files_testenv = {
-    '../testing/testenv/**.cpp',
-    -- '../testing/testmain/testMain.cpp'
-}
-
--- files_ testmain = { '../testing/testmain/testMain.cpp' }
+files_testenv = { '../testing/testenv/**.cpp'}
 
 -- leads to test env IL interface
 includedirs_test = {
@@ -71,7 +74,7 @@ workspace 'DSTW'
         targetdir '../build/%{_TARGET_OS}/lib/%{cfg.name}'
 
     filter { 'action:vs*' }
-        buildoptions { buildoptions_vs_test }
+        buildoptions { buildoptions_vs }
         warnings 'high'
         defines { '_WINSOCK_DEPRECATED_NO_WARNINGS' }
         location '../vs'
@@ -80,7 +83,7 @@ workspace 'DSTW'
         buildoptions { buildoptions_gcc }
         location '../make'
 
-    filter { 'kind:ConsoleApp', 'action:vs*',  }
+    filter { 'kind:ConsoleApp', 'action:vs*' }
         links { 'winmm', 'ws2_32' }
 
     filter { 'configurations:ci' }
@@ -113,7 +116,7 @@ workspace 'DSTW'
         }
 
         filter { 'action:vs*' }
-            buildoptions { buildoptions_vs_cpputest }
+            buildoptions { suppressions_vs_test, suppressions_vs_cpputest }
             files { base_cpputest .. '/src/Platforms/VisualCpp/*.cpp' }
 
         filter { 'action:gmake*' }
@@ -126,16 +129,19 @@ workspace 'DSTW'
         files { files_app, files_moduletest, files_testenv }
         includedirs { includedirs_test }
         links { 'submodules' }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     project 'moduletestsIL'
         files { files_app, '../testing/tests/moduletestsIL/*.cpp', files_testenv }
         includedirs { includedirs_test_IL }
         links { 'submodules' }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     project 'devtests'
         files { files_app, '../testing/tests/devtests/*.cpp', files_testenv }
         includedirs { includedirs_test, '../devel' }
         links { 'submodules' }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     project 'buildfail'
         kind 'StaticLib'
@@ -145,7 +151,6 @@ workspace 'DSTW'
     project 'memleak'
         files { '../testing/tests/memleak/memLeakMain.cpp' }
         includedirs { includedirs_test }
-
 
     --  ============================================================
     --  system tests
@@ -158,6 +163,7 @@ workspace 'DSTW'
             '../testing/testenv/testlib/src/TestLib.cpp',
             '../testing/testenv/testlib/src/NetTest.cpp'
         }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     --  run second in background
     --  must be unstrumented for coverage
@@ -170,6 +176,7 @@ workspace 'DSTW'
         files { '../testing/tests/systemtests/SYST_*.cpp', files_testenv }
         includedirs { includedirs_test }
         links { 'submodules' }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     --  run last to stop application in background
     project 'dstw_stop'
@@ -178,6 +185,7 @@ workspace 'DSTW'
             '../testing/testenv/TCP/src/TCP_Client.cpp'
         }
         includedirs { includedirs_test }
+        filter { 'action:vs*' } buildoptions { suppressions_vs_test }
 
     --  ============================================================
     --  gcov

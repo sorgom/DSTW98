@@ -15,7 +15,7 @@ namespace test
     class M_TCP : public I_TCP, private M_Base
     {
     public:
-        INSTANCE_DEC(M_TCP)
+        TEST_INSTANCE_DEC(M_TCP)
 
         inline void setTimeout(UINT32 ms)
         {
@@ -116,7 +116,7 @@ namespace test
             expect("recv").PARAM(socket).PARAM(size).AND_RETURN(res);
         }
 
-        inline INT32 send(INT32 socket, CPTR buffer, size_t size) const
+        inline INT32 send(INT32 socket, CPTR, size_t size) const
         {
             return call("send").PARAM(socket).PARAM(size).RETURN_DEF_INT(size);
         }

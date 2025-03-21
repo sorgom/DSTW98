@@ -8,7 +8,7 @@
 
 #include <TestSteps/MockMacros.h>
 #include <codebase/BaseTypes.h>
-#include <BAS/coding.h>
+#include <testlib/TestCoding.h>
 
 #include <sstream>
 

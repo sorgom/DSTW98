@@ -52,7 +52,7 @@ namespace test
     class M_TCP_Listener_Fld : public M_TCP_Listener
     {
     public:
-        INSTANCE_DEC(M_TCP_Listener_Fld)
+        TEST_INSTANCE_DEC(M_TCP_Listener_Fld)
         NOCOPY(M_TCP_Listener_Fld)
     private:
         M_TCP_Listener_Fld() : M_TCP_Listener("TCP_Listener_Fld") {}
@@ -61,7 +61,7 @@ namespace test
     class M_TCP_Listener_Gui : public M_TCP_Listener
     {
     public:
-        INSTANCE_DEC(M_TCP_Listener_Gui)
+        TEST_INSTANCE_DEC(M_TCP_Listener_Gui)
         NOCOPY(M_TCP_Listener_Gui)
     private:
         M_TCP_Listener_Gui() : M_TCP_Listener("TCP_Listener_Gui") {}
@@ -70,7 +70,7 @@ namespace test
     class M_TCP_Listener_Ctrl : public M_TCP_Listener
     {
     public:
-        INSTANCE_DEC(M_TCP_Listener_Ctrl)
+        TEST_INSTANCE_DEC(M_TCP_Listener_Ctrl)
         NOCOPY(M_TCP_Listener_Ctrl)
     private:
         M_TCP_Listener_Ctrl() : M_TCP_Listener("TCP_Listener_Ctrl") {}

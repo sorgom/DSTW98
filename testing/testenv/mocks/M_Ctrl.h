@@ -15,7 +15,7 @@ namespace test
         private M_Base
     {
     public:
-        INSTANCE_DEC(M_Ctrl)
+        TEST_INSTANCE_DEC(M_Ctrl)
 
         inline void log(E_Comp comp, E_Err ret)
         {

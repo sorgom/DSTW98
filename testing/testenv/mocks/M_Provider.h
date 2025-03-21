@@ -20,7 +20,7 @@ namespace test
         private M_Base
     {
     public:
-        INSTANCE_DEC(M_Provider)
+        TEST_INSTANCE_DEC(M_Provider)
 
         inline size_t size() const
         {

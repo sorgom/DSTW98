@@ -18,7 +18,7 @@ namespace test
     class M_Elems : public A_Elems
     {
     public:
-        INSTANCE_DEC(M_Elems)
+        TEST_INSTANCE_DEC(M_Elems)
 
     private:
         M_Elems() : A_Elems()

@@ -7,7 +7,7 @@
 #define TCP_CLIENT_H
 
 #include <ifs/DataTypes.h>
-#include <BAS/coding.h>
+#include <codebase/nocopy.h>
 
 #ifndef RECV_BUFF_SIZE
 #define RECV_BUFF_SIZE 10
@@ -24,7 +24,7 @@ namespace test
     class N_ProcComTele : public I_ProcComTele
     {
     public:
-        inline void process(const ComTele& tele) const {}
+        inline void process(const ComTele&) const {}
     };
 
     class TCP_Client

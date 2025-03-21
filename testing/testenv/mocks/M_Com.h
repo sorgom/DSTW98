@@ -14,7 +14,7 @@ namespace test
     class M_Com : public I_Com, private M_Base
     {
     public:
-        INSTANCE_DEC(M_Com)
+        TEST_INSTANCE_DEC(M_Com)
 
         inline void start()
         {

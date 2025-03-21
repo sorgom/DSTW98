@@ -9,23 +9,23 @@
 // #include <mocks/M_TCP_Listener.h>
 // #include <mocks/M_TCP.h>
 
-#include <BAS/coding.h>
+#include <testlib/TestCoding.h>
 
 namespace test
 {
-    INSTANCE_DEF(M_Com)
-    INSTANCE_DEF(M_Ctrl)
-    INSTANCE_DEF(M_Elems)
-    INSTANCE_DEF(M_Mapper)
-    INSTANCE_DEF(M_Provider)
-    INSTANCE_DEF(M_Reader)
-    INSTANCE_DEF(M_TCP_Con_Ctrl)
-    INSTANCE_DEF(M_TCP_Con_Fld)
-    INSTANCE_DEF(M_TCP_Con_Gui)
-    INSTANCE_DEF(M_TCP_Listener_Ctrl)
-    INSTANCE_DEF(M_TCP_Listener_Fld)
-    INSTANCE_DEF(M_TCP_Listener_Gui)
-    INSTANCE_DEF(M_TCP)
+    TEST_INSTANCE_DEF(M_Com)
+    TEST_INSTANCE_DEF(M_Ctrl)
+    TEST_INSTANCE_DEF(M_Elems)
+    TEST_INSTANCE_DEF(M_Mapper)
+    TEST_INSTANCE_DEF(M_Provider)
+    TEST_INSTANCE_DEF(M_Reader)
+    TEST_INSTANCE_DEF(M_TCP_Con_Ctrl)
+    TEST_INSTANCE_DEF(M_TCP_Con_Fld)
+    TEST_INSTANCE_DEF(M_TCP_Con_Gui)
+    TEST_INSTANCE_DEF(M_TCP_Listener_Ctrl)
+    TEST_INSTANCE_DEF(M_TCP_Listener_Fld)
+    TEST_INSTANCE_DEF(M_TCP_Listener_Gui)
+    TEST_INSTANCE_DEF(M_TCP)
 
     std::ostringstream M_Base::mStream;
 }

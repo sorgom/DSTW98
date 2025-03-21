@@ -5,7 +5,7 @@
 #ifndef TEST_ARRAY_H
 #define TEST_ARRAY_H
 
-#include <BAS/coding.h>
+#include <testlib/TestCoding.h>
 #include <cstring>
 
 namespace test
