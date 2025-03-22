@@ -23,7 +23,7 @@ txts=()
 for file in $(git diff-index --cached --name-only HEAD); do
   if [[ -f $file ]]
   then
-    # all+=($file)
+    all+=($file)
     if [[ $file == *.mdj ]]; then mdjs+=($file)
     elif [[ $file == *.svg ]]; then svgs+=($file)
     else txts+=($file)
