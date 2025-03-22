@@ -31,17 +31,12 @@ for file in $(git diff-index --cached --name-only HEAD); do
   fi
 done
 
-if [ ${#mdjs[@]} -gt 0 ]; then
-  echo cleaning mdj files
-  $py $sompy/cleanMdj.py -l ${mdjs[@]}
-fi
-if [ ${#svgs[@]} -gt 0 ]; then
-  echo cleaning svg files
-  $py $sompy/cleanSvg.py -l  ${svgs[@]}
-fi
-if [ ${#txts[@]} -gt 0 ]; then
-  echo cleaning text files
-  $py $sompy/cleanTxt.py -l ${txts[@]}
-fi
+echo txt: ${#txts[@]}
+echo svg: ${#svgs[@]}
+echo mdj: ${#mdjs[@]}
+
+$py $sompy/cleanSvg.py -l ${svgs[@]}
+$py $sompy/cleanTxt.py -l ${txts[@]}
+$py $sompy/cleanMdj.py -l ${mdjs[@]}
 
 for file in ${all[@]}; do git add $file; done
