@@ -13,7 +13,7 @@ set binDir=windows\ci
 
 echo - build
 msbuild -m %vsSolution% -p:configuration=ci -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
-if %errorlevel% neq 0 exit /b %errorlevel%
+if %errorlevel% neq 0 exit /b 1
 
 cd %buildDir%
 set tmpfile=tmp_%random%.txt
@@ -22,6 +22,7 @@ del /Q %tmpfile% 2>NUL
 echo - run
 rem gen required proj data file
 %binDir%\dstw_gen.exe
+
 rem start app in background
 start /B %myDir%\runSub.cmd %binDir%\dstw_runtime.exe X X
 timeout /t 2 /nobreak >NUL 2>&1
@@ -29,11 +30,14 @@ if not exist %tmpFile% (
     echo - application not started
     exit /b 1
 )
+
 rem run tests
 %binDir%\systemtests.exe
 set ret=%errorlevel%
+
 rem stop app anyway
 %binDir%\dstw_stop.exe
+
 :wait
 timeout /t 1 /nobreak >NUL
 if exist %tmpfile% goto wait

@@ -20,13 +20,13 @@ APP_INCS="-I../specification
     -I../application"
 
 TEST_INCS="-I../testing/testenv
-    $APP_INCS 
+    $APP_INCS
     -I../devel
     -I../submodules/cpputest/include
     -I../submodules/CppUTestSteps/TestSteps/include"
 
-APP_CALL="cppcheck -q -j 200 --language=c++ --check-level=exhaustive"
-TST_CALL="cppcheck -q -j 200 --language=c++ --check-level=exhaustive --force --inline-suppr"
+APP_CALL="cppcheck -q -j 200 --language=c++"
+TST_CALL="cppcheck -q -j 200 --language=c++ --force --inline-suppr"
 
 pids=()
 

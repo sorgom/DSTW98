@@ -6,7 +6,7 @@
 #   created by Manfred Sorgo
 
 from modTransTable import TransTable, TransEvent
-from modMdTable import mdTable, csvTable, rxCsv
+from modMdTable import mdTable, rxCsv
 from modUtilz import repoDir
 import re, csv
 from json import load as jload

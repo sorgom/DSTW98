@@ -63,4 +63,5 @@ covselect -qd --import %excludeFile%
 covdir -q --by-name
 
 :end
+DEL /Q %projFile% >NUL 2>&1
 cov01 -q --pop

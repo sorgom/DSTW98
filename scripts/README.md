@@ -51,5 +51,5 @@ DSTW\build\windows\ci> dir /B *.exe
 ````
 ### build & run system tests
 ````shell
-DSTW\scripts> ./runSystemTests.cmd
+DSTW\scripts> runSystemTests.cmd
 ````
