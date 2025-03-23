@@ -15,17 +15,15 @@ cd $(git rev-parse --show-toplevel)
 # path to sompy python scripts
 sompy=$(pwd)/submodules/sompy/somutil
 
-all=()
-mdjs=()
-svgs=()
 txts=()
+svgs=()
+mdjs=()
 
 for file in $(git diff-index --cached --name-only HEAD); do
   if [[ -f $file ]]
   then
-    all+=($file)
-    if [[ $file == *.mdj ]]; then mdjs+=($file)
-    elif [[ $file == *.svg ]]; then svgs+=($file)
+    if   [[ $file == *.svg ]]; then svgs+=($file)
+    elif [[ $file == *.mdj ]]; then mdjs+=($file)
     else txts+=($file)
     fi
   fi
@@ -35,8 +33,8 @@ echo txt: ${#txts[@]}
 echo svg: ${#svgs[@]}
 echo mdj: ${#mdjs[@]}
 
-$py $sompy/cleanSvg.py -l ${svgs[@]}
-$py $sompy/cleanTxt.py -l ${txts[@]}
-$py $sompy/cleanMdj.py -l ${mdjs[@]}
+done1=$($py $sompy/cleanTxt.py -le ${txts[@]})
+done2=$($py $sompy/cleanSvg.py -le ${svgs[@]})
+done3=$($py $sompy/cleanMdj.py -le ${mdjs[@]})
 
-for file in ${all[@]}; do git add $file; done
+for file in $done1 $done2 $done3; do git add $file; done
