@@ -17,7 +17,7 @@ set COVFILE=%buildDir%\moduletests.cov
 
 set COVCOPT=--srcdir %compDir% --macro
 set excludeFile=%myDir%\exclude.txt
-set covMinima=100,98
+set projectCoverageGoal=100,98
 
 set buildCall=msbuild -m %vsSolution% -p:configuration=release
 
@@ -35,10 +35,6 @@ if %clean% == 1 (
     %buildCall% -t:Clean
     DEL /Q %COVFILE% >NUL 2>&1
 )
-
-cov01 -q --off
-%buildCall% -t:submodules
-if %errorlevel% NEQ 0 goto err
 
 cov01 -q --on
 %buildCall% -t:moduletests
@@ -59,7 +55,7 @@ cd %buildDir%
 covdir -q --by-name > %report%
 type %report%
 
-covdir -q --checkmin %covMinima%
+covdir -q --checkmin %projectCoverageGoal%
 set elevel=%errorlevel%
 
 covdir -q --checkmin 100,100
