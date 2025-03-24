@@ -6,10 +6,10 @@ cd $(dirname $0)
 cd ..
 buildDir=$(pwd)/build
 makeDir=$(pwd)/make
-binDir=$buildDir/linux/ci
+binDir=$buildDir/linux/release
 
 cd $makeDir
-make -j config=ci
+make -j config=release
 
 cd $buildDir
 tot=0

@@ -7,12 +7,12 @@ DSTW/make$> make help
 ````
 - clean and build a config
 ````shell
-DSTW/make$> make clean config=ci
-DSTW/make$> make -j config=ci
+DSTW/make$> make clean config=release
+DSTW/make$> make -j config=release
 ````
 - find binaries in build folder
 ````shell
-DSTW/make$> cd ../build/linux/ci
+DSTW/make$> cd ../build/linux/release
 DSTW/build/linux/bin$> ls
 ````
 ### buildAndRun.sh
@@ -42,12 +42,12 @@ DSTW\scripts> premake5 vsNNNN
 ### just build
 ````shell
 DSTW\scripts> cd ../vs
-DSTW\vs> msbuild -m DSTW.sln -p:configuration=ci
+DSTW\vs> msbuild -m DSTW.sln -p:configuration=release
 ````
 - find binaries in build/windows folder
 ````shell
-DSTW\vs> cd ../build/windows/ci
-DSTW\build\windows\ci> dir /B *.exe
+DSTW\vs> cd ../build/windows/release
+DSTW\build\windows\release> dir /B *.exe
 ````
 ### build & run system tests
 ````shell

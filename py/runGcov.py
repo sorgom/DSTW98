@@ -9,7 +9,7 @@ from modUtilz import mdTxt, mdCode, writeFile
 
 ttl = '# current gcov coverage'
 
-def runGcov(conf='ci', verbose=True):
+def runGcov(conf='release', verbose=True):
     return Gcov().run(
         makDir,
         f'./bin/coverage_tests_{conf}',

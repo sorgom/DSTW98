@@ -55,7 +55,7 @@ files_moduletest = { '../testing/tests/moduletests/**.cpp' }
 --  ============================================================
 
 workspace 'DSTW'
-    configurations { 'ci', 'debug', 'memleak', 'bullseye', 'fail' }
+    configurations { 'release', 'debug', 'memleak', 'bullseye', 'fail' }
     language 'C++'
     targetdir '../build/%{_TARGET_OS}'
     objdir  '../build/%{_TARGET_OS}/obj'
@@ -86,7 +86,7 @@ workspace 'DSTW'
     filter { 'kind:ConsoleApp', 'action:vs*' }
         links { 'winmm', 'ws2_32' }
 
-    filter { 'configurations:ci' }
+    filter { 'configurations:release' }
         defines { 'NDEBUG' }
 
     filter { 'configurations:memleak' }

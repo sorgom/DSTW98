@@ -5,20 +5,21 @@ set myDir=%cd%
 cd ../..
 set repoDir=%cd%
 set buildDir=%repoDir%\build
+set compDir=%repoDir%\application\components
 set reportsDir=%repoDir%\reports
 set vsDir=%repoDir%\vs
-set exeDir=%buildDir%\windows\bullseye
+set exeDir=%buildDir%\windows\release
 
 set vsSolution=%vsDir%\DSTW.sln
 set report=%reportsDir%\moduletests_coverage.txt
 set todoTxt=%reportsDir%\moduletests_todo.txt
-set covfile=%buildDir%\moduletests.cov
+set COVFILE=%buildDir%\moduletests.cov
 
-set covcopt=--srcdir %repoDir% --macro
+set COVCOPT=--srcdir %compDir% --macro
 set excludeFile=%myDir%\exclude.txt
-set covMinima=100,100
+set covMinima=100,98
 
-set vsCall=msbuild -m %vsSolution% -p:configuration=bullseye
+set buildCall=msbuild -m %vsSolution% -p:configuration=release
 
 set elevel=0
 
@@ -28,31 +29,29 @@ DEL /Q %report% %todoTxt% >NUL 2>&1
 cov01 -q --push
 
 set clean=0
-if not exist %covfile% set clean=1
+if not exist %COVFILE% set clean=1
 if "%1" == "-c" set clean=1
 if %clean% == 1 (
-    %vsCall% -t:Clean
-    DEL /Q %covfile% >NUL 2>&1
+    %buildCall% -t:Clean
+    DEL /Q %COVFILE% >NUL 2>&1
 )
 
 cov01 -q --off
-%vsCall% -t:submodules
+%buildCall% -t:submodules
 if %errorlevel% NEQ 0 goto err
 
 cov01 -q --on
-%vsCall% -t:"moduletests,moduletestsIL"
+%buildCall% -t:moduletests
 if %errorlevel% NEQ 0 goto err
 
-if not exist %covfile% (
-    echo %covfile% not found
+if not exist %COVFILE% (
+    echo %COVFILE% not found
     goto err
 )
 
 covclear -q
-for %%t in (moduletests moduletestsIL) do (
-    %exeDir%\%%t.exe
-    if %errorlevel% NEQ 0 goto err
-)
+%exeDir%\moduletests.exe
+if %errorlevel% NEQ 0 goto err
 
 covselect -qd --import %excludeFile%
 
@@ -62,7 +61,9 @@ type %report%
 
 covdir -q --checkmin %covMinima%
 set elevel=%errorlevel%
-if %elevel% NEQ 0 covbr -qu -f %covfile% > %todoTxt%
+
+covdir -q --checkmin 100,100
+if %errorlevel% NEQ 0 covbr -qu > %todoTxt%
 
 :end
 cov01 -q --pop

@@ -9,10 +9,10 @@ set myDir=%cd%
 cd ..
 set buildDir=%cd%\build
 set vsSolution=%cd%\vs\DSTW.sln
-set binDir=windows\ci
+set binDir=windows\release
 
 echo - build
-msbuild -m %vsSolution% -p:configuration=ci -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
+msbuild -m %vsSolution% -p:configuration=release -t:dstw_gen,dstw_runtime,systemtests,dstw_stop >NUL
 if %errorlevel% neq 0 exit /b 1
 
 cd %buildDir%

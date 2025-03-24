@@ -10,7 +10,7 @@ repo=$(pwd)
 makeDir=$repo/make
 buildDir=$repo/build
 #   straight build
-ciDir=$buildDir/linux/ci
+ciDir=$buildDir/linux/release
 #   mem leak build
 mlDir=$buildDir/linux/memleak
 report=$repo/testing/valgrind_report.md

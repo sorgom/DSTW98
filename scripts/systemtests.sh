@@ -9,10 +9,10 @@ cd ..
 repo=$(pwd)
 buildDir=$repo/build
 makeDir=$repo/make
-binDir=linux/ci
+binDir=linux/release
 
 cd $makeDir
-make -j dstw_gen dstw_runtime dstw_stop systemtests config=ci
+make -j dstw_gen dstw_runtime dstw_stop systemtests config=release
 if [ $? -ne 0 ]; then exit 1; fi
 
 cd $buildDir
