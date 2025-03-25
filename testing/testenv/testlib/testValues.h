@@ -15,7 +15,7 @@ namespace test
     static const UINT16 tcpPortFld  = 8091;
     static const UINT16 tcpPortGui  = 8092;
     static const UINT16 tcpPortCtrl = 8093;
-    static const UINT16 tcpTimeout = 20;
+    static const UINT16 tcpTimeout  = 20;
 
     //  was: enum enum E_TestVals
     static const UINT8 NO_PARAM = PARAM_UNDEF - 1;

@@ -47,11 +47,11 @@ enum E_Err
 };
 
 //  reserved parameter values
-//  was: enum enum E_Param
+//  was: enum E_Param
 static const UINT8 PARAM_UNDEF = 255;
 
 //  Element types 21 .. 40
-//  was: enum enum E_ElemType
+//  was: enum E_ElemType
 static const UINT8 TYPE_LCR = 21;
 static const UINT8 TYPE_LCR_UBK = 22;
 static const UINT8 TYPE_SEG = 23; //  not used
@@ -61,7 +61,7 @@ static const UINT8 TYPE_SIG_N = 26;
 static const UINT8 TYPE_TSW = 27;
 
 //  SIG states 41 .. 60
-//  was: enum enum E_SigState
+//  was: enum E_SigState
 static const UINT8 SIG_STATE_H0 = 41;
 static const UINT8 SIG_STATE_H1 = 42;
 static const UINT8 SIG_STATE_N0 = 43;
@@ -82,7 +82,7 @@ static const UINT8 SIG_STATE_DEFECT = 57;
 static const UINT8 SIG_STATE_UNDEF = PARAM_UNDEF;
 
 //  TSW states 61 .. 70
-//  was: enum enum E_TswState
+//  was: enum E_TswState
 static const UINT8 TSW_STATE_LEFT = 61;
 static const UINT8 TSW_STATE_RIGHT = 62;
 static const UINT8 TSW_STATE_DEFECT = 63;
@@ -91,13 +91,13 @@ static const UINT8 TSW_STATE_WAIT_RIGHT = 65;
 static const UINT8 TSW_STATE_UNDEF = PARAM_UNDEF;
 
 //  TSW commands 71 .. 80
-//  was: enum enum E_TswCmd
+//  was: enum E_TswCmd
 static const UINT8 TSW_CMD_WU = 71;
 static const UINT8 TSW_CMD_LEFT = 72;
 static const UINT8 TSW_CMD_RIGHT = 73;
 
 //  LCR states 81 .. 90
-//  was: enum enum E_LcrState
+//  was: enum E_LcrState
 static const UINT8 LCR_STATE_OPEN = 81;
 static const UINT8 LCR_STATE_CLOSED = 82;
 static const UINT8 LCR_STATE_WAIT_OPEN = 83;
@@ -106,14 +106,14 @@ static const UINT8 LCR_STATE_DEFECT = 85;
 static const UINT8 LCR_STATE_UNDEF = PARAM_UNDEF;
 
 //  LCR UBK states 90 .. 100
-//  was: enum enum E_LcrUbkState
+//  was: enum E_LcrUbkState
 static const UINT8 LCR_UBK_STATE_OCCUPIED = 91;
 static const UINT8 LCR_UBK_STATE_FREE = 92;
 static const UINT8 LCR_UBK_STATE_DEFECT = 93;
 static const UINT8 LCR_UBK_STATE_UNDEF = PARAM_UNDEF;
 
 //  COM control 101 .. 110
-//  was: enum enum E_ComCtrl
+//  was: enum E_ComCtrl
 static const UINT8 COM_CTRL_STOP = 101;
 static const UINT8 COM_CTRL_PING = 102;
 static const UINT8 COM_CTRL_RE_GUI = 103;
