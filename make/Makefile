@@ -84,120 +84,120 @@ endif
 
 PROJECTS := submodules moduletests moduletestsIL devtests buildfail memleak dstw_gen dstw_runtime systemtests dstw_stop gcovapp gcovtests
 
-.PHONY: all clean help $(PROJECTS)
+.PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
 submodules:
 ifneq (,$(submodules_config))
-    @echo "==== Building submodules ($(submodules_config)) ===="
-    @${MAKE} --no-print-directory -C . -f submodules.make config=$(submodules_config)
+	@echo "==== Building submodules ($(submodules_config)) ===="
+	@${MAKE} --no-print-directory -C . -f submodules.make config=$(submodules_config)
 endif
 
 moduletests: submodules
 ifneq (,$(moduletests_config))
-    @echo "==== Building moduletests ($(moduletests_config)) ===="
-    @${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
+	@echo "==== Building moduletests ($(moduletests_config)) ===="
+	@${MAKE} --no-print-directory -C . -f moduletests.make config=$(moduletests_config)
 endif
 
 moduletestsIL: submodules
 ifneq (,$(moduletestsIL_config))
-    @echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
-    @${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
+	@echo "==== Building moduletestsIL ($(moduletestsIL_config)) ===="
+	@${MAKE} --no-print-directory -C . -f moduletestsIL.make config=$(moduletestsIL_config)
 endif
 
 devtests: submodules
 ifneq (,$(devtests_config))
-    @echo "==== Building devtests ($(devtests_config)) ===="
-    @${MAKE} --no-print-directory -C . -f devtests.make config=$(devtests_config)
+	@echo "==== Building devtests ($(devtests_config)) ===="
+	@${MAKE} --no-print-directory -C . -f devtests.make config=$(devtests_config)
 endif
 
 buildfail:
 ifneq (,$(buildfail_config))
-    @echo "==== Building buildfail ($(buildfail_config)) ===="
-    @${MAKE} --no-print-directory -C . -f buildfail.make config=$(buildfail_config)
+	@echo "==== Building buildfail ($(buildfail_config)) ===="
+	@${MAKE} --no-print-directory -C . -f buildfail.make config=$(buildfail_config)
 endif
 
 memleak:
 ifneq (,$(memleak_config))
-    @echo "==== Building memleak ($(memleak_config)) ===="
-    @${MAKE} --no-print-directory -C . -f memleak.make config=$(memleak_config)
+	@echo "==== Building memleak ($(memleak_config)) ===="
+	@${MAKE} --no-print-directory -C . -f memleak.make config=$(memleak_config)
 endif
 
 dstw_gen:
 ifneq (,$(dstw_gen_config))
-    @echo "==== Building dstw_gen ($(dstw_gen_config)) ===="
-    @${MAKE} --no-print-directory -C . -f dstw_gen.make config=$(dstw_gen_config)
+	@echo "==== Building dstw_gen ($(dstw_gen_config)) ===="
+	@${MAKE} --no-print-directory -C . -f dstw_gen.make config=$(dstw_gen_config)
 endif
 
 dstw_runtime:
 ifneq (,$(dstw_runtime_config))
-    @echo "==== Building dstw_runtime ($(dstw_runtime_config)) ===="
-    @${MAKE} --no-print-directory -C . -f dstw_runtime.make config=$(dstw_runtime_config)
+	@echo "==== Building dstw_runtime ($(dstw_runtime_config)) ===="
+	@${MAKE} --no-print-directory -C . -f dstw_runtime.make config=$(dstw_runtime_config)
 endif
 
 systemtests: submodules
 ifneq (,$(systemtests_config))
-    @echo "==== Building systemtests ($(systemtests_config)) ===="
-    @${MAKE} --no-print-directory -C . -f systemtests.make config=$(systemtests_config)
+	@echo "==== Building systemtests ($(systemtests_config)) ===="
+	@${MAKE} --no-print-directory -C . -f systemtests.make config=$(systemtests_config)
 endif
 
 dstw_stop:
 ifneq (,$(dstw_stop_config))
-    @echo "==== Building dstw_stop ($(dstw_stop_config)) ===="
-    @${MAKE} --no-print-directory -C . -f dstw_stop.make config=$(dstw_stop_config)
+	@echo "==== Building dstw_stop ($(dstw_stop_config)) ===="
+	@${MAKE} --no-print-directory -C . -f dstw_stop.make config=$(dstw_stop_config)
 endif
 
 gcovapp:
 ifneq (,$(gcovapp_config))
-    @echo "==== Building gcovapp ($(gcovapp_config)) ===="
-    @${MAKE} --no-print-directory -C . -f gcovapp.make config=$(gcovapp_config)
+	@echo "==== Building gcovapp ($(gcovapp_config)) ===="
+	@${MAKE} --no-print-directory -C . -f gcovapp.make config=$(gcovapp_config)
 endif
 
 gcovtests: gcovapp submodules
 ifneq (,$(gcovtests_config))
-    @echo "==== Building gcovtests ($(gcovtests_config)) ===="
-    @${MAKE} --no-print-directory -C . -f gcovtests.make config=$(gcovtests_config)
+	@echo "==== Building gcovtests ($(gcovtests_config)) ===="
+	@${MAKE} --no-print-directory -C . -f gcovtests.make config=$(gcovtests_config)
 endif
 
 clean:
-    @${MAKE} --no-print-directory -C . -f submodules.make clean
-    @${MAKE} --no-print-directory -C . -f moduletests.make clean
-    @${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
-    @${MAKE} --no-print-directory -C . -f devtests.make clean
-    @${MAKE} --no-print-directory -C . -f buildfail.make clean
-    @${MAKE} --no-print-directory -C . -f memleak.make clean
-    @${MAKE} --no-print-directory -C . -f dstw_gen.make clean
-    @${MAKE} --no-print-directory -C . -f dstw_runtime.make clean
-    @${MAKE} --no-print-directory -C . -f systemtests.make clean
-    @${MAKE} --no-print-directory -C . -f dstw_stop.make clean
-    @${MAKE} --no-print-directory -C . -f gcovapp.make clean
-    @${MAKE} --no-print-directory -C . -f gcovtests.make clean
+	@${MAKE} --no-print-directory -C . -f submodules.make clean
+	@${MAKE} --no-print-directory -C . -f moduletests.make clean
+	@${MAKE} --no-print-directory -C . -f moduletestsIL.make clean
+	@${MAKE} --no-print-directory -C . -f devtests.make clean
+	@${MAKE} --no-print-directory -C . -f buildfail.make clean
+	@${MAKE} --no-print-directory -C . -f memleak.make clean
+	@${MAKE} --no-print-directory -C . -f dstw_gen.make clean
+	@${MAKE} --no-print-directory -C . -f dstw_runtime.make clean
+	@${MAKE} --no-print-directory -C . -f systemtests.make clean
+	@${MAKE} --no-print-directory -C . -f dstw_stop.make clean
+	@${MAKE} --no-print-directory -C . -f gcovapp.make clean
+	@${MAKE} --no-print-directory -C . -f gcovtests.make clean
 
 help:
-    @echo "Usage: make [config=name] [target]"
-    @echo ""
-    @echo "CONFIGURATIONS:"
-    @echo "  release"
-    @echo "  debug"
-    @echo "  memleak"
-    @echo "  bullseye"
-    @echo "  fail"
-    @echo ""
-    @echo "TARGETS:"
-    @echo "   all (default)"
-    @echo "   clean"
-    @echo "   submodules"
-    @echo "   moduletests"
-    @echo "   moduletestsIL"
-    @echo "   devtests"
-    @echo "   buildfail"
-    @echo "   memleak"
-    @echo "   dstw_gen"
-    @echo "   dstw_runtime"
-    @echo "   systemtests"
-    @echo "   dstw_stop"
-    @echo "   gcovapp"
-    @echo "   gcovtests"
-    @echo ""
-    @echo "For more information, see https://github.com/premake/premake-core/wiki"
+	@echo "Usage: make [config=name] [target]"
+	@echo ""
+	@echo "CONFIGURATIONS:"
+	@echo "  release"
+	@echo "  debug"
+	@echo "  memleak"
+	@echo "  bullseye"
+	@echo "  fail"
+	@echo ""
+	@echo "TARGETS:"
+	@echo "   all (default)"
+	@echo "   clean"
+	@echo "   submodules"
+	@echo "   moduletests"
+	@echo "   moduletestsIL"
+	@echo "   devtests"
+	@echo "   buildfail"
+	@echo "   memleak"
+	@echo "   dstw_gen"
+	@echo "   dstw_runtime"
+	@echo "   systemtests"
+	@echo "   dstw_stop"
+	@echo "   gcovapp"
+	@echo "   gcovtests"
+	@echo ""
+	@echo "For more information, see https://github.com/premake/premake-core/wiki"

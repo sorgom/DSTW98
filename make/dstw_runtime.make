@@ -12,7 +12,7 @@ endif
 
 SHELLTYPE := posix
 ifeq ($(shell echo "test"), "test")
-    SHELLTYPE := msdos
+	SHELLTYPE := msdos
 endif
 
 # Configurations
@@ -132,55 +132,55 @@ OBJECTS += $(OBJDIR)/TSW.o
 # #############################################
 
 all: $(TARGET)
-    @:
+	@:
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
-    $(PRELINKCMDS)
-    @echo Linking dstw_runtime
-    $(SILENT) $(LINKCMD)
-    $(POSTBUILDCMDS)
+	$(PRELINKCMDS)
+	@echo Linking dstw_runtime
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
 
 $(TARGETDIR):
-    @echo Creating $(TARGETDIR)
+	@echo Creating $(TARGETDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) mkdir -p $(TARGETDIR)
+	$(SILENT) mkdir -p $(TARGETDIR)
 else
-    $(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
+	$(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
 endif
 
 $(OBJDIR):
-    @echo Creating $(OBJDIR)
+	@echo Creating $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) mkdir -p $(OBJDIR)
+	$(SILENT) mkdir -p $(OBJDIR)
 else
-    $(SILENT) mkdir $(subst /,\\,$(OBJDIR))
+	$(SILENT) mkdir $(subst /,\\,$(OBJDIR))
 endif
 
 clean:
-    @echo Cleaning dstw_runtime
+	@echo Cleaning dstw_runtime
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) rm -f  $(TARGET)
-    $(SILENT) rm -rf $(GENERATED)
-    $(SILENT) rm -rf $(OBJDIR)
+	$(SILENT) rm -f  $(TARGET)
+	$(SILENT) rm -rf $(GENERATED)
+	$(SILENT) rm -rf $(OBJDIR)
 else
-    $(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
-    $(SILENT) if exist $(subst /,\\,$(GENERATED)) del /s /q $(subst /,\\,$(GENERATED))
-    $(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
+	$(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
+	$(SILENT) if exist $(subst /,\\,$(GENERATED)) del /s /q $(subst /,\\,$(GENERATED))
+	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
 endif
 
 prebuild: | $(OBJDIR)
-    $(PREBUILDCMDS)
+	$(PREBUILDCMDS)
 
 ifneq (,$(PCH))
 $(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
 $(GCH): $(PCH) | prebuild
-    @echo $(notdir $<)
-    $(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 $(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) touch "$@"
+	$(SILENT) touch "$@"
 else
-    $(SILENT) echo $null >> "$@"
+	$(SILENT) echo $null >> "$@"
 endif
 else
 $(OBJECTS): | prebuild
@@ -191,47 +191,47 @@ endif
 # #############################################
 
 $(OBJDIR)/BAS_Elem.o: ../application/components/BAS/src/BAS_Elem.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Net.o: ../application/components/BAS/src/Net.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Com.o: ../application/components/COM/src/Com.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TCP.o: ../application/components/COM/src/TCP.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TCP_Com.o: ../application/components/COM/src/TCP_Com.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/LCR_X.o: ../application/components/LCR/src/LCR_X.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/SIG_X.o: ../application/components/SIG/src/SIG_X.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Ctrl.o: ../application/components/SYS/src/Ctrl.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Main.o: ../application/components/SYS/src/Main.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Mapper.o: ../application/components/SYS/src/Mapper.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Provider.o: ../application/components/SYS/src/Provider.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Reader.o: ../application/components/SYS/src/Reader.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TSW.o: ../application/components/TSW/src/TSW.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/AppMain.o: ../application/main/AppMain.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

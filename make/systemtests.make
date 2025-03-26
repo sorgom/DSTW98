@@ -12,7 +12,7 @@ endif
 
 SHELLTYPE := posix
 ifeq ($(shell echo "test"), "test")
-    SHELLTYPE := msdos
+	SHELLTYPE := msdos
 endif
 
 # Configurations
@@ -136,55 +136,55 @@ OBJECTS += $(OBJDIR)/wait.o
 # #############################################
 
 all: $(TARGET)
-    @:
+	@:
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
-    $(PRELINKCMDS)
-    @echo Linking systemtests
-    $(SILENT) $(LINKCMD)
-    $(POSTBUILDCMDS)
+	$(PRELINKCMDS)
+	@echo Linking systemtests
+	$(SILENT) $(LINKCMD)
+	$(POSTBUILDCMDS)
 
 $(TARGETDIR):
-    @echo Creating $(TARGETDIR)
+	@echo Creating $(TARGETDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) mkdir -p $(TARGETDIR)
+	$(SILENT) mkdir -p $(TARGETDIR)
 else
-    $(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
+	$(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
 endif
 
 $(OBJDIR):
-    @echo Creating $(OBJDIR)
+	@echo Creating $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) mkdir -p $(OBJDIR)
+	$(SILENT) mkdir -p $(OBJDIR)
 else
-    $(SILENT) mkdir $(subst /,\\,$(OBJDIR))
+	$(SILENT) mkdir $(subst /,\\,$(OBJDIR))
 endif
 
 clean:
-    @echo Cleaning systemtests
+	@echo Cleaning systemtests
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) rm -f  $(TARGET)
-    $(SILENT) rm -rf $(GENERATED)
-    $(SILENT) rm -rf $(OBJDIR)
+	$(SILENT) rm -f  $(TARGET)
+	$(SILENT) rm -rf $(GENERATED)
+	$(SILENT) rm -rf $(OBJDIR)
 else
-    $(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
-    $(SILENT) if exist $(subst /,\\,$(GENERATED)) del /s /q $(subst /,\\,$(GENERATED))
-    $(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
+	$(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
+	$(SILENT) if exist $(subst /,\\,$(GENERATED)) del /s /q $(subst /,\\,$(GENERATED))
+	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
 endif
 
 prebuild: | $(OBJDIR)
-    $(PREBUILDCMDS)
+	$(PREBUILDCMDS)
 
 ifneq (,$(PCH))
 $(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
 $(GCH): $(PCH) | prebuild
-    @echo $(notdir $<)
-    $(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 $(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
-    $(SILENT) touch "$@"
+	$(SILENT) touch "$@"
 else
-    $(SILENT) echo $null >> "$@"
+	$(SILENT) echo $null >> "$@"
 endif
 else
 $(OBJECTS): | prebuild
@@ -195,41 +195,41 @@ endif
 # #############################################
 
 $(OBJDIR)/TCP_Client.o: ../testing/testenv/TCP/src/TCP_Client.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Comparator.o: ../testing/testenv/comparators/src/Comparator.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/installComparators.o: ../testing/testenv/comparators/src/installComparators.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/ostreamHelpers.o: ../testing/testenv/comparators/src/ostreamHelpers.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/ostreams.o: ../testing/testenv/comparators/src/ostreams.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/M_Instances.o: ../testing/testenv/mocks/src/M_Instances.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/NetTest.o: ../testing/testenv/testlib/src/NetTest.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TestGroupBase.o: ../testing/testenv/testlib/src/TestGroupBase.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/TestLib.o: ../testing/testenv/testlib/src/TestLib.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/testMain.o: ../testing/testenv/testlib/src/testMain.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/wait.o: ../testing/testenv/testlib/src/wait.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/SYST_01.o: ../testing/tests/systemtests/SYST_01.cpp
-    @echo "$(notdir $<)"
-    $(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))
