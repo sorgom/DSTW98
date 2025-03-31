@@ -10,7 +10,7 @@ repo=$(pwd)
 makeDir=$repo/make
 buildDir=$repo/build
 #   straight build
-ciDir=$buildDir/linux/release
+rlDir=$buildDir/linux/release
 #   mem leak build
 mlDir=$buildDir/linux/memleak
 report=$repo/testing/valgrind_report.md
@@ -29,7 +29,7 @@ run() { valgrind $valgrind_opts $* | sed s/^==[0-9]*==/======/ | tee -a $report;
 #   build (with no report)
 cd $makeDir
 #   build app
-make -j dstw_gen dstw_runtime dstw_stop systemtests config=debug
+make -j dstw_gen dstw_runtime dstw_stop systemtests config=release
 if [ $? -ne 0 ]; then
     echo "build app failed"
     exit 1
@@ -50,33 +50,33 @@ run $mlDir/memleak
 quote
 
 #   gen required proj data file
-$ciDir/dstw_gen
+$rlDir/dstw_gen
 
 heading "runtime no action"
 quote
-run $ciDir/dstw_runtime
+run $rlDir/dstw_runtime
 quote
 
 heading "runtime read"
 quote
-run $ciDir/dstw_runtime X
+run $rlDir/dstw_runtime X
 quote
 
 heading "runtime read, run, stop"
 quote
-run $ciDir/dstw_runtime X X & pid=$!
+run $rlDir/dstw_runtime X X & pid=$!
 sleep 1
 
-$ciDir/dstw_stop
+$rlDir/dstw_stop
 wait $pid;
 quote
 sleep 2
 
 heading "runtime read, run, system tests, stop"
 quote
-run $ciDir/dstw_runtime X X & pid=$!
+run $rlDir/dstw_runtime X X & pid=$!
 sleep 2
-$ciDir/systemtests -b -v 2>&1 | tee -a $report
-$ciDir/dstw_stop
+$rlDir/systemtests -b -v 2>&1 | tee -a $report
+$rlDir/dstw_stop
 wait $pid;
 quote
