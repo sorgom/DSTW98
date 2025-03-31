@@ -1,5 +1,5 @@
 """ms build run module tests with Bullseye coverage"""
-from common import start, call, build, setCov, exec, report
+from common import start, call, build, setCov, report
 
 start('moduletests', __doc__)
 
@@ -7,7 +7,7 @@ setCov(True)
 build('moduletests', 'moduletestsIL')
 
 call('covclear -q')
-exec('moduletests')
-exec('moduletestsIL')
+call('moduletests')
+call('moduletestsIL')
 
 report()

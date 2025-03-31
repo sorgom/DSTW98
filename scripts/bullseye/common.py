@@ -1,14 +1,17 @@
 import atexit
-from os import chdir, getcwd, system, environ, remove
+from os import chdir, getcwd, system, environ, remove, name as oname
 from os.path import dirname, abspath, join, isfile
 from sys import path as sysPath
+
+isWin = oname == 'nt'
+osSubdir = 'windows' if isWin else 'linux'
 
 chdir(dirname(abspath(__file__)))
 myDir = getcwd()
 chdir('../..')
 repo = getcwd()
 buildDir = join(repo, 'build')
-binDir = join(buildDir, 'windows', 'bullseye')
+binDir = join(buildDir, osSubdir, 'bullseye')
 vsDir = join(repo, 'vs')
 vsSolution = join(vsDir, 'DSTW.sln')
 excludeFile = join(myDir, '_exclude.txt')
@@ -16,15 +19,15 @@ excludeFile = join(myDir, '_exclude.txt')
 sysPath.append(join(repo, 'submodules', 'sompy', 'somutil'))
 from docopts import docopts
 
-covFile = None
-
-def call(cmd:str):
-    if system(cmd) != 0:
+def call(cmd:str, ef=True):
+    res = system(cmd)
+    if res != 0 and ef:
         print('call failed:', call)
         exit(1)
+    return res
 
 def build(*targets):
-    """build vs solution with target"""
+    """build targets"""
     call(f'msbuild -m {vsSolution} -t:"{','.join(targets)}" -p:configuration=bullseye')
 
 def covRestore():
@@ -42,16 +45,11 @@ def getHelp(doc:str):
 usage: this script [options]
 options:
     -c  clean
+    -m  generate merged report
     -h  this help
-
-requires {vsSolution} (generated with premake5)
 """
     opts, _ = docopts(help)
     return opts
-
-def exec(cmd:str):
-    """execute command"""
-    call(join(binDir, cmd))
 
 def report():
     """report coverage"""
@@ -59,14 +57,20 @@ def report():
     call(f'covselect -qd --import {excludeFile}')
     call('covdir -q --by-name')
 
+def rm(file):
+    """remove file"""
+    if isfile(file):
+        remove(file)
+
 def start(what:str, doc:str):
     """common start for coverage"""
-    global covFile
     opts = getHelp(doc)
 
-    if not isfile(vsSolution):
+    if isWin and not isfile(vsSolution):
         print(f'{vsSolution} not found', 'use premake5 to generate', sep='\n')
         exit(1)
+
+    environ['PATH'] = f"{binDir}{';' if isWin else ':'}{environ['PATH']}"
 
     environ['COVCOPT'] = f'--srcdir {repo} --macro -q'
 
@@ -77,8 +81,7 @@ def start(what:str, doc:str):
     call('cov01 -q --push')
     setCov(False)
     if opts.get('c') or not isfile(covFile):
-        if isfile(covFile):
-            remove(covFile)
+        rm(covFile)
         build('clean')
 
     build('submodules')
