@@ -1,6 +1,3 @@
-# current bullseye coverage
-16.03.2025
-
 ### moduletests.cov
 ```
 Directory                        Function Coverage      C/D Coverage
@@ -18,13 +15,11 @@ application/components/SYS/        44 /  44 = 100%   65 /  65 = 100%
 application/components/SYS/src/    16 /  16 = 100%   59 /  59 = 100%
 application/components/TSW/         8 /   8 = 100%   22 /  22 = 100%
 application/components/TSW/src/     6 /   6 = 100%   22 /  22 = 100%
-specification/                      8 /   8 = 100%    0 /   0
-specification/codebase/             2 /   2 = 100%    0 /   0
 specification/ifs/                  6 /   6 = 100%    0 /   0
 -------------------------------  -----------------  ----------------
-Total                             192 / 192 = 100%  317 / 317 = 100%
-```
+Total                             190 / 190 = 100%  317 / 317 = 100%
 
+```
 ### systemtests.cov
 ```
 Directory                        Function Coverage      C/D Coverage
@@ -44,13 +39,11 @@ application/components/SYS/src/    16 /  16 = 100%   41 /  59 =  69%
 application/components/TSW/         6 /   8 =  75%    4 /  22 =  18%
 application/components/TSW/src/     4 /   6 =  66%    4 /  22 =  18%
 application/main/                   1 /   1 = 100%    0 /   0
-specification/                      8 /   8 = 100%    0 /   0
-specification/codebase/             2 /   2 = 100%    0 /   0
 specification/ifs/                  6 /   6 = 100%    0 /   0
 -------------------------------  -----------------  ----------------
-Total                             175 / 193 =  90%  142 / 317 =  44%
-```
+Total                             173 / 191 =  90%  142 / 317 =  44%
 
+```
 ### merged.cov
 ```
 Directory                        Function Coverage      C/D Coverage
@@ -70,11 +63,8 @@ application/components/SYS/src/    16 /  16 = 100%   59 /  59 = 100%
 application/components/TSW/         8 /   8 = 100%   22 /  22 = 100%
 application/components/TSW/src/     6 /   6 = 100%   22 /  22 = 100%
 application/main/                   1 /   1 = 100%    0 /   0
-specification/                      8 /   8 = 100%    0 /   0
-specification/codebase/             2 /   2 = 100%    0 /   0
 specification/ifs/                  6 /   6 = 100%    0 /   0
 -------------------------------  -----------------  ----------------
-Total                             193 / 193 = 100%  317 / 317 = 100%
-```
+Total                             191 / 191 = 100%  317 / 317 = 100%
 
-covmin 100,100 passed
+```
