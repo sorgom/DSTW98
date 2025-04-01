@@ -1,6 +1,6 @@
 import atexit
-from os import chdir, getcwd, system, environ, unlink, name as oname
-from os.path import dirname, abspath, join, isfile
+from os import chdir, getcwd, system, environ, unlink, name as oname, makedirs
+from os.path import dirname, abspath, isfile
 from subprocess import Popen, PIPE
 from sys import path as sysPath
 
@@ -11,16 +11,17 @@ chdir(dirname(abspath(__file__)))
 myDir = getcwd()
 chdir('../..')
 repo = getcwd()
-buildDir = join(repo, 'build')
-binDir = join(buildDir, osSub, 'bullseye')
-makeDir = join(repo, 'make')
-vsDir = join(repo, 'vs')
-vsSolution = join(vsDir, 'DSTW.sln')
-excludeFile = join(myDir, 'exclude.txt')
-coverageMd = join(repo, 'testing', 'coverage_bullseye.md')
-covMinima = '100,100'
+buildDir =      f'{repo}/build'
+binDir =        f'{buildDir}/{osSub}/bullseye'
+makeDir =       f'{repo}/make'
+reportsDir =    f'{repo}/reports'
+vsDir =         f'{repo}/vs'
+vsSolution =    f'{vsDir}/DSTW.sln'
+excludeFile =   f'{myDir}/exclude.txt'
+coverageMd =    f'{repo}/testing/coverage_bullseye.md'
+covMinima =     '100,100'
 
-sysPath.append(join(repo, 'submodules', 'sompy', 'somutil'))
+sysPath.append(f'{repo}/submodules/sompy/somutil')
 from docopts import docopts
 
 opts = None
@@ -31,6 +32,11 @@ def call(cmd:str, ef=True):
         print('call failed:', cmd)
         exit(1)
     return res
+
+def procOut(cmd:str):
+    """call command and return output"""
+    with Popen(cmd.split(), stdout=PIPE, universal_newlines=True) as proc:
+        return proc.stdout.read()
 
 def build(*targets):
     """build targets"""
@@ -78,8 +84,11 @@ def genMd():
         tsts.append(trg)
         srcs.append(trgf)
         for what, src in zip(tsts, srcs):
-            with Popen(f'covdir -q --by-name -f {src}'.split(), stdout=PIPE, universal_newlines=True) as proc:
-                print(f'### {what}', '```', proc.stdout.read(), '```', sep='\n', file=fh)
+            print(
+                f'### {what}',
+                '```',
+                procOut(f'covdir -q --by-name -f {src}'),
+                '```', sep='\n', file=fh)
 
         ret = system(f'covdir -q --checkmin {covMinima} -f {trgf}')
         fh.write(f'checkmin {covMinima} {"passed" if ret == 0 else "failed"}\n')
@@ -90,7 +99,11 @@ def report():
     """report coverage"""
     chdir(buildDir)
     call(f'covselect -qd --import {excludeFile}')
-    call('covdir -q --by-name')
+    txt = procOut(f'covdir -q --by-name')
+    reportFile = f'{reportsDir}/coverage_{opts.get('what', 'NN')}.txt'
+    with open(reportFile, 'w') as fh:
+        fh.write(txt)
+    print(txt)
     if opts.get('m'): genMd()
 
 def rm(file):
@@ -105,6 +118,9 @@ def start(what:str, doc:str):
     """common start for coverage"""
     global opts
     opts = getHelp(doc)
+    opts['what'] = what
+
+    makedirs(reportsDir, exist_ok=True)
 
     if isWin and not isfile(vsSolution):
         print(f'{vsSolution} not found', 'use premake5 to generate', sep='\n')
@@ -114,7 +130,7 @@ def start(what:str, doc:str):
 
     environ['COVCOPT'] = f'--srcdir {repo} --macro -q'
 
-    myCovFile = join(buildDir, covFile(what))
+    myCovFile = f'{buildDir}/{covFile(what)}'
     environ['COVFILE'] = myCovFile
 
     atexit.register(covRestore)
