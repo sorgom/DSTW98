@@ -1,21 +1,24 @@
 import atexit
-from os import chdir, getcwd, system, environ, remove, name as oname
+from os import chdir, getcwd, system, environ, unlink, name as oname
 from os.path import dirname, abspath, join, isfile
 from subprocess import Popen, PIPE
 from sys import path as sysPath
 
 isWin = oname == 'nt'
-osSubdir = 'windows' if isWin else 'linux'
+osSub = 'windows' if isWin else 'linux'
 
 chdir(dirname(abspath(__file__)))
 myDir = getcwd()
 chdir('../..')
 repo = getcwd()
 buildDir = join(repo, 'build')
-binDir = join(buildDir, osSubdir, 'bullseye')
+binDir = join(buildDir, osSub, 'bullseye')
+makeDir = join(repo, 'make')
 vsDir = join(repo, 'vs')
 vsSolution = join(vsDir, 'DSTW.sln')
-excludeFile = join(myDir, '_exclude.txt')
+excludeFile = join(myDir, 'exclude.txt')
+coverageMd = join(repo, 'testing', 'coverage_bullseye.md')
+covMinima = '100,100'
 
 sysPath.append(join(repo, 'submodules', 'sompy', 'somutil'))
 from docopts import docopts
@@ -25,13 +28,17 @@ opts = None
 def call(cmd:str, ef=True):
     res = system(cmd)
     if res != 0 and ef:
-        print('call failed:', call)
+        print('call failed:', cmd)
         exit(1)
     return res
 
 def build(*targets):
     """build targets"""
-    call(f'msbuild -m {vsSolution} -t:"{','.join(targets)}" -p:configuration=bullseye')
+    if isWin:
+        c = ','.join(targets)
+        call(f'msbuild -m {vsSolution} -t:"{c}" -p:configuration=bullseye')
+    else:
+        call(f'make -j -C {makeDir} {" ".join(targets)} config=bullseye')
 
 def covRestore():
     """restore cov01 setting"""
@@ -55,36 +62,44 @@ options:
     return opts
 
 def genMd():
+    """generate markdown coverage report"""
     chdir(buildDir)
-    srcs = ['moduletests.cov', 'systemtests.cov']
+    tsts = ['moduletests', 'systemtests']
+    srcs = [covFile(tst) for tst in tsts]
     for src in srcs:
-        if not isfile(src):
-            return False
-    trg = 'merged.cov'
-    call(f'covmerge -qcf {trg} {" ".join(srcs)}')
+        if not isfile(src): return
 
-    def covOut(src, fh):
-        with Popen(f'covdir -q --by-name -f {src}', stdout=PIPE, universal_newlines=True) as proc:
-            print(f'### {src}', '```', proc.stdout.read(), '```', sep='\n', file=fh)
+    trg = 'merged'
+    trgf = covFile(trg)
+    call(f'covmerge -qcf {trgf} {" ".join(srcs)}')
 
-    with open(join(repo, 'testing', 'coverage_bullseye.md'), 'w') as fh:
-        for src in srcs:
-            covOut(src, fh)
-        covOut(trg, fh)
-    return True
+    with open(coverageMd, 'w') as fh:
+        fh.write('# current Bullseye coverage\n')
+        tsts.append(trg)
+        srcs.append(trgf)
+        for what, src in zip(tsts, srcs):
+            with Popen(f'covdir -q --by-name -f {src}'.split(), stdout=PIPE, universal_newlines=True) as proc:
+                print(f'### {what}', '```', proc.stdout.read(), '```', sep='\n', file=fh)
+
+        ret = system(f'covdir -q --checkmin {covMinima} -f {trgf}')
+        fh.write(f'checkmin {covMinima} {"passed" if ret == 0 else "failed"}\n')
+        fh.close()
+        print('\n->', coverageMd)
 
 def report():
     """report coverage"""
-    if opts.get('m') and genMd():
-        return
     chdir(buildDir)
     call(f'covselect -qd --import {excludeFile}')
     call('covdir -q --by-name')
+    if opts.get('m'): genMd()
 
 def rm(file):
     """remove file"""
-    if isfile(file):
-        remove(file)
+    if isfile(file): unlink(file)
+
+def covFile(what:str):
+    """return coverage file name"""
+    return f'{what}_{osSub}.cov'
 
 def start(what:str, doc:str):
     """common start for coverage"""
@@ -99,14 +114,14 @@ def start(what:str, doc:str):
 
     environ['COVCOPT'] = f'--srcdir {repo} --macro -q'
 
-    covFile = join(buildDir, f'{what}.cov')
-    environ['COVFILE'] = covFile
+    myCovFile = join(buildDir, covFile(what))
+    environ['COVFILE'] = myCovFile
 
     atexit.register(covRestore)
     call('cov01 -q --push')
     setCov(False)
-    if opts.get('c') or not isfile(covFile):
-        rm(covFile)
+    if opts.get('c') or not isfile(myCovFile):
+        rm(myCovFile)
         build('clean')
 
     build('submodules')

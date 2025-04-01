@@ -72,7 +72,7 @@ namespace test
         // select on invalid socket
         // should fail
         STEP(8)
-        res = tcp.select(socket1 + 100);
+        res = tcp.select(-100);
         L_CHECK_EQUAL(-1, res);
 
         //  select with client connected

@@ -21,7 +21,7 @@ call('dstw_runtime X', False)
 call('dstw_gen')
 call('dstw_runtime X')
 
-bg = Popen('dstw_runtime X X', shell=False)
+bg = Popen('dstw_runtime X X'.split(), shell=False)
 call('systemtests')
 call('dstw_stop')
 bg.wait()
