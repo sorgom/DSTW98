@@ -1,19 +1,14 @@
 #!/bin/bash
-#   ====================================
-#   build and run all tests and app
-#   ====================================
+#   =============================================
+#   build everything
+#   run all binaries except system tests
+#   =============================================
 cd $(dirname $0)
 cd ..
-buildDir=$(pwd)/build
-makeDir=$(pwd)/make
-binDir=$buildDir/linux/release
+make -s -C make -j config=release
 
-cd $makeDir
-make -j config=release
-
-cd $buildDir
 tot=0
-for bin in $(ls $binDir/* | grep -v systemtests); do
+for bin in $(ls build/linux/release/* | grep -v systemtests); do
 echo ==== $(basename $bin)
 $bin
 ret=$?

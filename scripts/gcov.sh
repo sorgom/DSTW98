@@ -11,12 +11,11 @@ buildDir=$repo/build
 objDir=linux/obj/debug/gcovapp
 binDir=$buildDir/linux/debug
 
-cd $makeDir
-make -j config=debug gcovapp gcovtests
+make -s -C $makeDir -j config=debug gcovapp gcovtests
 
 cd $buildDir
 rm -f *.gcov
-$binDir/gcovtests > /dev/null
+$binDir/gcovtests
 gcov -o $objDir $appDir/*/src/*.cpp > /dev/null 2> /dev/null
 
 out () { printf "%-25s: %4d\n" $1 $2; }
