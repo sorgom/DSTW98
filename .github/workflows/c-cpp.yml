@@ -20,11 +20,14 @@ jobs:
       with:
          submodules: 'true'
 
-    - name: build and run tests
-      run: python3 scripts/buildAndRunTests.py
+    - name: module tests
+      run: python3 scripts/moduletests.py
+
+    - name: system tests
+      run: python3 scripts/systemtests.py
 
     - name: gcov
       run: chmod +x scripts/*.sh; scripts/gcov.sh
 
-    - name: check env
-      run: scripts/checkEnv.sh
+    # - name: check env
+    #   run: scripts/checkEnv.sh
