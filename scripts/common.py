@@ -1,6 +1,7 @@
+#   common functions for building and running tests
+#   linux / windows
 from os import chdir, getcwd, system, environ, name as oname
 from os.path import dirname
-from subprocess import Popen
 from sys import argv
 
 isWin = oname == 'nt'
@@ -21,7 +22,7 @@ def call(cmd:str):
         print(f'call failed:', cmd)
         exit(1)
 
-#   build targets windows or linux
+#   build targets windows (msbuild) or linux (make)
 def build(*targets):
     if isWin:
         c = ','.join(targets)
@@ -30,6 +31,7 @@ def build(*targets):
         call(f'make -s -j -C {makeDir} {" ".join(targets)} config={cfg}')
 
 def start():
+    #   extend PATH with bin directory
     environ['PATH'] = f"{binDir}{';' if isWin else ':'}{environ['PATH']}"
     if '-c' in argv:
         build('clean')

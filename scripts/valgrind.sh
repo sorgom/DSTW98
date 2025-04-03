@@ -1,6 +1,6 @@
 #!/bin/bash
 #   ====================================
-#   run DSTW in ubuntu Docker container
+#   run valgrind evaluation
 #   ====================================
 #   created by Manfred Sorgo
 
