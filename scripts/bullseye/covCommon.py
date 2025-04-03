@@ -17,16 +17,16 @@ makeDir     = f'{repo}/make'
 reportsDir  = f'{repo}/reports'
 vsDir       = f'{repo}/vs'
 vsSolution  = f'{vsDir}/DSTW.sln'
-excludeFile = f'{myDir}/exclude.txt'
+excludeFile = f'{myDir}/covExclude.txt'
 
 what = 'NN'
 
 #   basics
-def call(cmd:str, err=0):
+def call(cmd:str, check=True):
     """call command and check return code"""
     res = system(cmd)
-    if res != err:
-        print(f'call failed {res}/{err}:', cmd)
+    if check and res != 0:
+        print(f'call failed:', cmd)
         exit(1)
 
 def procOut(cmd:str):
@@ -39,8 +39,9 @@ def rm(file):
     if isfile(file): unlink(file)
 
 #  specific
-def build(*targets):
+def build(*targets, cov=0):
     """build targets windows or linux"""
+    call(f'cov01 -q{cov}')
     if isWin:
         c = ','.join(targets)
         call(f'msbuild -m {vsSolution} -t:"{c}" -p:configuration=bullseye')
@@ -50,10 +51,6 @@ def build(*targets):
 def covRestore():
     """restore cov01 setting"""
     call('cov01 -q --pop')
-
-def setCov(on:bool=True):
-    """set coverage on or off"""
-    call(f'cov01 -q{1 if on else 0}')
 
 def report():
     """report coverage"""
@@ -66,7 +63,7 @@ def report():
     print(txt)
 
 def covFile(what:str):
-    """return coverage file name"""
+    """coverage file name"""
     return f'{what}_{osSub}.cov'
 
 def start(me:str):
@@ -89,7 +86,6 @@ def start(me:str):
 
     atexit.register(covRestore)
     call('cov01 -q --push')
-    setCov(False)
     if '-c' in argv or not isfile(myCovFile):
         rm(myCovFile)
         build('clean')

@@ -1,5 +1,5 @@
 """write merged Bullseye coverage markdown report"""
-from common import call, repo, buildDir, covFile, procOut
+from covCommon import call, repo, buildDir, covFile, procOut
 from os import chdir, system
 from os.path import isfile, isdir
 

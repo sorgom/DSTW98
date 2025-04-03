@@ -12,7 +12,6 @@ on:
 
 jobs:
   release:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,14 +20,11 @@ jobs:
       with:
          submodules: 'true'
 
-    - name: build and run all
-      run: chmod +x scripts/*.sh; scripts/buildAndRun.sh
-
-    - name: system tests
-      run: scripts/systemtests.sh
+    - name: build and run tests
+      run: python3 scripts/buildAndRunTests.py
 
     - name: gcov
-      run: scripts/gcov.sh
+      run: chmod +x scripts/*.sh; scripts/gcov.sh
 
     - name: check env
       run: scripts/checkEnv.sh

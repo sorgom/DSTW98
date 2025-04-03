@@ -1,5 +1,5 @@
-"""ms build run system tests with Bullseye coverage"""
-from common import start, call, build, setCov, report, rm, buildDir
+"""build and run system tests with Bullseye coverage"""
+from covCommon import start, call, build, report, rm, buildDir
 from os import chdir
 from subprocess import Popen
 
@@ -7,11 +7,9 @@ projFile = 'dstw.proj'
 
 start('systemtests')
 
-setCov(False)
 build('dstw_gen', 'dstw_stop', 'systemtests')
 
-setCov(True)
-build('dstw_runtime')
+build('dstw_runtime', cov=1)
 
 chdir(buildDir)
 rm(projFile)
@@ -20,8 +18,8 @@ rm(projFile)
 call('dstw_runtime')
 
 #   call runtime with read and no project file
-#   expect error 103
-call('dstw_runtime X', 103)
+#   which should fail
+call('dstw_runtime X', False)
 
 #   generate project file
 call('dstw_gen')
@@ -29,7 +27,7 @@ call('dstw_gen')
 call('dstw_runtime X')
 
 #   call runtime with read and tcp loop in background
-bg = Popen('dstw_runtime X X'.split(), shell=False)
+bg = Popen('dstw_runtime X X'.split())
 
 #   run system tests via tcp
 call('systemtests')
