@@ -57,7 +57,7 @@ def report():
     chdir(buildDir)
     call(f'covselect -qd --import {excludeFile}')
     txt = procOut(f'covdir -q --by-name')
-    reportFile = f'{reportsDir}/coverage_{what}.txt'
+    reportFile = f'{reportsDir}/coverage_{what}_{osSub}.txt'
     with open(reportFile, 'w') as fh:
         fh.write(txt)
     print(txt)
