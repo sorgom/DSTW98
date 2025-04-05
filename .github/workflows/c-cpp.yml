@@ -29,5 +29,5 @@ jobs:
     - name: gcov
       run: chmod +x scripts/*.sh; scripts/gcov.sh
 
-    # - name: check env
-    #   run: scripts/checkEnv.sh
+    - name: check env
+      run: scripts/checkEnv.sh
