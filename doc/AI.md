@@ -46,19 +46,6 @@ So I came to the idea to ask ChatGPT:
 - asked: can you translate to cmd?
 - and I got it, not yet working, but almost
 
-#### discuss
-The thing is, that you really get to better solutions by discussion.
-
-e.g.
-- me: I don't think "call" statements are correct, because they exit the script
-- GPT: sorry, you are right
-- new code
-- took 10 minutes to have the working code
-
-Have a look at the results if you like:
--   [source](make/runSystemTests.sh)
--   [translation](make/runSystemTests.cmd)
-
 ### conclusion
 ChatGPT is a boost. It will make google and sites like StackOverflow more or less redundant.
 

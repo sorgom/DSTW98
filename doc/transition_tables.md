@@ -192,7 +192,7 @@ cat ../../testing/tests/moduletests/TSW/TSW_01.json
     "cmd0": "CMD(_CMD_);",
     "fld1": "FLD(_VAL_, _VAL_);",
     "fld0": "FLD(_VAL_);",
-    "csv": "specification/doc/transitions_TSW.csv"
+    "csv": "doc/transitions_TSW.csv"
 }
 ```
 Sample: generated test code for TSW

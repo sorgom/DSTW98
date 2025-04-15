@@ -33,7 +33,7 @@ If testing a single application module (SUT, software under test)
 ### sample: test of Mapper
 #### mocks and calls scheme
 
-![test Mapper](../specification/doc/moduletest_mapper.svg)
+![test Mapper](../doc/moduletest_mapper.svg)
 
 ## system tests
 Here we have
@@ -44,7 +44,7 @@ The system tests take place that way:
 - At startup the DSTW application reads project data provided for testing
 - The test application then communicates via TCP
 
-![system tests](../specification/doc/sys_tests.svg)
+![system tests](../doc/sys_tests.svg)
 
 ## code coverage
 - [coverage tools](coverage_tools.md)

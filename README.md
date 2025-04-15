@@ -15,18 +15,18 @@ The project does not intend an implementation that would work in a real digital 
 
 The aim is to
 - apply and demonstrate techniques to meet security integrity level 4 (SIL4).
-- show a completely different approach than the [model driven](Clinch.md) one I happened to experience.
+- show a completely different approach than the [model driven](doc/Clinch.md) one I happened to experience.
 - use as much modern C++ as possible
 - gain AI usage experience
 
 ## components interaction overview
-![overview](specification/doc/overview.svg)
+![overview](doc/overview.svg)
 
 ## topics
-- [SIL4](SIL4.md)
-- [AI usage](AI.md)
-- [testing](testing/README.md)
-- [transition tables](specification/doc/transition_tables.md)
-- [code coverage](testing/coverage_tools.md)
-- [how to build](make/README.md)
-- [current lines of code](CLOC.md)
+- [SIL4](doc/SIL4.md)
+- [AI usage](doc/AI.md)
+- [testing](doc/testing.md)
+- [transition tables](doc/transition_tables.md)
+- [code coverage](doc/coverage_tools.md)
+- [how to build](scripts/README.md)
+- [current lines of code](doc/CLOC.md)

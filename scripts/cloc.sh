@@ -17,7 +17,7 @@ clc()
 }
 cd $(dirname $0)
 cd ..
-md=CLOC.md
+md=doc/CLOC.md
 echo "# CLOC" > $md
 date +'%Y-%m-%d' >> $md
 clc specification >> $md

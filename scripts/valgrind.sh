@@ -13,7 +13,7 @@ buildDir=$repo/build
 rlDir=$buildDir/linux/release
 #   mem leak build
 mlDir=$buildDir/linux/memleak
-report=$repo/testing/valgrind_report.md
+report=$repo/doc/valgrind_report.md
 
 out() { echo $* | tee -a $report; }
 #   start / end markdown code block
