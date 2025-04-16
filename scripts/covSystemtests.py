@@ -1,15 +1,14 @@
 """build and run system tests with Bullseye coverage"""
-from covCommon import start, call, build, report, rm, buildDir
+from covCommon import *
 from os import chdir
 from subprocess import Popen
 
 projFile = 'dstw.proj'
 
-start('systemtests')
+covStart('systemtests')
 
-build('dstw_gen', 'dstw_stop', 'systemtests')
-
-build('dstw_runtime', cov=1)
+covBuild('dstw_gen', 'dstw_stop', 'systemtests')
+covBuild('dstw_runtime', cov=1)
 
 chdir(buildDir)
 rm(projFile)
@@ -38,4 +37,4 @@ call('dstw_stop')
 #   wait for background process to finish
 bg.wait()
 
-report()
+covReport()

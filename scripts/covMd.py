@@ -4,7 +4,7 @@ from os import chdir, system
 from os.path import isfile, isdir
 
 covMinima   = '100,100'
-coverageMd  = f'{repo}/testing/coverage_bullseye.md'
+coverageMd  = f'{repo}/doc/coverage_bullseye.md'
 
 if not isdir(buildDir): exit()
 chdir(buildDir)
