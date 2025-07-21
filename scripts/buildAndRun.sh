@@ -5,6 +5,7 @@
 #   =============================================
 cd $(dirname $0)
 cd ..
+if [ $1 = "-c" ]; then make -s -C make clean config=release; fi
 make -s -C make -j config=release
 
 tot=0
