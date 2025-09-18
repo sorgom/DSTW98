@@ -6,7 +6,7 @@
 
 cd $(dirname $0)
 cd ..
-
+if [ $1 = "-c" ]; then make -s -C make clean config=release; fi
 make -s -C make -j dstw_gen dstw_runtime dstw_stop systemtests config=release
 if [ $? -ne 0 ]; then exit 1; fi
 

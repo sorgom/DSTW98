@@ -11,6 +11,7 @@ buildDir=$repo/build
 objDir=linux/obj/debug/gcovapp
 binDir=$buildDir/linux/debug
 
+if [ $1 = "-c" ]; then make -s -C $makeDir -j config=debug clean; fi
 make -s -C $makeDir -j config=debug gcovapp gcovtests
 
 cd $buildDir
