@@ -18,12 +18,14 @@
 
 //  communication telegrams
 //  Com telegrams element identifier
-#define ComAddrSize 12
+constexpr auto ComAddrSize = 12;
+constexpr auto ComDataSize = 8;
+constexpr auto ComTelegramSize = ComAddrSize + ComDataSize;
 
 struct ComAddr
 {
     CHAR chars[ComAddrSize];
-    inline ComAddr() {}
+    inline ComAddr() = default;
     inline ComAddr(const ComAddr& src)
     {
         std::memcpy(chars, src.chars, ComAddrSize);
@@ -33,55 +35,38 @@ struct ComAddr
         return std::memcmp(chars, b.chars, ComAddrSize) > 0;
     }
 };
-SIZE_CHECK(ComAddr, ComAddrSize)
+static_assert(ComAddrSize == sizeof(ComAddr));
 
 //  Com telegrams data
 struct ComData
 {
-    const UINT8 param1;
-    const UINT8 param2;
-    const UINT8 param3;
-    const UINT8 param4;
-    const UINT8 param5;
-    const UINT8 param6;
-    const UINT8 param7;
-    const UINT8 param8;
-    inline ComData(const UINT8 p1 = PARAM_UNDEF,
-                   const UINT8 p2 = PARAM_UNDEF,
-                   const UINT8 p3 = PARAM_UNDEF,
-                   const UINT8 p4 = PARAM_UNDEF,
-                   const UINT8 p5 = PARAM_UNDEF,
-                   const UINT8 p6 = PARAM_UNDEF,
-                   const UINT8 p7 = PARAM_UNDEF,
-                   const UINT8 p8 = PARAM_UNDEF) :
-        param1(p1),
-        param2(p2),
-        param3(p3),
-        param4(p4),
-        param5(p5),
-        param6(p6),
-        param7(p7),
-        param8(p8)
-    {};
+    UINT8 param1 = PARAM_UNDEF;
+    UINT8 param2 = PARAM_UNDEF;
+    UINT8 param3 = PARAM_UNDEF;
+    UINT8 param4 = PARAM_UNDEF;
+    UINT8 param5 = PARAM_UNDEF;
+    UINT8 param6 = PARAM_UNDEF;
+    UINT8 param7 = PARAM_UNDEF;
+    UINT8 param8 = PARAM_UNDEF;
 };
-SIZE_CHECK(ComData, 8)
+static_assert(ComDataSize == sizeof(ComData));
 
 //  Com telegram
 struct ComTele
 {
-    const ComAddr addr;
-    const ComData data;
+    ComAddr addr;
+    ComData data;
 };
-SIZE_CHECK(ComTele, sizeof(ComAddr) + sizeof(ComData))
+static_assert(ComTelegramSize == sizeof(ComTele));
 
 //  project items
 struct ProjItem
 {
-    const ComAddr addr;
-    const UINT8 type;
-    const UINT8 reserve[7];
+    ComAddr addr;
+    UINT8 type;
+    UINT8 reserve[7];
 };
-SIZE_CHECK(ProjItem, sizeof(ComAddr) + 8)
+static_assert(ComAddrSize + 8 == sizeof(ProjItem));
 
 // Com TCP setup
 struct ComSetup
@@ -96,7 +81,7 @@ struct ComSetup
     UINT16 timeout;
 };
 
-SIZE_CHECK(ComSetup, 8)
+static_assert(8 == sizeof(ComSetup));
 
 //  result of a find operation
 struct PosRes

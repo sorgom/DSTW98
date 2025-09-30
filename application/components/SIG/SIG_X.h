@@ -13,7 +13,7 @@ class SIG_X : public BAS_Elem<COMP_SIG>
 public:
     inline void toGui() const
     {
-        sndGui(mStateToGui);
+        sndGui(ComData{mStateToGui});
     }
 
     NOCOPY(SIG_X)
@@ -39,7 +39,7 @@ class SIG_XS : public SIG_X
 public:
     inline void toGui() const
     {
-        sndGui(mStateToGui, mSpeedToGui);
+        sndGui(ComData{mStateToGui, mSpeedToGui});
     }
 
     NOCOPY(SIG_XS)

@@ -100,7 +100,7 @@ namespace test
         CHECK_N_CLEAR()
 
         STEP(3)
-        const ComData cd(1, 2, 3, 4, 5, 6, 7, 8);
+        const ComData cd{1, 2, 3, 4, 5, 6, 7, 8};
         SUBSTEPS()
         for (size_t n = 0; n < CAPACITY; ++n)
         {

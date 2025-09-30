@@ -48,7 +48,7 @@ void TSW::swLeft()
         break;
     default:
         chgState(TSW_STATE_WAIT_LEFT);
-        sndFld(TSW_STATE_LEFT);
+        sndFld(ComData{TSW_STATE_LEFT});
         break;
     }
 }
@@ -63,7 +63,7 @@ void TSW::swRight()
         break;
     default:
         chgState(TSW_STATE_WAIT_RIGHT);
-        sndFld(TSW_STATE_RIGHT);
+        sndFld(ComData{TSW_STATE_RIGHT});
         break;
     }
 }
@@ -74,11 +74,11 @@ void TSW::wu()
     {
     case TSW_STATE_LEFT:
         chgState(TSW_STATE_WAIT_RIGHT);
-        sndFld(TSW_STATE_RIGHT);
+        sndFld(ComData{TSW_STATE_RIGHT});
         break;
     case TSW_STATE_RIGHT:
         chgState(TSW_STATE_WAIT_LEFT);
-        sndFld(TSW_STATE_LEFT);
+        sndFld(ComData{TSW_STATE_LEFT});
         break;
     default:
         break;

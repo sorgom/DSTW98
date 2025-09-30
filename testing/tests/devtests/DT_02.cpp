@@ -35,8 +35,8 @@ namespace test
     TEST(DT_02, T02)
     {
         STEP(1)
-        ComTele tele = { ComAddr(), ComData(1, 2, 3, 4, 5, 6, 7, 8) };
-        const ComData cd(11, 12, 13);
+        ComTele tele = { ComAddr(), ComData{1, 2, 3, 4, 5, 6, 7, 8} };
+        const ComData cd{11, 12, 13};
         std::memcpy((void*) &tele.data, &cd, sizeof(ComData));
         L_CHECK_EQUAL(11, tele.data.param1);
         L_CHECK_EQUAL(12, tele.data.param2);

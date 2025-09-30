@@ -7,9 +7,11 @@
 
 //  disable copy constructor and copy operator
 #define NOCOPY(CLASS) \
-private: CLASS(const CLASS&); CLASS& operator = (const CLASS&);
+CLASS(const CLASS&) = delete; \
+CLASS(const CLASS&&) = delete; \
+CLASS& operator = (const CLASS&) = delete;
 
 //  disable default constructor
-#define NODEF(CLASS) private: CLASS();
+#define NODEF(CLASS) CLASS() = delete;
 
 #endif // _H

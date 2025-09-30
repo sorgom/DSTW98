@@ -16,25 +16,8 @@ protected:
     inline X_Elem(size_t id):
         mId(id)
     {}
-    void sndFld(
-        UINT8 p1 = PARAM_UNDEF,
-        UINT8 p2 = PARAM_UNDEF,
-        UINT8 p3 = PARAM_UNDEF,
-        UINT8 p4 = PARAM_UNDEF,
-        UINT8 p5 = PARAM_UNDEF,
-        UINT8 p6 = PARAM_UNDEF,
-        UINT8 p7 = PARAM_UNDEF,
-        UINT8 p8 = PARAM_UNDEF) const;
-
-    void sndGui(
-        UINT8 p1 = PARAM_UNDEF,
-        UINT8 p2 = PARAM_UNDEF,
-        UINT8 p3 = PARAM_UNDEF,
-        UINT8 p4 = PARAM_UNDEF,
-        UINT8 p5 = PARAM_UNDEF,
-        UINT8 p6 = PARAM_UNDEF,
-        UINT8 p7 = PARAM_UNDEF,
-        UINT8 p8 = PARAM_UNDEF) const;
+    void sndFld(const ComData& data) const;
+    void sndGui(const ComData& data) const;
 
     static void logMismatch(E_Comp comp);
 

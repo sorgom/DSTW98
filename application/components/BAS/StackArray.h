@@ -33,7 +33,7 @@ class StackArray :
     public I_Array<T, CAP>
 {
 public:
-    inline StackArray() : mSize(0) {}
+    inline StackArray() : mData{}, mSize(0) {}
 
     inline size_t size() const
     {

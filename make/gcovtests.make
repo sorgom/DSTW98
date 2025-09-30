@@ -45,8 +45,8 @@ TARGETDIR = ../build/linux/release
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/release/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/release/libgcovapp.a ../build/linux/lib/release/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/release/libgcovapp.a ../build/linux/lib/release/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/release -s --coverage
@@ -56,8 +56,8 @@ TARGETDIR = ../build/linux/debug
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/debug/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DDEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -std=c++17 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++17 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/debug/libgcovapp.a ../build/linux/lib/debug/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/debug --coverage
@@ -67,8 +67,8 @@ TARGETDIR = ../build/linux/memleak
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/memleak/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG -DMEM_LEAK
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/memleak/libgcovapp.a ../build/linux/lib/memleak/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/memleak -s --coverage
@@ -78,8 +78,8 @@ TARGETDIR = ../build/linux/bullseye
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/bullseye/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DNDEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/bullseye/libgcovapp.a ../build/linux/lib/bullseye/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/bullseye -s --coverage
@@ -89,8 +89,8 @@ TARGETDIR = ../build/linux/fail
 TARGET = $(TARGETDIR)/gcovtests
 OBJDIR = ../build/linux/obj/fail/gcovtests
 DEFINES += -DCAPACITY=20 -DCPPUTEST_USE_LONG_LONG=0 -DCPPUTEST_MEM_LEAK_DETECTION_DISABLED -DSTATIC_FAIL
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++98 -pedantic-errors -Werror -Wall
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++17 -pedantic-errors -Werror -Wall
 LIBS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a -lgcov
 LDDEPS += ../build/linux/lib/fail/libgcovapp.a ../build/linux/lib/fail/libsubmodules.a
 ALL_LDFLAGS += $(LDFLAGS) -L../build/linux/lib/fail -s --coverage

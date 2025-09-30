@@ -10,7 +10,7 @@ void LCR_X::open()
         case LCR_STATE_WAIT_CLOSED:
             mState = LCR_STATE_WAIT_OPEN;
             toGui();
-            sndFld(LCR_STATE_OPEN);
+            sndFld(ComData{LCR_STATE_OPEN});
             break;
         default:
             break;
@@ -26,7 +26,7 @@ void LCR_X::close()
         case LCR_STATE_WAIT_OPEN:
             mState = LCR_STATE_WAIT_CLOSED;
             toGui();
-            sndFld(LCR_STATE_CLOSED);
+            sndFld(ComData{LCR_STATE_CLOSED});
             break;
         default:
             break;
