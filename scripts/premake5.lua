@@ -2,7 +2,7 @@
 --  premake5 build settings
 --  ============================================================
 
-buildoptions_gcc = '-std=c++98 -pedantic-errors -Werror -Wall'
+buildoptions_gcc = '-std=c++17 -pedantic-errors -Werror -Wall'
 
 --  4103 alignment changed after including header, may be due to pragma pack
 suppressions_vs = '/wd4103'

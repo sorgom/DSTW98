@@ -22,6 +22,6 @@ public:
     NOCOPY(Com)
 
 private:
-    inline Com() {}
+    inline Com() = default;
 };
 #endif // _H

@@ -31,8 +31,8 @@ namespace test
     {
     public:
 
-        inline TCP_Client(const I_ProcComTele& proc) : mSocket(-1), mProc(proc) {}
-        inline TCP_Client() : mSocket(-1), mProc(mNProc) {}
+        inline TCP_Client(const I_ProcComTele& proc) : mSocket(-1), mProc(proc), mBuff{}  {}
+        inline TCP_Client() : mSocket(-1), mProc(mNProc), mBuff{} {}
 
         static bool init();
         static void cleanup();

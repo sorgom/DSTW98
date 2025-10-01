@@ -33,6 +33,6 @@ public:
 
 private:
     AddrMap<CAPACITY> mMap;
-    inline Mapper() {}
+    inline Mapper() = default;
 };
 #endif // _H

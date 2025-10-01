@@ -18,7 +18,7 @@ public:
     INSTANCE_DEC(Main)
     NOCOPY(Main)
 private:
-    inline Main() {}
+    inline Main() = default;
 };
 
 #endif // _H

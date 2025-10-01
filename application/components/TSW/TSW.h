@@ -21,7 +21,7 @@ public:
 
     inline void toGui() const
     {
-        sndGui(mState);
+        sndGui(ComData{mState});
     }
 
     void fromFld(const ComData& data);

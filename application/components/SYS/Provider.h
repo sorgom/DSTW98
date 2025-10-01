@@ -17,7 +17,7 @@
 class Provider : public I_Provider
 {
 public:
-    inline Provider() {}
+    inline Provider() = default;
 
     inline size_t size() const
     {
@@ -44,6 +44,7 @@ public:
     INSTANCE_DEC(Provider)
     NOCOPY(Provider)
 private:
+    //  determine required size by size of byte union
     #define ADD_SIZE(CLASS) BYTE m ## CLASS[sizeof(CLASS)];
     union Sizes
     {
@@ -55,13 +56,6 @@ private:
         ADD_SIZE(LCR_UBK)
     };
     StackArray<I_Elem, CAPACITY, sizeof(Sizes)> mElems;
-
-    template <class T>
-    inline void add(size_t pos)
-    {
-        mElems.add(T(pos));
-    }
-
 };
 
 #endif // _H

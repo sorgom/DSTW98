@@ -42,7 +42,7 @@ public:
     void fromFld(const ComData& data);
     inline void toGui() const
     {
-        sndGui(mState);
+        sndGui(ComData{mState});
     }
 
     NOCOPY(LCR)
@@ -63,7 +63,7 @@ public:
     void fromFld(const ComData& data);
     inline void toGui() const
     {
-        sndGui(mState, mStateUbk);
+        sndGui(ComData{mState, mStateUbk});
     }
 
     NOCOPY(LCR_UBK)

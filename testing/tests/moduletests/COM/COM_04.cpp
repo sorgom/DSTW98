@@ -185,14 +185,14 @@ namespace test
 
         STEP(1)
         {
-            const ComTele tf;
+            const ComTele tf{};
             m_TCP_Con_Fld().expectSend(tf);
             com.toFld(tf);
             CHECK_N_CLEAR()
         }
         STEP(2)
         {
-            const ComTele tg;
+            const ComTele tg{};
             m_TCP_Con_Gui().expectSend(tg);
             com.toGui(tg);
             CHECK_N_CLEAR()

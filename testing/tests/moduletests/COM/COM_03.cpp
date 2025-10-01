@@ -30,7 +30,7 @@ namespace test
             //  new (&tele.data) ComData(p1, p2);
             //  but vscode does not like it
             //  therefore:
-            const ComData cd(p1, p2);
+            const ComData cd{ p1, p2 };
             std::memcpy((void*) &tele.data, &cd, sizeof(ComData));
         }
     };

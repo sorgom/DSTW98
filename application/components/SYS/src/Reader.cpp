@@ -18,16 +18,14 @@ void Reader::read()
     provider.clear();
 
 #ifdef _WIN32
-//  warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead.
-//  fopen_s is not C++ 89 standard
-#pragma warning(disable:4996)
-#endif
+    FILE* file = nullptr;
+    const auto err = fopen_s(&file, PROJ_FILE, "rb");
+    bool ok = err == 0;
+#else
     FILE* file = fopen(PROJ_FILE, "rb");
-#ifdef _WIN32
-#pragma warning(default:4996)
+    bool ok = file != nullptr;
 #endif
 
-    bool ok = file != nullptr;
     if (ok)
     {
         fseek(file, 0, SEEK_END);

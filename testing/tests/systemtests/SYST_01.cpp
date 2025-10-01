@@ -64,7 +64,7 @@ namespace test
 
         CSTEP(1, "send ping telegram")
         {
-            const ComTele ts = { genComAddr(22, "PING"), ComData(COM_CTRL_PING, COM_CTRL_PING) };
+            const ComTele ts = { genComAddr(22, "PING"), ComData{COM_CTRL_PING, COM_CTRL_PING}};
             clientCtrl.expectRecv(ts);
             clientCtrl.send(ts);
             think();
@@ -125,9 +125,9 @@ namespace test
             if (ok)
             {
                 if (same) pFld = pCmd;
-                const ComTele teleCmd = { data.addr(n), ComData(pCmd) };
-                const ComTele teleFld = { data.addr(n), ComData(pFld) };
-                const ComTele teleGui = { data.addr(n), ComData(pGui1, pGui2) };
+                const ComTele teleCmd = { data.addr(n), ComData{pCmd} };
+                const ComTele teleFld = { data.addr(n), ComData{pFld} };
+                const ComTele teleGui = { data.addr(n), ComData{pGui1, pGui2} };
                 clientFld.expectRecv(teleFld);
                 clientGui.expectRecv(teleGui);
                 clientGui.send(teleCmd);
@@ -174,7 +174,7 @@ namespace test
             }
             if (ok)
             {
-                const ComTele teleState = { data.addr(n), ComData(p1, p2) };
+                const ComTele teleState = { data.addr(n), ComData{p1, p2} };
                 clientGui.expectRecv(teleState);
                 clientFld.send(teleState);
                 think();
@@ -186,7 +186,7 @@ namespace test
 
         CSTEP(4, "process reGui command via Ctrl")
         {
-            const ComTele ts = { genComAddr(22, "REGUI"), ComData(COM_CTRL_RE_GUI, COM_CTRL_RE_GUI) };
+            const ComTele ts = { genComAddr(22, "REGUI"), ComData{COM_CTRL_RE_GUI, COM_CTRL_RE_GUI} };
             clientGui.expectRecv(MinProjData::size());
             clientCtrl.send(ts);
             wait(500);

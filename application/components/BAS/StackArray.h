@@ -7,11 +7,15 @@
 #ifndef STACK_ARRAY_H
 #define STACK_ARRAY_H
 
-#include <codebase/checks.h>
 #include <ifs/DataTypes.h>
 #include <BAS/coding.h>
 #include <cstring>
+#include <new>
+#include <type_traits>
+#include <utility>
 
+
+//  basic array interface
 template <class T, size_t CAP>
 class I_Array
 {
@@ -28,12 +32,13 @@ public:
     }
 };
 
+
 template <class T, size_t CAP, size_t SIZE = sizeof(T)>
 class StackArray :
     public I_Array<T, CAP>
 {
 public:
-    inline StackArray() : mSize(0) {}
+    inline StackArray() : mData{}, mSize(0) {}
 
     inline size_t size() const
     {
@@ -50,16 +55,22 @@ public:
         return *reinterpret_cast<T*>(mData[pos]);
     }
 
+    //  add element by copying an object
     template <class DT>
-    inline const T& add(const DT& obj)
+    inline void add(const DT& obj)
     {
-        //  static check if object size fits into segment
-        typedef CHAR CT[sizeof(DT) <= SIZE ? 1 : -1];
-        const CT ct = {};
-        use(ct);
+        static_assert(sizeof(DT) <= SIZE);
+        static_assert(std::is_base_of<T, DT>::value);
         std::memcpy(mData[mSize++], &obj, sizeof(DT));
-        //  static check if object is derived from T
-        return static_cast<const T&>(obj);
+    }
+
+    //  add element with type and construction arguments
+    template <class DT, typename... Args>
+    inline void add(Args&&... args)
+    {
+        static_assert(sizeof(DT) <= SIZE);
+        static_assert(std::is_base_of<T, DT>::value);
+        new (mData[mSize++]) DT(std::forward<Args>(args)...);
     }
 
     inline void clear()
@@ -93,7 +104,7 @@ public:
     }
 
     //  find data position by key
-    //  requires that index() has been called once before
+    //  requires that sort() or index() has been called once before
     const PosRes find(KEY key) const
     {
         return search(key);

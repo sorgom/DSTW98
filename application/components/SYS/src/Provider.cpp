@@ -13,22 +13,22 @@ void Provider::add(const ProjItem& item)
         switch (item.type)
         {
             case TYPE_LCR:
-                add<LCR>(pos);
+                mElems.add<LCR>(pos);
                 break;
             case TYPE_LCR_UBK:
-                add<LCR_UBK>(pos);
+                mElems.add<LCR_UBK>(pos);
                 break;
             case TYPE_SIG_H:
-                add<SIG_H>(pos);
+                mElems.add<SIG_H>(pos);
                 break;
             case TYPE_SIG_N:
-                add<SIG_N>(pos);
+                mElems.add<SIG_N>(pos);
                 break;
             case TYPE_SIG_H_N:
-                add<SIG_H_N>(pos);
+                mElems.add<SIG_H_N>(pos);
                 break;
             case TYPE_TSW:
-                add<TSW>(pos);
+                mElems.add<TSW>(pos);
                 break;
             default:
                 ok = false;

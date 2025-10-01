@@ -80,7 +80,7 @@ namespace test
         {
             STEP(n)
             L_CHECK_TRUE(ta.hasSpace())
-            ta.add(ExtendedData(genv(n), n));
+            ta.add<ExtendedData>(genv(n), n);
         }
         ENDSTEPS()
         L_CHECK_EQUAL(CAP, ta.size())
@@ -131,7 +131,7 @@ namespace test
         }
         for (INT32 n = 0; n < CAP; ++n)
         {
-            ta.add(ExtendedData(n, n));
+            ta.add<ExtendedData>(n, n);
         }
         L_CHECK_EQUAL(CAP, ta.size())
 
@@ -144,7 +144,7 @@ namespace test
         L_CHECK_EQUAL(0, ta.size())
         for (INT32 n = 0; n < CAP; ++n)
         {
-            ta.add(ExtendedData(gendup(n), n));
+            ta.add<ExtendedData>(gendup(n), n);
         }
         L_CHECK_EQUAL(CAP, ta.size())
 

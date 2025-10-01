@@ -17,6 +17,6 @@ public:
     NOCOPY(Reader)
 private:
     ComSetup mComSetup;
-    inline Reader() {}
+    inline Reader() = default;
 };
 #endif // _H
