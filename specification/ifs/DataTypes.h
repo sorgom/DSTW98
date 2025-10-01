@@ -9,7 +9,6 @@
 #include "values.h"
 
 #include <codebase/BaseTypes.h>
-#include <codebase/checks.h>
 #include <codebase/nocopy.h>
 
 #include <cstring>
@@ -17,11 +16,11 @@
 #include <codebase/packBegin.h>
 
 //  communication telegrams
-//  Com telegrams element identifier
 constexpr auto ComAddrSize = 12;
 constexpr auto ComDataSize = 8;
 constexpr auto ComTelegramSize = ComAddrSize + ComDataSize;
 
+//  Com telegrams element identifier
 struct ComAddr
 {
     CHAR chars[ComAddrSize];

@@ -7,10 +7,12 @@
 #ifndef STACK_ARRAY_H
 #define STACK_ARRAY_H
 
-#include <codebase/checks.h>
 #include <ifs/DataTypes.h>
 #include <BAS/coding.h>
 #include <cstring>
+#include <new>
+#include <type_traits>
+#include <utility>
 
 template <class T, size_t CAP>
 class I_Array
@@ -51,15 +53,19 @@ public:
     }
 
     template <class DT>
-    inline const T& add(const DT& obj)
+    inline void add(const DT& obj)
     {
-        //  static check if object size fits into segment
-        typedef CHAR CT[sizeof(DT) <= SIZE ? 1 : -1];
-        const CT ct = {};
-        use(ct);
+        static_assert(sizeof(DT) <= SIZE);
+        static_assert(std::is_base_of<T, DT>::value);
         std::memcpy(mData[mSize++], &obj, sizeof(DT));
-        //  static check if object is derived from T
-        return static_cast<const T&>(obj);
+    }
+
+    template <class DT, typename... Args>
+    inline void add(Args&&... args)
+    {
+        static_assert(sizeof(DT) <= SIZE);
+        static_assert(std::is_base_of<T, DT>::value);
+        new (mData[mSize++]) DT(std::forward<Args>(args)...);
     }
 
     inline void clear()
