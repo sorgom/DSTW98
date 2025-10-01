@@ -49,7 +49,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Fld() {}
+    inline TCP_Listener_Fld() = default;
 };
 
 class TCP_Listener_Gui : public Tcp_Listener_Base
@@ -60,7 +60,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Gui() {}
+    inline TCP_Listener_Gui() = default;
 };
 
 class TCP_Listener_Ctrl : public Tcp_Listener_Base
@@ -71,7 +71,7 @@ public:
 protected:
     I_TCP_Con& getCon() const;
 private:
-    inline TCP_Listener_Ctrl() {}
+    inline TCP_Listener_Ctrl() = default;
 };
 
 //  ============================================================
@@ -109,7 +109,7 @@ protected:
     void onAccept() const;
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Fld() {}
+    inline TCP_Con_Fld() = default;
 };
 
 //  GUI tcp communication client
@@ -122,7 +122,7 @@ protected:
     void onAccept() const;
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Gui() {}
+    inline TCP_Con_Gui() = default;
 };
 
 //  control tcp communication client
@@ -135,6 +135,6 @@ protected:
     inline void onAccept() const {}
     void forward(const ComTele& tele) const;
 private:
-    inline TCP_Con_Ctrl() {}
+    inline TCP_Con_Ctrl() = default;
 };
 #endif // _H

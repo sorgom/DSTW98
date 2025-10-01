@@ -23,7 +23,7 @@
     }
 
 //  prevent from unused variable warning
-template <class T>
-void use(const T&) {}
+// template <class T>
+// void use(const T&) {}
 
 #endif // _H

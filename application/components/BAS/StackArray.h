@@ -14,6 +14,8 @@
 #include <type_traits>
 #include <utility>
 
+
+//  basic array interface
 template <class T, size_t CAP>
 class I_Array
 {
@@ -29,6 +31,7 @@ public:
         return size() < CAP;
     }
 };
+
 
 template <class T, size_t CAP, size_t SIZE = sizeof(T)>
 class StackArray :
@@ -52,6 +55,7 @@ public:
         return *reinterpret_cast<T*>(mData[pos]);
     }
 
+    //  add element by copying an object
     template <class DT>
     inline void add(const DT& obj)
     {
@@ -60,6 +64,7 @@ public:
         std::memcpy(mData[mSize++], &obj, sizeof(DT));
     }
 
+    //  add element with type and construction arguments
     template <class DT, typename... Args>
     inline void add(Args&&... args)
     {
@@ -99,7 +104,7 @@ public:
     }
 
     //  find data position by key
-    //  requires that index() has been called once before
+    //  requires that sort() or index() has been called once before
     const PosRes find(KEY key) const
     {
         return search(key);
