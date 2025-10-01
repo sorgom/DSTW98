@@ -1,0 +1,3 @@
+exclude folder ../../testing/
+exclude folder ../../submodules/
+exclude folder ../../specification/

@@ -1,0 +1,48 @@
+#!/usr/bin/bash
+# use: git config core.hooksPath .gitHooks
+
+# availability of python
+py=$(which python || which python3 || which py)
+if [[ -z $py ]]
+then
+  echo "No python found"
+  exit 0
+fi
+
+# go to the root of the git repo
+cd $(git rev-parse --show-toplevel)
+
+# path to sompy python scripts
+sompy=$(pwd)/submodules/sompy/somutil
+
+# files to skip
+skips="make/*"
+
+txts=()
+svgs=()
+mdjs=()
+
+for file in $(git diff-index --cached --name-only HEAD); do
+  if [[ -f $file ]]
+  then
+    if   [[ $file == *.svg ]]; then svgs+=($file)
+    elif [[ $file == *.mdj ]]; then mdjs+=($file)
+    else
+      ok=true
+      for s in $skips; do
+        if [[ $file == $s ]]; then ok=false; break; fi
+      done
+      if $ok; then txts+=($file); fi
+    fi
+  fi
+done
+
+echo txt: ${#txts[@]}
+echo svg: ${#svgs[@]}
+echo mdj: ${#mdjs[@]}
+
+done1=$($py $sompy/cleanTxt.py -le ${txts[@]})
+done2=$($py $sompy/cleanSvg.py -le ${svgs[@]})
+done3=$($py $sompy/cleanMdj.py -le ${mdjs[@]})
+
+for file in $done1 $done2 $done3; do git add $file; done
