@@ -44,7 +44,7 @@ namespace test
 
         NOCOPY(TestArray)
     private:
-        typedef BYTE Segment[sizeof(T)];
+        using Segment = BYTE[sizeof(T)];
         Segment mData[CAP];
         size_t mSize;
     };

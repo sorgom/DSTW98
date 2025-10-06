@@ -29,7 +29,8 @@ public:
 
     inline void add(const ComAddr& addr)
     {
-        mData.add(addr);
+        mData.cpy(addr);
+        // mData.add<ComAddr>(addr);
     }
 
     inline bool index()
@@ -63,7 +64,7 @@ public:
     }
 
 private:
-    typedef StackArray<ComAddr, CAP> AddrArray;
+    using AddrArray = StackArray<ComAddr, CAP>;
 
     class AddrIndex : public StackIndex<ComAddr, CAP, const ComAddr&>
     {

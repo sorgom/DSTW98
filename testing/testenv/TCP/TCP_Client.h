@@ -55,7 +55,7 @@ namespace test
     private:
         INT32 mSocket;
         const I_ProcComTele& mProc;
-        typedef CHAR Buffer[RECV_BUFF_SIZE * sizeof(ComTele)];
+        using Buffer = CHAR [RECV_BUFF_SIZE * sizeof(ComTele)];
         mutable Buffer mBuff;
         const N_ProcComTele mNProc;
         mutable size_t mNum;

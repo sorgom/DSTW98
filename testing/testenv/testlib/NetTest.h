@@ -53,11 +53,8 @@ public:
 private:
     NetTest();
 
-    typedef UINT16 (*af16) (UINT16);
-    typedef UINT32 (*af32) (UINT32);
-
-    // using af16 = UINT16 (*) (const UINT16);
-    // using af32 = UINT32 (*) (const UINT32);
+    using af16 = UINT16 (*) (const UINT16);
+    using af32 = UINT32 (*) (const UINT32);
     static UINT16 keep16(UINT16 n);
     static UINT16 swap16(UINT16 n);
     static UINT32 keep32(UINT32 n);

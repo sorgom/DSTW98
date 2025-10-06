@@ -13,7 +13,7 @@
 
 namespace test
 {
-    typedef TestArray<M_Elem, CAPACITY> A_Elems;
+    using A_Elems = TestArray<M_Elem, CAPACITY>;
 
     class M_Elems : public A_Elems
     {

@@ -143,6 +143,6 @@ namespace test
     };
 
     //  minimal proj data to get all element types tested
-    typedef GenProjData<NUM_ALL_TYPES> MinProjData;
+    using MinProjData = GenProjData<NUM_ALL_TYPES>;
 } // namespace
 #endif // _H

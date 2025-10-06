@@ -6,28 +6,27 @@
 #ifndef BASE_TYPES_H
 #define BASE_TYPES_H
 
-#include <cstddef>
+#include  <cstdint>
 
-typedef unsigned char   UINT8;
-typedef UINT8           BYTE;
-typedef unsigned short  UINT16;
-typedef unsigned int    UINT32;
+using UINT8  = uint8_t;
+using BYTE   = UINT8;
+using UINT16 = uint16_t;
+using UINT32 = uint32_t;
 
-typedef signed char     INT8;
-typedef signed short    INT16;
-typedef signed int      INT32;
+using INT8  = int8_t;
+using INT16 = int16_t;
+using INT32 = int32_t;
 
-typedef char            CHAR;
+using CHAR = char;
 
-typedef void*           PTR;
-typedef const void*     CPTR;
+using PTR  = void*;
+using CPTR = const void*;
 
-typedef CHAR*           C_STRING;
-typedef const CHAR*     CONST_C_STRING;
+using C_STRING = CHAR*;
+using CONST_C_STRING = const CHAR*;
 
 #ifndef _MSC_VER
     using std::size_t;
-    #define nullptr 0
 #endif
 
 #endif // _H

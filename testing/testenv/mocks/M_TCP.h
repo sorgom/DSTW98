@@ -139,7 +139,7 @@ namespace test
         }
         NOCOPY(M_TCP)
     private:
-        typedef const ComTele* TelePtr;
+        using TelePtr = const ComTele*;
         mutable TelePtr mTele;
         inline M_TCP() :
             M_Base("Tcp"),

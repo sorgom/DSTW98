@@ -12,7 +12,6 @@
 #include <cstring>
 #include <new>
 #include <type_traits>
-#include <utility>
 
 
 //  basic array interface
@@ -57,7 +56,7 @@ public:
 
     //  add element by copying an object
     template <class DT>
-    inline void add(const DT& obj)
+    inline void cpy(const DT& obj)
     {
         static_assert(sizeof(DT) <= SIZE);
         static_assert(std::is_base_of<T, DT>::value);
@@ -66,11 +65,11 @@ public:
 
     //  add element with type and construction arguments
     template <class DT, typename... Args>
-    inline void add(Args&&... args)
+    inline void add(const Args&... args)
     {
         static_assert(sizeof(DT) <= SIZE);
         static_assert(std::is_base_of<T, DT>::value);
-        new (mData[mSize++]) DT(std::forward<Args>(args)...);
+        new (mData[mSize++]) DT(args...);
     }
 
     inline void clear()
@@ -81,7 +80,7 @@ public:
 
     NOCOPY(StackArray)
 private:
-    typedef BYTE Segment[SIZE];
+    using Segment = BYTE[SIZE];
     Segment mData[CAP];
     size_t mSize;
 };
@@ -93,7 +92,7 @@ protected:
     virtual KEY getKey(const T&) const = 0;
 
 public:
-    typedef I_Array<T, CAP> Array;
+    using Array = I_Array<T, CAP>;
 
     inline StackIndex(const Array& array) : mArray(array) {}
 
