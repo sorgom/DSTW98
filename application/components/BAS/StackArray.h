@@ -104,7 +104,7 @@ public:
 
     //  find data position by key
     //  requires that sort() or index() has been called once before
-    const PosRes find(KEY key) const
+    inline const PosRes find(KEY key) const
     {
         return search(key);
     }
